@@ -21,6 +21,7 @@
 		BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */; };
 		BF77AD321A6E47FF008CCFB9 /* PlayerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */; };
 		BF77AD331A6E47FF008CCFB9 /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */; };
+		BF77AD351A6E5484008CCFB9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerInfoViewController.m; sourceTree = "<group>"; };
 		BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewController.h; sourceTree = "<group>"; };
 		BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewController.m; sourceTree = "<group>"; };
+		BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF77AD351A6E5484008CCFB9 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +85,7 @@
 		BF77ACDC1A6E4724008CCFB9 = {
 			isa = PBXGroup;
 			children = (
+				BF77AD361A6E54A2008CCFB9 /* Frameworks */,
 				BF77ACE71A6E4725008CCFB9 /* thespy */,
 				BF77AD011A6E4725008CCFB9 /* thespyTests */,
 				BF77ACE61A6E4725008CCFB9 /* Products */,
@@ -156,6 +160,14 @@
 				BF77AD251A6E47FF008CCFB9 /* PlayerHeader.m */,
 			);
 			path = bean;
+			sourceTree = "<group>";
+		};
+		BF77AD361A6E54A2008CCFB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

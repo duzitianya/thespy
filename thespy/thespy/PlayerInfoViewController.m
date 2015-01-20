@@ -7,6 +7,7 @@
 //
 
 #import "PlayerInfoViewController.h"
+#import "AppDelegate.h"
 
 @interface PlayerInfoViewController ()
 
@@ -18,12 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 400)];
-//    view.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:view];
+    CGFloat width = kMAIN_SCREEN_WIDTH;
+    CGFloat height = kMAIN_SCREEN_HEIGHT;
+    CGFloat barHeight = self.navigationController.navigationBar.frame.size.height+20;
     
     ActionView *actionView = [[ActionView alloc] init];
-    [actionView setUpFrame:CGRectMake(0, 0, 320, 600)];
+    [actionView setUpFrame:CGRectMake(0, barHeight, width, height-barHeight)];
     actionView.delegate = self;
     [self.view addSubview:actionView];
     

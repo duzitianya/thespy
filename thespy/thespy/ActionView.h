@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
 @protocol ActionViewDelegate <NSObject>
 
@@ -16,10 +17,16 @@
 
 @end
 
-@interface ActionView : UIView
+@interface ActionView : UIView<CBCentralManagerDelegate>
 
 @property (nonatomic, weak) id<ActionViewDelegate> delegate;
+@property (nonatomic) NSInteger tag;
+@property (nonatomic, strong) UIButton *server;
+@property (nonatomic, strong) UIButton *client;
+@property (nonatomic, retain) CBCentralManager *centralManager;
 
 - (void)setUpFrame:(CGRect)frame;
+
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central;
 
 @end

@@ -23,8 +23,16 @@
     CGFloat height = kMAIN_SCREEN_HEIGHT;
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height+20;
     
+    CGFloat currentY = barHeight;
+    self.header = [[[NSBundle mainBundle] loadNibNamed:@"PlayerHeader" owner:self.view options:nil] lastObject];
+    self.header.frame = CGRectMake(0, currentY, width, self.header.frame.size.height);
+    [self.header initWithPlayerBean:self.mainPlayer];
+    [self.view addSubview:self.header];
+    
+    currentY += self.header.frame.size.height;
+    
     ActionView *actionView = [[ActionView alloc] init];
-    [actionView setUpFrame:CGRectMake(0, barHeight, width, height-barHeight)];
+    [actionView setUpFrame:CGRectMake(0, currentY, width, height-barHeight-self.header.frame.size.height)];
     actionView.delegate = self;
     [self.view addSubview:actionView];
     

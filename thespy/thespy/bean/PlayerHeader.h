@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PlayerBean.h"
 
 @interface PlayerHeader : UIView
+@property (weak, nonatomic) IBOutlet UIImageView *headImg;
+@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UILabel *playerID;
+@property (strong, nonatomic) IBOutlet UILabel *history;
+
+- (void) initWithPlayerBean:(PlayerBean *)bean;
 
 @end

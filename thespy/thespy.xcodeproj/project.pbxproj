@@ -54,8 +54,8 @@
 		BF77AD231A6E47FF008CCFB9 /* PlayerBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerBean.m; sourceTree = "<group>"; };
 		BF77AD241A6E47FF008CCFB9 /* PlayerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerHeader.h; sourceTree = "<group>"; };
 		BF77AD251A6E47FF008CCFB9 /* PlayerHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerHeader.m; sourceTree = "<group>"; };
-		BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameInitionView.xib; sourceTree = "<group>"; };
-		BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerHeader.xib; sourceTree = "<group>"; };
+		BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameInitionView.xib; path = ../GameInitionView.xib; sourceTree = "<group>"; };
+		BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerHeader.xib; path = ../PlayerHeader.xib; sourceTree = "<group>"; };
 		BF77AD281A6E47FF008CCFB9 /* PlayerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerInfoViewController.h; sourceTree = "<group>"; };
 		BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerInfoViewController.m; sourceTree = "<group>"; };
 		BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewController.h; sourceTree = "<group>"; };
@@ -107,8 +107,6 @@
 				BF77AD1D1A6E47FF008CCFB9 /* ActionView.h */,
 				BF77AD1E1A6E47FF008CCFB9 /* ActionView.m */,
 				BF77AD1F1A6E47FF008CCFB9 /* bean */,
-				BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */,
-				BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */,
 				BF77AD281A6E47FF008CCFB9 /* PlayerInfoViewController.h */,
 				BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */,
 				BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */,
@@ -152,6 +150,8 @@
 		BF77AD1F1A6E47FF008CCFB9 /* bean */ = {
 			isa = PBXGroup;
 			children = (
+				BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */,
+				BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */,
 				BF77AD201A6E47FF008CCFB9 /* GameInitionView.h */,
 				BF77AD211A6E47FF008CCFB9 /* GameInitionView.m */,
 				BF77AD221A6E47FF008CCFB9 /* PlayerBean.h */,

@@ -10,6 +10,14 @@
 
 @implementation PlayerHeader
 
+- (void)awakeFromNib{
+    
+}
 
+- (void) initWithPlayerBean:(PlayerBean *)bean{
+//    _headImg = bean.img;
+    _name.text = bean.name;
+    _playerID.text = bean.id;
+}
 
 @end

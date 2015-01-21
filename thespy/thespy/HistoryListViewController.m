@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initDB];
+    [[GameDB shareInstance] historyList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,10 +45,6 @@
     [cell addSubview:num];
     
     return cell;
-}
-
-- (void) initDB{
-    [GameDB shareInstance];
 }
 
 

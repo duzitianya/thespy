@@ -29,11 +29,11 @@
     [self.view addSubview:self.header];
     
     currentY += self.header.frame.size.height;
-    GameInitionView *gameView = [[[NSBundle mainBundle] loadNibNamed:@"GameInitionView" owner:self.view options:nil] lastObject];
-    gameView.frame = CGRectMake(0, currentY, width, gameView.frame.size.height);
-    [self.view addSubview:gameView];
+    self.mainGameView = [[[NSBundle mainBundle] loadNibNamed:@"GameInitionView" owner:self.view options:nil] lastObject];
+    self.mainGameView.frame = CGRectMake(0, currentY, width, self.mainGameView.frame.size.height);
+    [self.view addSubview:self.mainGameView];
     
-    currentY += gameView.frame.size.height;
+    currentY += self.mainGameView.frame.size.height;
     
     ActionView *actionView = [[ActionView alloc] init];
     [actionView setUpFrame:CGRectMake(0, currentY, width, height-barHeight-self.header.frame.size.height)];
@@ -48,6 +48,11 @@
 
 - (void) createServer{
     NSLog(@"create server. . . ");
+    NSInteger totalNum = self.totalNum;
+    NSInteger citizenNum = self.citizenNum;
+    NSInteger whiteBoardNum = self.whiteBoardNum;
+    NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
+    
 }
 
 - (void) asClient{

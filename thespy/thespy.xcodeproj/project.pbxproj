@@ -26,6 +26,8 @@
 		BF77AD3D1A6F88F6008CCFB9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF77AD3C1A6F88F6008CCFB9 /* libsqlite3.dylib */; };
 		BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD401A6F8A5D008CCFB9 /* GameDB.m */; };
 		BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD431A6F935E008CCFB9 /* GameResult.m */; };
+		BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */; };
+		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,9 @@
 		BF77AD401A6F8A5D008CCFB9 /* GameDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDB.m; path = db_sqlit3/GameDB.m; sourceTree = "<group>"; };
 		BF77AD421A6F935E008CCFB9 /* GameResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResult.h; sourceTree = "<group>"; };
 		BF77AD431A6F935E008CCFB9 /* GameResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResult.m; sourceTree = "<group>"; };
+		BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
+		BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
+		BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +180,9 @@
 				BF77AD251A6E47FF008CCFB9 /* PlayerHeader.m */,
 				BF77AD421A6F935E008CCFB9 /* GameResult.h */,
 				BF77AD431A6F935E008CCFB9 /* GameResult.m */,
+				BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */,
+				BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */,
+				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -281,6 +289,7 @@
 				BF77ACF91A6E4725008CCFB9 /* LaunchScreen.xib in Resources */,
 				BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */,
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
+				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +310,7 @@
 			files = (
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
+				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */,
 				BF77AD3B1A6F808A008CCFB9 /* HistoryListViewController.m in Sources */,
 				BF77AD2C1A6E47FF008CCFB9 /* ActionView.m in Sources */,

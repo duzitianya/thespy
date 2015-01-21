@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GameDB.h"
+#import "HistoryListCell.h"
 
 @interface HistoryListViewController : UITableViewController
 

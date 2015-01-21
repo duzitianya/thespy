@@ -61,7 +61,7 @@
     
     NSString *selectSQL = @"SELECT * FROM T_SPY_GAME_HISTORY";
     sqlite3_stmt *stmt;
-    if (sqlite3_prepare_v2(db, [selectSQL UTF8String], -1, nil, nil) == SQLITE_OK)  {
+    if (sqlite3_prepare_v2(db, [selectSQL UTF8String], -1, &stmt, nil) == SQLITE_OK)  {
         while (sqlite3_step(stmt)==SQLITE_ROW) {
             int num_cols = sqlite3_column_count(stmt);//计算有多少列
             if (num_cols > 0) {

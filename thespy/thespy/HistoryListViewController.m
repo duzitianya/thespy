@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[GameDB shareInstance] historyList];
+    self.data = [[GameDB shareInstance] historyList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,21 +30,20 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [self.data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *indentifier = @"hisCell";
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    UILabel *num = [[UILabel alloc] init];
-    num.text = [NSString stringWithFormat:@"%d", indexPath.row];
-    [cell addSubview:num];
+    HistoryListCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"HistoryListCell" owner:self options:nil] lastObject];
+    GameResult *r = [self.data objectAtIndex:indexPath.row];
+    [[HistoryListCell alloc] initWithGameResult:r Index:indexPath.row];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 36;
 }
 
 

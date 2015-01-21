@@ -11,11 +11,11 @@
 @implementation PlayerHeader
 
 - (void)awakeFromNib{
-    
+    _headImg.layer.cornerRadius = 40.;
 }
 
 - (void) initWithPlayerBean:(PlayerBean *)bean{
-//    _headImg = bean.img;
+    _headImg.image = [UIImage imageNamed:bean.img];
     _name.text = bean.name;
     _playerID.text = bean.id;
 }

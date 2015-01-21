@@ -11,8 +11,10 @@
 #import "PlayerListViewController.h"
 #import "PlayerHeader.h"
 #import "ActionView.h"
+#import "GameInitionView.h"
+#import "HistoryListViewController.h"
 
-@interface PlayerInfoViewController : UIViewController<ActionViewDelegate>
+@interface PlayerInfoViewController : UIViewController<ActionViewDelegate, HistoryDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
 @property (nonatomic, strong) PlayerHeader *header;

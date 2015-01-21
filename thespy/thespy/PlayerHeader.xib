@@ -7,48 +7,63 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="pra-Yj-cRu" customClass="PlayerHeader">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kIz-S6-ulN">
-                    <rect key="frame" x="20" y="28" width="80" height="80"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kIz-S6-ulN">
+                    <rect key="frame" x="20" y="15" width="80" height="80"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="Csz-sW-p10"/>
+                        <constraint firstAttribute="height" constant="80" id="fzs-zY-CM7"/>
+                    </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXu-Gx-mZE">
-                    <rect key="frame" x="120" y="28" width="42" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXu-Gx-mZE">
+                    <rect key="frame" x="120" y="15" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiF-P1-8H3">
-                    <rect key="frame" x="120" y="70" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiF-P1-8H3">
+                    <rect key="frame" x="120" y="50" width="35.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="0.5" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuk-Jm-Ljq">
-                    <rect key="frame" x="272" y="48" width="40" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuk-Jm-Ljq">
+                    <rect key="frame" x="280" y="15" width="20" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="bfc-Wu-AKb"/>
+                    </constraints>
                     <state key="normal" image="SpyResource.bundle/right_icon">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="fuk-Jm-Ljq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LiF-P1-8H3" secondAttribute="trailing" constant="10" id="4NW-Yg-ikS"/>
+                <constraint firstItem="kIz-S6-ulN" firstAttribute="leading" secondItem="pra-Yj-cRu" secondAttribute="leading" constant="20" id="9br-gG-Q3q"/>
+                <constraint firstItem="GXu-Gx-mZE" firstAttribute="leading" secondItem="kIz-S6-ulN" secondAttribute="trailing" constant="20" id="Cmp-Px-Oer"/>
+                <constraint firstAttribute="trailing" secondItem="fuk-Jm-Ljq" secondAttribute="trailing" constant="20" id="Dzk-ZO-9dz"/>
+                <constraint firstItem="fuk-Jm-Ljq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GXu-Gx-mZE" secondAttribute="trailing" constant="10" id="FKS-yq-fhd"/>
+                <constraint firstItem="kIz-S6-ulN" firstAttribute="bottom" secondItem="fuk-Jm-Ljq" secondAttribute="bottom" id="V7F-N7-JZ3"/>
+                <constraint firstItem="GXu-Gx-mZE" firstAttribute="top" secondItem="kIz-S6-ulN" secondAttribute="top" id="Xf2-61-TEX"/>
+                <constraint firstItem="kIz-S6-ulN" firstAttribute="top" secondItem="pra-Yj-cRu" secondAttribute="top" constant="15" id="mRX-ja-AXg"/>
+                <constraint firstItem="LiF-P1-8H3" firstAttribute="top" secondItem="GXu-Gx-mZE" secondAttribute="bottom" constant="15" id="nvQ-7z-4XJ"/>
+                <constraint firstItem="LiF-P1-8H3" firstAttribute="leading" secondItem="kIz-S6-ulN" secondAttribute="trailing" constant="20" id="p51-Cn-uum"/>
+                <constraint firstItem="kIz-S6-ulN" firstAttribute="top" secondItem="fuk-Jm-Ljq" secondAttribute="top" id="ydy-zg-v9W"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="headImg" destination="kIz-S6-ulN" id="Nk1-vX-u29"/>
+                <outlet property="historyButton" destination="fuk-Jm-Ljq" id="EzQ-u5-5vZ"/>
                 <outlet property="name" destination="GXu-Gx-mZE" id="z0G-vG-fpb"/>
                 <outlet property="playerID" destination="LiF-P1-8H3" id="xWV-qF-uqM"/>
             </connections>
+            <point key="canvasLocation" x="326" y="154.5"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="veO-Zr-y7H">
-            <rect key="frame" x="0.0" y="0.0" width="73" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-            <state key="normal" title="Button">
-                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-        </button>
     </objects>
     <resources>
         <image name="SpyResource.bundle/right_icon" width="16" height="16"/>

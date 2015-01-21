@@ -7,7 +7,6 @@
 //
 
 #import "PlayerInfoViewController.h"
-#import "AppDelegate.h"
 
 @interface PlayerInfoViewController ()
 
@@ -26,10 +25,15 @@
     CGFloat currentY = barHeight;
     self.header = [[[NSBundle mainBundle] loadNibNamed:@"PlayerHeader" owner:self.view options:nil] lastObject];
     self.header.frame = CGRectMake(0, currentY, width, self.header.frame.size.height);
-    [self.header initWithPlayerBean:self.mainPlayer];
+    [self.header initWithPlayerBean:self.mainPlayer Delegate:self];
     [self.view addSubview:self.header];
     
     currentY += self.header.frame.size.height;
+    GameInitionView *gameView = [[[NSBundle mainBundle] loadNibNamed:@"GameInitionView" owner:self.view options:nil] lastObject];
+    gameView.frame = CGRectMake(0, currentY, width, gameView.frame.size.height);
+    [self.view addSubview:gameView];
+    
+    currentY += gameView.frame.size.height;
     
     ActionView *actionView = [[ActionView alloc] init];
     [actionView setUpFrame:CGRectMake(0, currentY, width, height-barHeight-self.header.frame.size.height)];
@@ -48,6 +52,11 @@
 
 - (void) asClient{
     NSLog(@"as client. . . ");
+}
+
+- (void) gotoHistoryList{
+    HistoryListViewController *vc = [[HistoryListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

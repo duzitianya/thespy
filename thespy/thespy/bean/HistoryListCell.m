@@ -24,7 +24,7 @@
     _roleLabel.text = role;
     _victoryLabel.text = victory;
     _dateLabel.text = date;
-    _countLabel.text = [NSString stringWithFormat:@"%d", index+1];
+    _countLabel.text = [NSString stringWithFormat:@"%ld", index+1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

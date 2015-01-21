@@ -34,10 +34,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    HistoryListCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"HistoryListCell" owner:self options:nil] lastObject];
+//    GameResult *r = [self.data objectAtIndex:indexPath.row];
+//    [[HistoryListCell alloc] initWithGameResult:r Index:indexPath.row];
     
-    HistoryListCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"HistoryListCell" owner:self options:nil] lastObject];
     GameResult *r = [self.data objectAtIndex:indexPath.row];
-    [[HistoryListCell alloc] initWithGameResult:r Index:indexPath.row];
+    
+    static NSString *CellIdentifier = @"historyCell";
+    HistoryListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[HistoryListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell initWithGameResult:r Index:indexPath.row];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
     
     return cell;
 }

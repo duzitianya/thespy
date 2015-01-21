@@ -10,6 +10,6 @@
 
 #define MAX_SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height;
 
-@interface GameInitionView : UIView
+@interface GameInitionView : UIScrollView
 
 @end

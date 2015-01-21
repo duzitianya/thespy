@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3BBB551E-4712-4232-A954-4D922A560768</string>
+	<key>IDESourceControlProjectName</key>
+	<string>thespy</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4C180052-03F2-4EB1-8976-E03FA0FF1A07</key>
+		<string>https://github.com/duzitianya/thespy.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>thespy/thespy.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4C180052-03F2-4EB1-8976-E03FA0FF1A07</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/duzitianya/thespy.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4C180052-03F2-4EB1-8976-E03FA0FF1A07</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4C180052-03F2-4EB1-8976-E03FA0FF1A07</string>
+			<key>IDESourceControlWCCName</key>
+			<string>thespy</string>
+		</dict>
+	</array>
+</dict>
+</plist>

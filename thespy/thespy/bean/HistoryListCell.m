@@ -20,11 +20,11 @@
     NSString *victory = result._victory;
     NSString *date = result._date;
     
-    _nameLabel.text = name;
-    _roleLabel.text = role;
-    _victoryLabel.text = victory;
-    _dateLabel.text = date;
-    _countLabel.text = [NSString stringWithFormat:@"%ld", index+1];
+    self.nameLabel.text = name;
+    self.roleLabel.text = role;
+    self.victoryLabel.text = victory;
+    self.dateLabel.text = date;
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", index+1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

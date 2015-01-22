@@ -34,8 +34,8 @@
     [self.window makeKeyAndVisible];
     
     //初始化数据库，如果已经初始化过，不再继续
-    GameResult *result = [[GameResult alloc] initWithName:@"小红帽" Role:@"卧底" Victory:@"胜利"];
-    [[GameDB shareInstance] addGameResult:result];
+//    GameResult *result = [[GameResult alloc] initWithName:@"小红帽" Role:@"卧底" Victory:@"胜利"];
+//    [[GameDB shareInstance] addGameResult:result];
     
     return YES;
 }

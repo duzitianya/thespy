@@ -121,6 +121,8 @@
 		BF77ACE71A6E4725008CCFB9 /* thespy */ = {
 			isa = PBXGroup;
 			children = (
+				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
+				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
 				BF77AD3E1A6F8A2E008CCFB9 /* db_sqlite3 */,
 				BF77AD1D1A6E47FF008CCFB9 /* ActionView.h */,
 				BF77AD1E1A6E47FF008CCFB9 /* ActionView.m */,
@@ -135,8 +137,6 @@
 				BF77ACF51A6E4725008CCFB9 /* Images.xcassets */,
 				BF77ACF71A6E4725008CCFB9 /* LaunchScreen.xib */,
 				BF77ACE81A6E4725008CCFB9 /* Supporting Files */,
-				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
-				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
 			);
 			path = thespy;
 			sourceTree = "<group>";

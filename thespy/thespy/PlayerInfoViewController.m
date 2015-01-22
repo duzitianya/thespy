@@ -30,7 +30,8 @@
     
     currentY += self.header.frame.size.height;
     self.mainGameView = [[[NSBundle mainBundle] loadNibNamed:@"GameInitionView" owner:self.view options:nil] lastObject];
-    self.mainGameView.frame = CGRectMake(0, currentY, width, self.mainGameView.frame.size.height);
+    CGFloat plusY = [ActionView getViewHeight];
+    self.mainGameView.frame = CGRectMake(0, currentY, width, height-barHeight-self.header.frame.size.height-plusY);
     [self.view addSubview:self.mainGameView];
     
     currentY += self.mainGameView.frame.size.height;
@@ -48,10 +49,12 @@
 
 - (void) createServer{
     NSLog(@"create server. . . ");
-    NSInteger totalNum = self.totalNum;
-    NSInteger citizenNum = self.citizenNum;
-    NSInteger whiteBoardNum = self.whiteBoardNum;
+    NSInteger totalNum = self.mainGameView.totalNum;
+    NSInteger citizenNum = self.mainGameView.citizenNum;
+    NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
+    
+    
     
 }
 
@@ -61,6 +64,7 @@
 
 - (void) gotoHistoryList{
     HistoryListViewController *vc = [[HistoryListViewController alloc] init];
+    vc.title = @"我的游戏记录";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

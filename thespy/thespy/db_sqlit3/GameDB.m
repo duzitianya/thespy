@@ -59,7 +59,7 @@
 - (NSArray*) historyList{
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:10];
     
-    NSString *selectSQL = @"SELECT * FROM T_SPY_GAME_HISTORY";
+    NSString *selectSQL = @"SELECT * FROM T_SPY_GAME_HISTORY ORDER BY ID DESC";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, [selectSQL UTF8String], -1, &stmt, nil) == SQLITE_OK)  {
         while (sqlite3_step(stmt)==SQLITE_ROW) {

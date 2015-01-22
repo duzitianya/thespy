@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.data = [[GameDB shareInstance] historyList];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,26 +35,22 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    HistoryListCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"HistoryListCell" owner:self options:nil] lastObject];
-//    GameResult *r = [self.data objectAtIndex:indexPath.row];
-//    [[HistoryListCell alloc] initWithGameResult:r Index:indexPath.row];
     
-    GameResult *r = [self.data objectAtIndex:indexPath.row];
+    GameResult *r = [self.data objectAtIndex:indexPath.row]; 
     
     static NSString *CellIdentifier = @"historyCell";
     HistoryListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[HistoryListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"HistoryListCell" owner:self options:nil] objectAtIndex:0];
         [cell initWithGameResult:r Index:indexPath.row];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 36;
+    return 70;
 }
 
 

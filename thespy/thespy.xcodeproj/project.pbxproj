@@ -28,6 +28,8 @@
 		BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD431A6F935E008CCFB9 /* GameResult.m */; };
 		BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */; };
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
+		BF77AD4D1A70D8DD008CCFB9 /* SPYService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */; };
+		BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,10 @@
 		BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListCell.xib; sourceTree = "<group>"; };
+		BF77AD4B1A70D8DD008CCFB9 /* SPYService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYService.h; path = networking/SPYService.h; sourceTree = "<group>"; };
+		BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYService.m; path = networking/SPYService.m; sourceTree = "<group>"; };
+		BF77AD4E1A70E593008CCFB9 /* SPYServiceBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYServiceBrowser.h; path = networking/SPYServiceBrowser.h; sourceTree = "<group>"; };
+		BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYServiceBrowser.m; path = networking/SPYServiceBrowser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,16 +127,17 @@
 		BF77ACE71A6E4725008CCFB9 /* thespy */ = {
 			isa = PBXGroup;
 			children = (
-				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
-				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
+				BF77AD4A1A70D48A008CCFB9 /* networking */,
 				BF77AD3E1A6F8A2E008CCFB9 /* db_sqlite3 */,
-				BF77AD1D1A6E47FF008CCFB9 /* ActionView.h */,
-				BF77AD1E1A6E47FF008CCFB9 /* ActionView.m */,
 				BF77AD1F1A6E47FF008CCFB9 /* bean */,
 				BF77AD281A6E47FF008CCFB9 /* PlayerInfoViewController.h */,
 				BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */,
+				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
+				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
 				BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */,
 				BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */,
+				BF77AD1D1A6E47FF008CCFB9 /* ActionView.h */,
+				BF77AD1E1A6E47FF008CCFB9 /* ActionView.m */,
 				BF77ACEC1A6E4725008CCFB9 /* AppDelegate.h */,
 				BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */,
 				BF77ACF21A6E4725008CCFB9 /* Main.storyboard */,
@@ -170,14 +177,14 @@
 		BF77AD1F1A6E47FF008CCFB9 /* bean */ = {
 			isa = PBXGroup;
 			children = (
-				BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */,
-				BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */,
 				BF77AD201A6E47FF008CCFB9 /* GameInitionView.h */,
 				BF77AD211A6E47FF008CCFB9 /* GameInitionView.m */,
+				BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */,
 				BF77AD221A6E47FF008CCFB9 /* PlayerBean.h */,
 				BF77AD231A6E47FF008CCFB9 /* PlayerBean.m */,
 				BF77AD241A6E47FF008CCFB9 /* PlayerHeader.h */,
 				BF77AD251A6E47FF008CCFB9 /* PlayerHeader.m */,
+				BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */,
 				BF77AD421A6F935E008CCFB9 /* GameResult.h */,
 				BF77AD431A6F935E008CCFB9 /* GameResult.m */,
 				BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */,
@@ -203,6 +210,17 @@
 				BF77AD401A6F8A5D008CCFB9 /* GameDB.m */,
 			);
 			name = db_sqlite3;
+			sourceTree = "<group>";
+		};
+		BF77AD4A1A70D48A008CCFB9 /* networking */ = {
+			isa = PBXGroup;
+			children = (
+				BF77AD4B1A70D8DD008CCFB9 /* SPYService.h */,
+				BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */,
+				BF77AD4E1A70E593008CCFB9 /* SPYServiceBrowser.h */,
+				BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */,
+			);
+			name = networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +337,8 @@
 				BF77AD2E1A6E47FF008CCFB9 /* PlayerBean.m in Sources */,
 				BF77AD331A6E47FF008CCFB9 /* PlayerListViewController.m in Sources */,
 				BF77AD321A6E47FF008CCFB9 /* PlayerInfoViewController.m in Sources */,
+				BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */,
+				BF77AD4D1A70D8DD008CCFB9 /* SPYService.m in Sources */,
 				BF77AD2D1A6E47FF008CCFB9 /* GameInitionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

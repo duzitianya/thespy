@@ -13,6 +13,8 @@
 #import "ActionView.h"
 #import "GameInitionView.h"
 #import "HistoryListViewController.h"
+#import "SPYService.h"
+#import "SPYServiceBrowser.h"
 
 @interface PlayerInfoViewController : UIViewController<ActionViewDelegate, HistoryDelegate>
 

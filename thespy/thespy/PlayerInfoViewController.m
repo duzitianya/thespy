@@ -54,7 +54,8 @@
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    
+    [[SPYService alloc] init];
+//    [[SPYServiceBrowser alloc] init];
     
 }
 

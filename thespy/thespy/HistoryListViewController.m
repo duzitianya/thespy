@@ -42,9 +42,12 @@
     HistoryListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"HistoryListCell" owner:self options:nil] objectAtIndex:0];
-        [cell initWithGameResult:r Index:indexPath.row];
+        UINib *nib = [UINib nibWithNibName:@"HistoryListCell" bundle:[NSBundle mainBundle]];
+        [tableView registerNib:nib forCellReuseIdentifier:CellIdentifier];//注册cell复用
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    [cell initWithGameResult:r Index:indexPath.row];
     
     return cell;
 }

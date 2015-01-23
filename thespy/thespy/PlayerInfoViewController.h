@@ -16,7 +16,7 @@
 #import "SPYService.h"
 #import "SPYServiceBrowser.h"
 
-@interface PlayerInfoViewController : UIViewController<ActionViewDelegate, HistoryDelegate>
+@interface PlayerInfoViewController : UIViewController<ActionViewDelegate, TopViewDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
 @property (nonatomic, strong) PlayerHeader *header;

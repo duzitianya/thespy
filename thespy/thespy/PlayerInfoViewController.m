@@ -70,4 +70,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void) presentViewController:(UIViewController*)viewcontroller{
+    [self presentViewController:viewcontroller animated:YES completion:nil];
+}
+
 @end

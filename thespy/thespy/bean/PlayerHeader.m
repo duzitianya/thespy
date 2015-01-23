@@ -8,7 +8,9 @@
 
 #import "PlayerHeader.h"
 
-@implementation PlayerHeader
+@implementation PlayerHeader{
+    NSDictionary *imgInfo;
+}
 
 - (void)awakeFromNib{
     _headImg.layer.borderWidth = 1;
@@ -97,19 +99,17 @@
 
 //点击相册中的图片或照相机照完后点击use后触发的方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    NSLog(@"=====================");
-    self.imgUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
+    imgInfo = info;
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确认使用该照片吗" message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"不使用", nil];
-    
     [alertView show];
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
-        
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imgUrl]];
-        _headImg.image = image;
+        UIImage *img = [imgInfo objectForKey:UIImagePickerControllerOriginalImage];
+        _headImg.image = img;
     }
     
     [self.delegate dismissViewController];

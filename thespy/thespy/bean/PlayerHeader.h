@@ -16,10 +16,12 @@
 
 - (void) gotoHistoryList;
 - (void) presentViewController:(UIViewController*)view;
+- (void) dismissViewController;
 
 @end
 
-@interface PlayerHeader : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+@interface PlayerHeader : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@property (strong, nonatomic) NSURL *imgUrl;
 @property (strong, nonatomic) IBOutlet UIImageView *headImg;
 @property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UILabel *playerID;

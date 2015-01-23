@@ -71,7 +71,11 @@
 }
 
 - (void) presentViewController:(UIViewController*)viewcontroller{
-    [self presentViewController:viewcontroller animated:YES completion:nil];
+    [self presentModalViewController:viewcontroller animated:YES];
+}
+
+- (void) dismissViewController{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

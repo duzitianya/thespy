@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF201F9E1A71F10900A571C8 /* SpyResource.bundle */; };
+		BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BF201FA11A72452D00A571C8 /* SPYConnection.m */; };
 		BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACEA1A6E4725008CCFB9 /* main.m */; };
 		BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */; };
 		BF77ACF41A6E4725008CCFB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF77ACF21A6E4725008CCFB9 /* Main.storyboard */; };
@@ -43,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF201F9E1A71F10900A571C8 /* SpyResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpyResource.bundle; path = thespy/SpyResource.bundle; sourceTree = "<group>"; };
+		BF201FA01A72452D00A571C8 /* SPYConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYConnection.h; path = networking/SPYConnection.h; sourceTree = "<group>"; };
+		BF201FA11A72452D00A571C8 /* SPYConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYConnection.m; path = networking/SPYConnection.m; sourceTree = "<group>"; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -108,6 +113,7 @@
 		BF77ACDC1A6E4724008CCFB9 = {
 			isa = PBXGroup;
 			children = (
+				BF201F9E1A71F10900A571C8 /* SpyResource.bundle */,
 				BF77AD361A6E54A2008CCFB9 /* Frameworks */,
 				BF77ACE71A6E4725008CCFB9 /* thespy */,
 				BF77AD011A6E4725008CCFB9 /* thespyTests */,
@@ -219,6 +225,8 @@
 				BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */,
 				BF77AD4E1A70E593008CCFB9 /* SPYServiceBrowser.h */,
 				BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */,
+				BF201FA01A72452D00A571C8 /* SPYConnection.h */,
+				BF201FA11A72452D00A571C8 /* SPYConnection.m */,
 			);
 			name = networking;
 			sourceTree = "<group>";
@@ -309,6 +317,7 @@
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
+				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +349,7 @@
 				BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */,
 				BF77AD4D1A70D8DD008CCFB9 /* SPYService.m in Sources */,
 				BF77AD2D1A6E47FF008CCFB9 /* GameInitionView.m in Sources */,
+				BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +472,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = thespy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -472,6 +483,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = thespy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

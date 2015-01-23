@@ -8,11 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "SPYServiceBrowser.h"
+#import "SPYConnection.h"
 
-@interface SPYService : NSObject<NSNetServiceDelegate>
+@protocol SPYServiceDelegate <NSObject>
+
+@optional
+- (void) reloadClientListTable;
+
+@end
+
+@interface SPYService : NSObject<NSNetServiceDelegate, NSStreamDelegate>
 
 @property (nonatomic, strong) NSNetService *server;
-@property (nonatomic, strong) NSInputStream *input;
-@property (nonatomic, strong) NSOutputStream *output;
+@property (nonatomic, strong) NSMutableArray *clients;
+//@property (nonatomic, strong) NSMutableArray *clientsConnections;
+@property (nonatomic, strong) SPYConnection *connection;
+@property (nonatomic) BOOL isServerOpen;
+
++(SPYService *)shareInstance;
 
 @end

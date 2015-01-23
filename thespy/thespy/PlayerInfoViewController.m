@@ -54,18 +54,19 @@
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    [[SPYService alloc] init];
-//    [[SPYServiceBrowser alloc] init];
+    [SPYService shareInstance];
     
 }
 
 - (void) asClient{
     NSLog(@"as client. . . ");
+    
+    [SPYServiceBrowser shareInstance];
 }
 
 - (void) gotoHistoryList{
     HistoryListViewController *vc = [[HistoryListViewController alloc] init];
-    vc.title = @"我的游戏记录";
+    vc.title = @"游戏记录";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

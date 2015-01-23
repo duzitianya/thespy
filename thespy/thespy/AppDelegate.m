@@ -22,7 +22,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    PlayerBean *selfPlayer = [PlayerBean initWithData:@"http://p1.a.58cdn.com.cn/enterprise/mingqi/n_s02287152410186101156_0869c3300cb192ea.jpg" Name:@"我的游戏我做主" ID:@"ID:0x20140620" Word:@""];
+    NSString *deviceName = [UIDevice currentDevice].name;
+    PlayerBean *selfPlayer = [PlayerBean initWithData:@"http://p1.a.58cdn.com.cn/enterprise/mingqi/n_s02287152410186101156_0869c3300cb192ea.jpg" Name:deviceName ID:@"ID:0x20140620" Word:@""];
     
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
     vc.mainPlayer = selfPlayer;

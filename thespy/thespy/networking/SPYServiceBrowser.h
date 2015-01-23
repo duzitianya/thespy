@@ -7,11 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SPYConnection.h"
+#import "SPYServiceBrowser.h"
 
-@interface SPYServiceBrowser : NSObject<NSNetServiceBrowserDelegate>
+@protocol SPYServiceBrowserDelegate <NSObject>
+
+@optional
+- (void) reloadServerListTable;
+
+@end
+
+@interface SPYServiceBrowser : NSObject<NSNetServiceBrowserDelegate, NSNetServiceDelegate>
+
+@property (nonatomic, weak) id<SPYServiceBrowserDelegate> delegate;
 
 @property (nonatomic, strong) NSNetServiceBrowser *browser;
-@property (nonatomic, strong) NSInputStream *input;
-@property (nonatomic, strong) NSOutputStream *output;
+@property (nonatomic, strong) NSMutableArray *servers;
+@property (nonatomic, strong) NSMutableArray *serversConnections;
+
++(SPYServiceBrowser *)shareInstance;
 
 @end

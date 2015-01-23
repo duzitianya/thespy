@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSInputStream *input;
 @property (nonatomic, strong) NSOutputStream *output;
 
-- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs
+- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs;
 
 @end

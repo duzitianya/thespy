@@ -86,30 +86,13 @@
     NSInputStream *inputs;
     NSOutputStream *outputs;
     if ([server getInputStream:&inputs outputStream:&outputs]) {
-        self.input = inputs;
-        self.output = outputs;
         
-        [self.input scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [self.input open];
-        [self.output scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [self.output open];
+        SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
         
-        //发送数据
-        NSData *data = [@"ready" dataUsingEncoding:NSUTF8StringEncoding];
-        [self.output write:[data bytes] maxLength:[data length]];
+        [self.serversConnections addObject:connection];
+
     }
 }
 
-
-- (NSData*)readGameData{
-    uint8_t buffer[1024];
-    bzero(buffer, sizeof(buffer));
-    NSInteger length;
-    NSInteger len = [self.input read:buffer maxLength:sizeof(buffer)-1];
-    if (len==length) {
-        buffer[len] = '\0';
-    }
-    return [[NSData alloc] initWithBytes:buffer length:len];
-}
 
 @end

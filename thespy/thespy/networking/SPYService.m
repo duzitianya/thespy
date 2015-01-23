@@ -25,7 +25,7 @@
         
         NSString *deviceName = [UIDevice currentDevice].name;
         NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_spygame._tcp." name:deviceName];
-        server.includesPeerToPeer = YES;
+        server.includesPeerToPeer = NO;
         [server setDelegate:self];
         [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [server publishWithOptions:NSNetServiceListenForConnections];

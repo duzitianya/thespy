@@ -46,6 +46,10 @@
 
 //发送数据
 - (NSInteger) writeData:(NSData*)data{
+    //发送数据
+//    NSData *data = [@"ready" dataUsingEncoding:NSUTF8StringEncoding];
+//    [self.output write:[data bytes] maxLength:[data length]];
+    
     NSInteger length = [data length];
     uint8_t *buffer;
     [data getBytes:buffer length:length];

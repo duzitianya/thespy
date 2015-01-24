@@ -27,5 +27,6 @@
 @property (nonatomic) BOOL isServerOpen;
 
 +(SPYService *)shareInstance;
+- (void) publishServer;
 
 @end

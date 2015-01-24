@@ -19,14 +19,11 @@
     return shared;
 }
 
-- (id) init {
+- (instancetype) init{
     self = [super init];
     if (self) {
-        self.browser = [[NSNetServiceBrowser alloc] init];
-        self.browser.includesPeerToPeer = YES;
-        self.browser.delegate = self;
-        [self.browser searchForServicesOfType:@"_spygame._tcp." inDomain:@"local"];
-        
+        self.servers = [[NSMutableArray alloc] initWithCapacity:5];
+        self.serversConnections = [[NSMutableArray alloc] initWithCapacity:5];
     }
     return self;
 }
@@ -46,6 +43,17 @@
     if (self.browser!=nil) {
         [self stop];
     }
+}
+
+- (void) browseService{
+    [self.browser stop];
+    self.browser.delegate = nil;
+    self.browser = nil;
+    
+    self.browser = [[NSNetServiceBrowser alloc] init];
+    self.browser.includesPeerToPeer = YES;
+    self.browser.delegate = self;
+    [self.browser searchForServicesOfType:@"_spygame._tcp." inDomain:@"local"];
 }
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser

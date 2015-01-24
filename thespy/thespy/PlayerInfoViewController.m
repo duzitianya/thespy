@@ -54,14 +54,19 @@
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    [SPYService shareInstance];
-    
+    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
+    plvc.isServer = YES;
+    plvc.title = @"等待加入";
+    [self.navigationController pushViewController:plvc animated:YES];
 }
 
 - (void) asClient{
     NSLog(@"as client. . . ");
     
-    [SPYServiceBrowser shareInstance];
+    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
+    plvc.isServer = NO;
+    plvc.title = @"查找服务";
+    [self.navigationController pushViewController:plvc animated:YES];
 }
 
 - (void) gotoHistoryList{

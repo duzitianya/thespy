@@ -22,15 +22,8 @@
 - (id) init{
     self = [super init];
     if (self) {
-        
-        NSString *deviceName = [UIDevice currentDevice].name;
-        NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_spygame._tcp." name:deviceName];
-        server.includesPeerToPeer = NO;
-        [server setDelegate:self];
-        [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        [server publishWithOptions:NSNetServiceListenForConnections];
-        self.server = server;
-        
+        self.clients = [[NSMutableArray alloc] initWithCapacity:5];
+        [self publishServer];
     }
     return self;
 }
@@ -40,16 +33,28 @@
     [self.server stop];
 }
 
+- (void) publishServer{
+    NSString *deviceName = [UIDevice currentDevice].name;
+    NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_spygame._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",deviceName]];
+    server.includesPeerToPeer = NO;
+    [server setDelegate:self];
+    [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [server publishWithOptions:NSNetServiceListenForConnections];
+    self.server = server;
+    self.isServerOpen = YES;
+}
+
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
     NSLog(@"-------------not-----------");
     self.isServerOpen = NO;
 }
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
-    
     self.connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    
-    
+}
+
+- (void)netServiceDidResolveAddress:(NSNetService *)sender{
+    NSLog(@"netServiceDidResolveAddress from server.....");
 }
 
 //服务发布成功后回调，打开输入输出流
@@ -60,9 +65,8 @@
     
     self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
     
-    NSLog(@"%@------%d", self.server.hostName, (int)self.server.port);
+//    NSLog(@"%@------%d", self.server.hostName, (int)self.server.port);
     
-    self.isServerOpen = YES;
 }
 
 

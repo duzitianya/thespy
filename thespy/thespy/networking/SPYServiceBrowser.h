@@ -26,5 +26,7 @@
 @property (nonatomic, strong) NSMutableArray *serversConnections;
 
 +(SPYServiceBrowser *)shareInstance;
+- (void) browseService;
+- (void) connectNSServer:(NSInteger)index;
 
 @end

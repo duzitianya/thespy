@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "PlayerBean.h"
 #import "AppDelegate.h"
+#import "SettingsView.h"
 
 @protocol TopViewDelegate <NSObject>
 

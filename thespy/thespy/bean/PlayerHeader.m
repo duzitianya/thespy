@@ -27,8 +27,7 @@
     self.changeButton = [[UIButton alloc] initWithFrame:CGRectMake(x, y, width, height)];
     [self.changeButton addTarget:self action:@selector(changeHeadImg:) forControlEvents:UIControlEventTouchUpInside];
     self.changeButton.layer.cornerRadius = _headImg.layer.cornerRadius;
-    self.changeButton.layer.backgroundColor = [[UIColor blackColor] CGColor];
-    [self.changeButton setAlpha:0.5];
+    [self.changeButton setAlpha:0.1];
     [self insertSubview:self.changeButton aboveSubview:_headImg];
     
     CALayer *lineLayer = [CALayer layer];
@@ -69,12 +68,27 @@
     if (buttonIndex == 0) {
         UIImagePickerController *camera = [[UIImagePickerController alloc] init];
         camera.delegate = self;
-        camera.allowsEditing = NO;
+        camera.allowsEditing = YES;
         
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             camera.sourceType = UIImagePickerControllerSourceTypeCamera;
+            camera.cameraDevice = UIImagePickerControllerCameraDeviceFront;//前置摄像头
+//            camera.cameraViewTransform = CGAffineTransformMakeScale(0.5, 0.5);//x,y轴缩放比例
+            CGFloat cameraTransformX = 1.0;
+            CGFloat cameraTransformY = 1.12412;
+            camera.cameraViewTransform = CGAffineTransformScale(camera.cameraViewTransform, cameraTransformX, cameraTransformY);
+            camera.showsCameraControls = NO;
+            
+            
             //此处设置只能使用相机，禁止使用视频功能
-//            camera.mediaTypes = [[NSArray alloc]initWithObjects:@"kUTTypeImage",nil];
+            camera.mediaTypes = @[(NSString*)kUTTypeImage];
+            
+//            SettingsView *sv = [[[NSBundle mainBundle] loadNibNamed:@"SettingsView" owner:self options:nil] lastObject];
+            SettingsView *sv = [[SettingsView alloc] init];
+            camera.cameraOverlayView = sv;
+            
+            [camera.view sendSubviewToBack:sv];
+            
         } else {
             NSLog(@"相机功能不可用");
             return;
@@ -89,7 +103,7 @@
         
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
             //此处设置只能使用相机，禁止使用视频功能
-//            picker.mediaTypes = [[NSArray alloc]initWithObjects:@"kUTTypeImage",nil];
+            picker.mediaTypes = @[(NSString*)kUTTypeImage];
         }
         [self.delegate presentViewController:picker];
     } else if(buttonIndex == 2) {
@@ -114,5 +128,6 @@
     
     [self.delegate dismissViewController];
 }
+
 
 @end

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF201F9E1A71F10900A571C8 /* SpyResource.bundle */; };
 		BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BF201FA11A72452D00A571C8 /* SPYConnection.m */; };
+		BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */; };
 		BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACEA1A6E4725008CCFB9 /* main.m */; };
 		BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */; };
 		BF77ACF41A6E4725008CCFB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF77ACF21A6E4725008CCFB9 /* Main.storyboard */; };
@@ -32,6 +33,8 @@
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
 		BF77AD4D1A70D8DD008CCFB9 /* SPYService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */; };
 		BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */; };
+		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
+		BFC3B2BC1A738C49001FB912 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,7 @@
 		BF201F9E1A71F10900A571C8 /* SpyResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpyResource.bundle; path = thespy/SpyResource.bundle; sourceTree = "<group>"; };
 		BF201FA01A72452D00A571C8 /* SPYConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYConnection.h; path = networking/SPYConnection.h; sourceTree = "<group>"; };
 		BF201FA11A72452D00A571C8 /* SPYConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYConnection.m; path = networking/SPYConnection.m; sourceTree = "<group>"; };
+		BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -88,6 +92,9 @@
 		BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYService.m; path = networking/SPYService.m; sourceTree = "<group>"; };
 		BF77AD4E1A70E593008CCFB9 /* SPYServiceBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYServiceBrowser.h; path = networking/SPYServiceBrowser.h; sourceTree = "<group>"; };
 		BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYServiceBrowser.m; path = networking/SPYServiceBrowser.m; sourceTree = "<group>"; };
+		BFC3B2B11A736FC0001FB912 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		BFC3B2BB1A738C49001FB912 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */,
 				BF77AD3D1A6F88F6008CCFB9 /* libsqlite3.dylib in Frameworks */,
 				BF77AD351A6E5484008CCFB9 /* CoreBluetooth.framework in Frameworks */,
 			);
@@ -196,6 +204,9 @@
 				BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */,
 				BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */,
 				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
+				BFC3B2B11A736FC0001FB912 /* SettingsView.h */,
+				BFC3B2B21A736FC0001FB912 /* SettingsView.m */,
+				BFC3B2BB1A738C49001FB912 /* SettingsView.xib */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -203,6 +214,7 @@
 		BF77AD361A6E54A2008CCFB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */,
 				BF77AD3C1A6F88F6008CCFB9 /* libsqlite3.dylib */,
 				BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */,
 			);
@@ -316,6 +328,7 @@
 				BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */,
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
+				BFC3B2BC1A738C49001FB912 /* SettingsView.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
 			);
@@ -336,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
+				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */,

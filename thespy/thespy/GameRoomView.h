@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "PlayerBean.h"
 #import "GameRoomSubview.h"
+#import "PlayerListViewController.h"
 
 @interface GameRoomView : UIViewController
 @property (nonatomic) NSInteger totalNum;       //参与者总数
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *otherPlayer;
 
 @property (nonatomic, strong) GameRoomSubview *subRoomView;
+@property (nonatomic, strong) UIView *contentView;
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum;
 

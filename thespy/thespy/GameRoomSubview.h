@@ -11,4 +11,8 @@
 
 @interface GameRoomSubview : UICollectionViewController
 
+@property (nonatomic, strong) NSMutableArray *allPlayer;
+
+- (void) setMainPlayer:(PlayerBean*)player;
+
 @end

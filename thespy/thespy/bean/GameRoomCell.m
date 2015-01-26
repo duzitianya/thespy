@@ -10,15 +10,17 @@
 
 @implementation GameRoomCell
 
-- (void) setupWithData:(NSData*)headerData Name:(NSString*)name{
-    self.playerHeader.image = [[UIImage alloc] initWithData:headerData];
-    self.playerName.text = [UIDevice currentDevice].name;
+- (void) setupWithData:(PlayerBean*)player{
+    self.playerHeader.image = player.img;
+    self.playerName.text = player.name;
 }
 
 - (void)awakeFromNib {
     
     self.layer.cornerRadius = 4;
     self.playerHeader.layer.cornerRadius = 4;
+//    self.playerHeader.layer.cornerRadius = 35;
+//    self.playerHeader.layer.masksToBounds = YES;
 }
 
 @end

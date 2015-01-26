@@ -17,37 +17,38 @@
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat currentY = barHeight + 20;
     
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 20)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 30)];
     title.text = [NSString stringWithFormat:@"总人数:%d,平民:%d,卧底:%d,白板:%d", (int)_totalNum, (int)_citizenNum,(int) _spyNum, (int)_whiteBoardNum];
-    title.backgroundColor = [UIColor purpleColor];
+    title.backgroundColor = [UIColor darkGrayColor];
+    title.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:title];
-    currentY += 20;
+    currentY += 30;
     
-    UILabel *nowPlayer = [[UILabel alloc]initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 20)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 5)];
+    line.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:line];
+    currentY += 5;
+    
+    UILabel *nowPlayer = [[UILabel alloc]initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 30)];
     nowPlayer.text = [NSString stringWithFormat:@"目前参与人数:%d", (int)_totalNum];
-    nowPlayer.backgroundColor = [UIColor blueColor];
+    nowPlayer.backgroundColor = [UIColor darkGrayColor];
+    nowPlayer.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:nowPlayer];
-    currentY += 20;
+    currentY += 30;
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
-    [self.view addSubview:self.contentView];
-    
-//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    [layout setItemSize:CGSizeMake(60, 80)];//设置cell的尺寸
-//    [layout setScrollDirection:UICollectionViewScrollDirectionVertical];//设置其布局方向
-//    layout.sectionInset = UIEdgeInsetsMake(15, 15, 20, 15);//设置其边界
-//    GameRoomView *collection = [[GameRoomView alloc] initWithCollectionViewLayout:layout];
-//    self.subRoomView = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomSubview" owner:self options:nil] lastObject];
-    PlayerListViewController *vc = [[PlayerListViewController alloc] init];
-    [self addChildViewController:vc];
-    [self.view addSubview:vc.view];
+    GameRoomSubview *subview = [[GameRoomSubview alloc] initWithNibName:@"GameRoomSubview" bundle:[NSBundle mainBundle]];
+    subview.view.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT);
+    [subview setMainPlayer:self.mainPlayer];
+    [self addChildViewController:subview];
+    [self.view addSubview:subview.view];
 }
 
-- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum{
+- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer{
     self.totalNum = totalNum;
     self.spyNum = spyNum;
     self.citizenNum = citizenNum;
     self.whiteBoardNum = whiteBoardNum;
+    self.mainPlayer = mainPlayer;
     
     self.otherPlayer = [[NSMutableArray alloc] initWithCapacity:5];
 }

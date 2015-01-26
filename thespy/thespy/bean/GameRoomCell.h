@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "PlayerBean.h"
 
 @interface GameRoomCell : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *playerHeader;
 @property (strong, nonatomic) IBOutlet UILabel *playerName;
 
-- (void) setupWithData:(NSData*)headerData Name:(NSString*)name;
+- (void) setupWithData:(PlayerBean*)player;
 
 @end

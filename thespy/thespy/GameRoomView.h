@@ -19,12 +19,12 @@
 @property (nonatomic) NSInteger citizenNum;     //平民数
 @property (nonatomic) NSInteger whiteBoardNum;  //白板数
 
-@property (nonatomic, strong) PlayerBean *selfBean;
+@property (nonatomic, strong) PlayerBean *mainPlayer;
 @property (nonatomic, strong) NSMutableArray *otherPlayer;
 
 @property (nonatomic, strong) GameRoomSubview *subRoomView;
 @property (nonatomic, strong) UIView *contentView;
 
-- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum;
+- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer;
 
 @end

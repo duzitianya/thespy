@@ -13,27 +13,23 @@
 @end
 
 @implementation GameRoomSubview
+@synthesize allPlayer;
 
 static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    self.allPlayer = [[NSMutableArray alloc] initWithCapacity:5];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) setMainPlayer:(PlayerBean*)player{
+    [self.allPlayer addObject:player];
 }
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -43,14 +39,15 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 30;
+    return [self.allPlayer count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-    [gameRoomCell setupWithData:nil Name:[NSString stringWithFormat:@"%d", (int)indexPath.row]];
+    NSLog(@"%d----%d", indexPath.row, indexPath.section);
+    [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
     [cell.contentView addSubview:gameRoomCell];
     return cell;
 }

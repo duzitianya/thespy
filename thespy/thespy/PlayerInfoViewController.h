@@ -20,7 +20,7 @@
 @interface PlayerInfoViewController : UIViewController<ActionViewDelegate, TopViewDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
-@property (nonatomic, strong) PlayerHeader *header;
+//@property (nonatomic, strong) PlayerHeader *header;
 @property (nonatomic, strong) GameInitionView *mainGameView;
 
 @property (nonatomic) NSInteger totalNum;       //参与者总数

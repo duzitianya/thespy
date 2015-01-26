@@ -17,7 +17,7 @@
 @synthesize status;
 @synthesize connection;
 
-+ (PlayerBean*) initWithData:(NSData *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word {
++ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word {
     PlayerBean *bean = [[PlayerBean alloc] init];
     bean.img = img;
     bean.name = name;

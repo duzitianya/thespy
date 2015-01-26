@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SPYConnection.h"
+//#import <UIKit/UIKit.h>
 
 //当前链接状态类型
 typedef enum {
@@ -23,9 +24,11 @@ typedef enum{
     WHITE//白板
 }PlayerRole;
 
+@class UIImage;
+
 @interface PlayerBean : NSObject
 
-@property (nonatomic, strong) NSData *img;    //头像
+@property (nonatomic, strong) UIImage *img;    //头像
 @property (nonatomic, weak) NSString *name;     //昵称
 @property (nonatomic, weak) NSString *id;       //唯一标识
 @property (nonatomic, strong) NSString *word;   //词条

@@ -53,7 +53,7 @@
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.includesPeerToPeer = YES;
     self.browser.delegate = self;
-    [self.browser searchForServicesOfType:@"_spygame._tcp." inDomain:@"local"];
+    [self.browser searchForServicesOfType:@"_thespy._tcp." inDomain:@"local"];
 }
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser

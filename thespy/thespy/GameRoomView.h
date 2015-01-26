@@ -12,8 +12,9 @@
 #import "PlayerBean.h"
 #import "GameRoomSubview.h"
 #import "PlayerListViewController.h"
+#import "SPYService.h"
 
-@interface GameRoomView : UIViewController
+@interface GameRoomView : UIViewController<SPYServiceDelegate>
 @property (nonatomic) NSInteger totalNum;       //参与者总数
 @property (nonatomic) NSInteger spyNum;         //卧底数
 @property (nonatomic) NSInteger citizenNum;     //平民数
@@ -24,6 +25,8 @@
 
 @property (nonatomic, strong) GameRoomSubview *subRoomView;
 @property (nonatomic, strong) UIView *contentView;
+
+@property (nonatomic, strong) SPYService *server;
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer;
 

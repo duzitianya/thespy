@@ -41,6 +41,16 @@
     [subview setMainPlayer:self.mainPlayer];
     [self addChildViewController:subview];
     [self.view addSubview:subview.view];
+    
+    self.server = [SPYService shareInstance];
+    self.server.delegate = self;
+    if (!self.server.isServerOpen) {
+        [self.server publishServer];
+    }
+}
+
+- (void) reloadClientListTable{
+    [self.subRoomView.collectionView reloadData];
 }
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer{

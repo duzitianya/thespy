@@ -46,7 +46,6 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-    NSLog(@"%d----%d", indexPath.row, indexPath.section);
     [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
     [cell.contentView addSubview:gameRoomCell];
     return cell;

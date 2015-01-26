@@ -53,7 +53,6 @@
 }
 
 - (void) createServer{
-    NSLog(@"create server. . . ");
     NSInteger totalNum = self.mainGameView.totalNum;
     NSInteger citizenNum = self.mainGameView.citizenNum;
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
@@ -68,7 +67,6 @@
 }
 
 - (void) asClient{
-    NSLog(@"as client. . . ");
     NSInteger totalNum = self.mainGameView.totalNum;
     NSInteger citizenNum = self.mainGameView.citizenNum;
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;

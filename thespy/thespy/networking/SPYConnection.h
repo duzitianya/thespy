@@ -14,5 +14,8 @@
 @property (nonatomic, strong) NSOutputStream *output;
 
 - (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs;
-
+//读数据
+- (NSData*)readGameData;
+//发送数据
+- (NSInteger) writeData:(NSData*)data;
 @end

@@ -15,14 +15,15 @@
 @synthesize word;
 @synthesize role;
 @synthesize status;
+@synthesize connection;
 
-+ (PlayerBean*) initWithData:(NSString *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word {
++ (PlayerBean*) initWithData:(NSData *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word {
     PlayerBean *bean = [[PlayerBean alloc] init];
     bean.img = img;
     bean.name = name;
     bean.id = id;
     bean.word = word;
-    bean.status = BLE_OFFLINE;
+    bean.status = BLE_ONLINE;
     return bean;
 }
 

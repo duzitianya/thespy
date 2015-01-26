@@ -23,7 +23,7 @@
     self = [super init];
     if (self) {
         self.servers = [[NSMutableArray alloc] initWithCapacity:5];
-        self.serversConnections = [[NSMutableArray alloc] initWithCapacity:5];
+//        self.serversConnections = [[NSMutableArray alloc] initWithCapacity:5];
     }
     return self;
 }
@@ -97,7 +97,7 @@
         
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
         
-        [self.serversConnections addObject:connection];
+//        [self.serversConnections addObject:connection];
 
     }
 }

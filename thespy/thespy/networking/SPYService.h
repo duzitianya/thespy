@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "SPYServiceBrowser.h"
 #import "SPYConnection.h"
+#import "PlayerBean.h"
 
 @protocol SPYServiceDelegate <NSObject>
 
@@ -19,11 +20,9 @@
 @end
 
 @interface SPYService : NSObject<NSNetServiceDelegate, NSStreamDelegate>
-
+@property (nonatomic, strong) id<SPYServiceDelegate> delegate;
 @property (nonatomic, strong) NSNetService *server;
-@property (nonatomic, strong) NSMutableArray *clients;
-//@property (nonatomic, strong) NSMutableArray *clientsConnections;
-@property (nonatomic, strong) SPYConnection *connection;
+@property (nonatomic, strong) NSMutableArray *clients;//PlayerBean
 @property (nonatomic) BOOL isServerOpen;
 
 +(SPYService *)shareInstance;

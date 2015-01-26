@@ -14,7 +14,7 @@
 
 @optional
 - (void) reloadServerListTable;
-
+- (void) connectServerSuccessful;
 @end
 
 @interface SPYServiceBrowser : NSObject<NSNetServiceBrowserDelegate, NSNetServiceDelegate>
@@ -22,8 +22,8 @@
 @property (nonatomic, weak) id<SPYServiceBrowserDelegate> delegate;
 
 @property (nonatomic, strong) NSNetServiceBrowser *browser;
-@property (nonatomic, strong) NSMutableArray *servers;
-@property (nonatomic, strong) NSMutableArray *serversConnections;
+@property (nonatomic, strong) NSMutableArray *servers;//SPYService
+@property (nonatomic, strong) SPYConnection *connection;//SPYConnection
 
 +(SPYServiceBrowser *)shareInstance;
 - (void) browseService;

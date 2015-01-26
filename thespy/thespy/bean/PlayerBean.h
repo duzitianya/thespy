@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SPYConnection.h"
 
 //当前链接状态类型
 typedef enum {
@@ -24,13 +25,14 @@ typedef enum{
 
 @interface PlayerBean : NSObject
 
-@property (nonatomic, strong) NSString *img;    //头像
+@property (nonatomic, strong) NSData *img;    //头像
 @property (nonatomic, weak) NSString *name;     //昵称
 @property (nonatomic, weak) NSString *id;       //唯一标识
 @property (nonatomic, strong) NSString *word;   //词条
 @property (nonatomic) PlayerOnlineStatus status;//状态
 @property (nonatomic) PlayerRole role;         //角色
+@property (nonatomic, strong) SPYConnection *connection;//与服务器的链接
 
-+ (PlayerBean*) initWithData:(NSString *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word;
++ (PlayerBean*) initWithData:(NSData *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word;
 
 @end

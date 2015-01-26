@@ -77,7 +77,7 @@
             CGFloat cameraTransformX = 1.0;
             CGFloat cameraTransformY = 1.12412;
             camera.cameraViewTransform = CGAffineTransformScale(camera.cameraViewTransform, cameraTransformX, cameraTransformY);
-            camera.showsCameraControls = NO;
+            camera.showsCameraControls = YES;
             
             
             //此处设置只能使用相机，禁止使用视频功能
@@ -87,7 +87,7 @@
             SettingsView *sv = [[SettingsView alloc] init];
             camera.cameraOverlayView = sv;
             
-            [camera.view sendSubviewToBack:sv];
+//            [camera.view sendSubviewToBack:sv];
             
         } else {
             NSLog(@"相机功能不可用");

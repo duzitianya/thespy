@@ -19,15 +19,29 @@
     
 }
 
+-(instancetype)init:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteboardNum{
+    
+    self = [super init];
+    if (self) {
+        self.totalNum = totalNum;
+        self.spyNum = spyNum;
+        self.citizenNum = citizenNum;
+        self.whiteBoardNum = whiteboardNum;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.isServer) {
         self.server = [SPYService shareInstance];
+        self.server.delegate = self;
         if (!self.server.isServerOpen) {
             [self.server publishServer];
         }
     }else{
         self.serverBrowser = [SPYServiceBrowser shareInstance];
+        self.serverBrowser.delegate = self;
         [self.serverBrowser browseService];
     }
 }

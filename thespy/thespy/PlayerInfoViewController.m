@@ -54,16 +54,21 @@
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
-    plvc.isServer = YES;
-    plvc.title = @"等待加入";
-    [self.navigationController pushViewController:plvc animated:YES];
+    GameRoomView *room = [[GameRoomView alloc] init];
+    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum];
+    room.selfBean = mainPlayer;
+    room.title = @"等待加入";
+    [self.navigationController pushViewController:room animated:YES];
 }
 
 - (void) asClient{
     NSLog(@"as client. . . ");
+    NSInteger totalNum = self.mainGameView.totalNum;
+    NSInteger citizenNum = self.mainGameView.citizenNum;
+    NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
+    NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
+    PlayerListViewController *plvc = [[PlayerListViewController alloc] init:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum];
     plvc.isServer = NO;
     plvc.title = @"查找服务";
     [self.navigationController pushViewController:plvc animated:YES];

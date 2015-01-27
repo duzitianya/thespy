@@ -80,14 +80,11 @@
             camera.cameraViewTransform = CGAffineTransformMakeTranslation(-10, -10);
             camera.showsCameraControls = NO;
             
-            
             //此处设置只能使用相机，禁止使用视频功能
             camera.mediaTypes = @[(NSString*)kUTTypeImage];
-            
-//            SettingsView *sv = [[[NSBundle mainBundle] loadNibNamed:@"SettingsView" owner:self options:nil] lastObject];
+    
             SettingsView *sv = [[SettingsView alloc] init];
             camera.cameraOverlayView = sv;
-            [camera.view sendSubviewToBack:sv];
             
         } else {
             NSLog(@"相机功能不可用");

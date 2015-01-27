@@ -25,7 +25,10 @@
     //如果尚未初始化，则进行初始化
     if ([util isUserDataExist]==NO) {
         //弹出初始化视图
-        
+        UIViewController *vc = [[UIViewController alloc] init];
+        SettingsView *sv = [[SettingsView alloc] init];
+        [vc.view addSubview:sv];
+        [self presentViewController:vc];
     }else{
         //读取初始化数据
         NSString *name = [util getUserName];

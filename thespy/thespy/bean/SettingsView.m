@@ -26,16 +26,6 @@
 //    confirmButton.layer.cornerRadius = height/2;
 //    confirmButton.alpha = 0;
 //    [confirmButton addTarget:self action:@selector(confirmHeadImg:) forControlEvents:UIControlEventTouchUpInside];
-    NSArray *all = [self subviews];
-    for (int i=0; i<[all count]; i++) {
-        UIView *v = all[i];
-        NSLog(@"class:%@--->x:%f--y:%f,  width:%f--height:%f", [[v class] description], v.frame.origin.x, v.frame.origin.y, v.frame.size.width, v.frame.size.height);
-        NSArray *subs = [v subviews];
-        for (int j=0; j<[subs count]; j++) {
-            UIView *subv = subs[j];
-            NSLog(@"class:%@--->x:%f--y:%f,  width:%f--height:%f", [[subv class] description], subv.frame.origin.x, subv.frame.origin.y, subv.frame.size.width, subv.frame.size.height);
-        }
-    }
 }
 
 - (instancetype) init{
@@ -47,6 +37,7 @@
 }
 
 - (void) setupFrame{
+    [self setUserInteractionEnabled:NO];
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, 75)];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
@@ -67,18 +58,18 @@
     title.text = t;
     [topView addSubview:title];
     
+    [self addSubview:topView];
+    [self addSubview:leftView];
+    [self addSubview:rightView];
+    
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2-75, 75, 150, 150)];
     _headImg.layer.backgroundColor = [[UIColor clearColor] CGColor];
     _headImg.alpha = 0.;
     [self addSubview:_headImg];
     
-    SettingsSubView *subview = [[[NSBundle mainBundle] loadNibNamed:@"SettingsSubView" owner:self options:nil] lastObject];
-    subview.frame = CGRectMake(0, 75+150, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-75-150);
-    [self addSubview:subview];
-    
-    [self addSubview:topView];
-    [self addSubview:leftView];
-    [self addSubview:rightView];
+    _subview = [[[NSBundle mainBundle] loadNibNamed:@"SettingsSubView" owner:self options:nil] lastObject];
+    _subview.frame = CGRectMake(0, 75+150, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-75-150);
+    [self addSubview:_subview];
 }
 
 - (void) confirmHeadImg:(UIButton*)sender{

@@ -13,5 +13,6 @@
 
 @interface SettingsView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) UIImageView *headImg;
+@property (strong, nonatomic) SettingsSubView *subview;
 
 @end

@@ -13,6 +13,10 @@
 - (void) awakeFromNib{
     NSString *deviceName = [UIDevice currentDevice].name;
     _deviceLabel.text = deviceName;
+    
+    _confirmButton.layer.borderWidth = 1;
+    _confirmButton.layer.cornerRadius = 3;
+    _confirmButton.layer.borderColor = [_confirmButton.titleLabel.textColor CGColor];
 }
 
 - (IBAction)saveData:(UIButton *)sender {

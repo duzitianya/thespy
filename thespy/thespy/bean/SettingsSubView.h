@@ -11,6 +11,7 @@
 @interface SettingsSubView : UIView
 @property (strong, nonatomic) IBOutlet UILabel *deviceLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nickNameTextField;
+@property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UISwitch *useNickName;
 - (IBAction)saveData:(UIButton *)sender;
 

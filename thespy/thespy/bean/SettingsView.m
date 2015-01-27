@@ -51,13 +51,11 @@
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, 75)];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2+75, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 75+150, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-75-150)];
     
     UIColor *col = UIColorFromRGB(0x64FFFF);
     topView.backgroundColor = col;
     leftView.backgroundColor = col;
     rightView.backgroundColor = col;
-    bottomView.backgroundColor = col;
     
     NSString *t = @"游戏设置";
     CGSize titleSize = [t sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(kMAIN_SCREEN_WIDTH/2, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
@@ -75,12 +73,12 @@
     [self addSubview:_headImg];
     
     SettingsSubView *subview = [[[NSBundle mainBundle] loadNibNamed:@"SettingsSubView" owner:self options:nil] lastObject];
-    [bottomView addSubview:subview];
+    subview.frame = CGRectMake(0, 75+150, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-75-150);
+    [self addSubview:subview];
     
     [self addSubview:topView];
     [self addSubview:leftView];
     [self addSubview:rightView];
-    [self addSubview:bottomView];
 }
 
 - (void) confirmHeadImg:(UIButton*)sender{

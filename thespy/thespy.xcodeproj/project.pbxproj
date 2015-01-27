@@ -17,6 +17,7 @@
 		BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC0F1A76449600A87FD2 /* GameRoomSubview.m */; };
 		BF3DBC121A76449600A87FD2 /* GameRoomSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */; };
 		BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */; };
+		BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */; };
 		BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACEA1A6E4725008CCFB9 /* main.m */; };
 		BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */; };
 		BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF77ACF51A6E4725008CCFB9 /* Images.xcassets */; };
@@ -40,7 +41,7 @@
 		BF77AD4D1A70D8DD008CCFB9 /* SPYService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4C1A70D8DD008CCFB9 /* SPYService.m */; };
 		BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */; };
 		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
-		BFC3B2BC1A738C49001FB912 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsView.xib */; };
+		BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomSubview.xib; sourceTree = "<group>"; };
 		BF3DBC1A1A77765300A87FD2 /* SPYFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYFileUtil.h; path = files/SPYFileUtil.h; sourceTree = "<group>"; };
 		BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYFileUtil.m; path = files/SPYFileUtil.m; sourceTree = "<group>"; };
+		BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSubView.h; sourceTree = "<group>"; };
+		BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSubView.m; sourceTree = "<group>"; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -110,7 +113,7 @@
 		BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYServiceBrowser.m; path = networking/SPYServiceBrowser.m; sourceTree = "<group>"; };
 		BFC3B2B11A736FC0001FB912 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
-		BFC3B2BB1A738C49001FB912 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSubView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,7 +240,9 @@
 				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
 				BFC3B2B11A736FC0001FB912 /* SettingsView.h */,
 				BFC3B2B21A736FC0001FB912 /* SettingsView.m */,
-				BFC3B2BB1A738C49001FB912 /* SettingsView.xib */,
+				BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */,
+				BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */,
+				BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */,
 				BF3DBC041A76350B00A87FD2 /* GameRoomCell.h */,
 				BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */,
 				BF3DBC071A76351700A87FD2 /* GameRoomCell.xib */,
@@ -363,7 +368,7 @@
 				BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */,
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
-				BFC3B2BC1A738C49001FB912 /* SettingsView.xib in Resources */,
+				BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */,
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
@@ -388,6 +393,7 @@
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
+				BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */,

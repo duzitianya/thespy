@@ -74,10 +74,11 @@
             camera.sourceType = UIImagePickerControllerSourceTypeCamera;
             camera.cameraDevice = UIImagePickerControllerCameraDeviceFront;//前置摄像头
 //            camera.cameraViewTransform = CGAffineTransformMakeScale(0.5, 0.5);//x,y轴缩放比例
-            CGFloat cameraTransformX = 1.0;
-            CGFloat cameraTransformY = 1.12412;
+            CGFloat cameraTransformX = 0.5;
+            CGFloat cameraTransformY = 0.35;
             camera.cameraViewTransform = CGAffineTransformScale(camera.cameraViewTransform, cameraTransformX, cameraTransformY);
-            camera.showsCameraControls = YES;
+            camera.cameraViewTransform = CGAffineTransformMakeTranslation(-10, -10);
+            camera.showsCameraControls = NO;
             
             
             //此处设置只能使用相机，禁止使用视频功能
@@ -86,8 +87,7 @@
 //            SettingsView *sv = [[[NSBundle mainBundle] loadNibNamed:@"SettingsView" owner:self options:nil] lastObject];
             SettingsView *sv = [[SettingsView alloc] init];
             camera.cameraOverlayView = sv;
-            
-//            [camera.view sendSubviewToBack:sv];
+            [camera.view sendSubviewToBack:sv];
             
         } else {
             NSLog(@"相机功能不可用");

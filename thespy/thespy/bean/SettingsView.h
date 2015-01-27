@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "AppDelegate.h"
+#import "SettingsSubView.h"
 
 @interface SettingsView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView *headImg;
+@property (strong, nonatomic) UIImageView *headImg;
 
 @end

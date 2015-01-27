@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#define MAX_SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height;
+#import "AppDelegate.h"
 
 @interface GameInitionView : UIScrollView
 

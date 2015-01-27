@@ -16,6 +16,7 @@
 		BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBC071A76351700A87FD2 /* GameRoomCell.xib */; };
 		BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC0F1A76449600A87FD2 /* GameRoomSubview.m */; };
 		BF3DBC121A76449600A87FD2 /* GameRoomSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */; };
+		BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */; };
 		BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACEA1A6E4725008CCFB9 /* main.m */; };
 		BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */; };
 		BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF77ACF51A6E4725008CCFB9 /* Images.xcassets */; };
@@ -66,6 +67,8 @@
 		BF3DBC0E1A76449600A87FD2 /* GameRoomSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomSubview.h; sourceTree = "<group>"; };
 		BF3DBC0F1A76449600A87FD2 /* GameRoomSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomSubview.m; sourceTree = "<group>"; };
 		BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomSubview.xib; sourceTree = "<group>"; };
+		BF3DBC1A1A77765300A87FD2 /* SPYFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYFileUtil.h; path = files/SPYFileUtil.h; sourceTree = "<group>"; };
+		BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYFileUtil.m; path = files/SPYFileUtil.m; sourceTree = "<group>"; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -131,6 +134,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF3DBC191A77762F00A87FD2 /* files */ = {
+			isa = PBXGroup;
+			children = (
+				BF3DBC1A1A77765300A87FD2 /* SPYFileUtil.h */,
+				BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */,
+			);
+			name = files;
+			sourceTree = "<group>";
+		};
 		BF77ACDC1A6E4724008CCFB9 = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +166,7 @@
 		BF77ACE71A6E4725008CCFB9 /* thespy */ = {
 			isa = PBXGroup;
 			children = (
+				BF3DBC191A77762F00A87FD2 /* files */,
 				BF3DBBFB1A76243500A87FD2 /* Main.storyboard */,
 				BF77AD4A1A70D48A008CCFB9 /* networking */,
 				BF77AD3E1A6F8A2E008CCFB9 /* db_sqlite3 */,
@@ -373,6 +386,7 @@
 			files = (
 				BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */,
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
+				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,

@@ -15,14 +15,14 @@
 @protocol SPYServiceDelegate <NSObject>
 
 @optional
-- (void) reloadClientListTable;
+- (void) reloadClientListTable:(PlayerBean*)player;
 
 @end
 
 @interface SPYService : NSObject<NSNetServiceDelegate, NSStreamDelegate>
 @property (nonatomic, strong) id<SPYServiceDelegate> delegate;
 @property (nonatomic, strong) NSNetService *server;
-@property (nonatomic, strong) NSMutableArray *clients;//PlayerBean
+//@property (nonatomic, strong) NSMutableArray *clients;//PlayerBean
 @property (nonatomic) BOOL isServerOpen;
 
 +(SPYService *)shareInstance;

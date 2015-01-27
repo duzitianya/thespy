@@ -29,7 +29,8 @@
                 UIButton *b = subview;
                 b.layer.borderColor = [[UIColor blueColor] CGColor];
                 b.layer.borderWidth = .5;
-                b.layer.cornerRadius = 13;
+                b.layer.cornerRadius = 3;
+                [b setExclusiveTouch:YES];
             }
         }
     }
@@ -49,8 +50,8 @@
 }
 
 - (IBAction)whiteboardButtonClick:(UIButton *)sender {
-    NSString *labeltxt = sender.titleLabel.text;
-    if ([labeltxt isEqualToString:@"-"]) {
+    int tag = sender.tag;
+    if (tag == 21) {
         if (self.whiteBoardNum>0) {
             self.whiteBoardNum -= 1;
             self.citizenNum += 1;
@@ -67,8 +68,8 @@
 }
 
 - (IBAction)spyButtonClick:(UIButton *)sender {
-    NSString *labeltxt = sender.titleLabel.text;
-    if ([labeltxt isEqualToString:@"-"]) {
+    int tag = sender.tag;
+    if (tag == 11) {
         if (self.spyNum>1) {
             self.spyNum -= 1;
             self.citizenNum += 1;
@@ -83,4 +84,6 @@
     self.spyLabel.text = [NSString stringWithFormat:@"%d", self.spyNum];
     self.citizenLabel.text = [NSString stringWithFormat:@"%d", self.citizenNum];
 }
+
+
 @end

@@ -33,17 +33,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.isServer) {
-        self.server = [SPYService shareInstance];
-        self.server.delegate = self;
-        if (!self.server.isServerOpen) {
-            [self.server publishServer];
-        }
-    }else{
-        self.serverBrowser = [SPYServiceBrowser shareInstance];
-        self.serverBrowser.delegate = self;
-        [self.serverBrowser browseService];
-    }
+    
+    self.serverBrowser = [SPYServiceBrowser shareInstance];
+    self.serverBrowser.delegate = self;
+    [self.serverBrowser browseService];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,11 +51,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.isServer) {
-        return [self.server.clients count];
-    }else{
-        return [self.serverBrowser.servers count];
-    }
+
+    return [self.serverBrowser.servers count];
+    
 }
 
 
@@ -74,23 +66,12 @@
     }*/
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     
-    if (self.isServer) {
-        NSNetServiceBrowser *browser = self.server.clients[indexPath.row];
-        if (browser) {
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", browser.description];
-        }
-    }else{
-        NSNetService *service = self.serverBrowser.servers[indexPath.row];
-        if (service) {
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", service.name];
-        }
+    NSNetService *service = self.serverBrowser.servers[indexPath.row];
+    if (service) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", service.name];
     }
     
     return cell;
-}
-
-- (void) reloadClientListTable{
-    [self.tableView reloadData];
 }
 
 - (void) reloadServerListTable{
@@ -98,9 +79,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!self.isServer) {
-        [self.serverBrowser connectNSServer:indexPath.row];
-    }
+    [self.serverBrowser connectNSServer:indexPath.row];
 }
 
 @end

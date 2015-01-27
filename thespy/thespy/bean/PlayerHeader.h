@@ -24,8 +24,8 @@
 
 @interface PlayerHeader : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *headImg;
-@property (strong, nonatomic) IBOutlet UILabel *name;
-@property (strong, nonatomic) IBOutlet UILabel *playerID;
+@property (strong, nonatomic) IBOutlet UILabel *deviceName;
+@property (strong, nonatomic) IBOutlet UILabel *nickName;
 @property (strong, nonatomic) IBOutlet UIButton *historyButton;
 @property (weak, nonatomic) id<TopViewDelegate> delegate;
 @property (strong, nonatomic) UIButton *changeButton;

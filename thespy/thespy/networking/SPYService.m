@@ -22,7 +22,7 @@
 - (id) init{
     self = [super init];
     if (self) {
-        self.clients = [[NSMutableArray alloc] initWithCapacity:5];
+//        self.clients = [[NSMutableArray alloc] initWithCapacity:5];
 //        [self publishServer];
     }
     return self;
@@ -54,13 +54,13 @@
     NSData *nameAndId = connection.readGameData;//second read name,id
     
     NSString *str = [[NSString alloc] initWithData:nameAndId encoding:NSUTF8StringEncoding];
-    NSString *name = [str componentsSeparatedByString:@","][0];
-    NSString *id = [str componentsSeparatedByString:@","][1];
+    NSString *nickname = [str componentsSeparatedByString:@","][0];
+    NSString *devicename = [str componentsSeparatedByString:@","][1];
     
-    PlayerBean *player = [PlayerBean initWithData:himg Name:name ID:id Word:@""];
+    PlayerBean *player = [PlayerBean initWithData:himg Name:nickname DeviceName:devicename];
     player.connection = connection;
-    [self.clients addObject:player];
-    [self.delegate reloadClientListTable];
+//    [self.clients addObject:player];
+    [self.delegate reloadClientListTable:player];
 }
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender{

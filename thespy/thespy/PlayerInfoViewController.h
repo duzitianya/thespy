@@ -16,6 +16,7 @@
 #import "SPYService.h"
 #import "SPYServiceBrowser.h"
 #import "GameRoomView.h"
+#import "SPYFileUtil.h"
 
 @interface PlayerInfoViewController : UIViewController<ActionViewDelegate, TopViewDelegate>
 

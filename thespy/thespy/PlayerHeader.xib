@@ -58,10 +58,10 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="deviceName" destination="LiF-P1-8H3" id="p1X-o9-JmP"/>
                 <outlet property="headImg" destination="kIz-S6-ulN" id="Nk1-vX-u29"/>
                 <outlet property="historyButton" destination="fuk-Jm-Ljq" id="EzQ-u5-5vZ"/>
-                <outlet property="name" destination="GXu-Gx-mZE" id="z0G-vG-fpb"/>
-                <outlet property="playerID" destination="LiF-P1-8H3" id="xWV-qF-uqM"/>
+                <outlet property="nickName" destination="GXu-Gx-mZE" id="K7b-3c-dJp"/>
             </connections>
             <point key="canvasLocation" x="326" y="154.5"/>
         </view>

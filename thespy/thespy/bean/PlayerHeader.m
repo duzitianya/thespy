@@ -31,18 +31,18 @@
     [self insertSubview:self.changeButton aboveSubview:_headImg];
     
     CALayer *lineLayer = [CALayer layer];
-    lineLayer.frame = CGRectMake(15, 140, kMAIN_SCREEN_WIDTH-30, 0.5);
+    lineLayer.frame = CGRectMake(15, self.frame.size.height, kMAIN_SCREEN_WIDTH-30, 1);
     lineLayer.contentsGravity = kCAGravityResizeAspect;
     [lineLayer setBackgroundColor:[UIColorFromRGB(0xdfe0df) CGColor]];
-//    [self.layer addSublayer:lineLayer];
+    [self.layer addSublayer:lineLayer];
 }
 
 - (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<TopViewDelegate>)delegate{
 //    NSURL *imageUrl = [NSURL URLWithString:bean.img];
 //    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
 //    _headImg.image = image;
-    _name.text = bean.name;
-    _playerID.text = bean.id;
+    _nickName.text = bean.name;
+    _deviceName.text = bean.deviceName;
     [_historyButton addTarget:self action:@selector(historyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     _delegate = delegate;

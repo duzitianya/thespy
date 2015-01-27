@@ -20,6 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    SPYFileUtil *util = [SPYFileUtil shareInstance];
+    //判断app是否未初始化过
+    //如果尚未初始化，则进行初始化
+    if ([util isUserDataExist]==NO) {
+        //弹出初始化视图
+        
+    }else{
+        //读取初始化数据
+        NSString *name = [util getUserName];
+        NSData *header = [util getUserHeader];
+        PlayerBean *player = [PlayerBean initWithData:header Name:name DeviceName:[UIDevice currentDevice].name];
+        self.mainPlayer = player;
+    }
+    
     CGFloat width = kMAIN_SCREEN_WIDTH;
     CGFloat height = kMAIN_SCREEN_HEIGHT;
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height+20;
@@ -36,6 +50,10 @@
     self.mainGameView = [[[NSBundle mainBundle] loadNibNamed:@"GameInitionView" owner:self.view options:nil] lastObject];
     CGFloat plusY = [ActionView getViewHeight];
     self.mainGameView.frame = CGRectMake(0, currentY, width, height-barHeight-header.frame.size.height-plusY);
+    self.mainGameView.contentSize = CGSizeMake(kMAIN_SCREEN_WIDTH, 388);
+    self.mainGameView.scrollEnabled = YES;
+    [self.mainGameView setShowsHorizontalScrollIndicator:NO];
+    [self.mainGameView setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:self.mainGameView];
     
     currentY += self.mainGameView.frame.size.height;
@@ -73,7 +91,6 @@
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
     PlayerListViewController *plvc = [[PlayerListViewController alloc] init:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum];
-    plvc.isServer = NO;
     plvc.title = @"查找服务";
     [self.navigationController pushViewController:plvc animated:YES];
 }

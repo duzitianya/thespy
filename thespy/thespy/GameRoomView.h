@@ -20,6 +20,8 @@
 @property (nonatomic) NSInteger citizenNum;     //平民数
 @property (nonatomic) NSInteger whiteBoardNum;  //白板数
 
+@property (nonatomic, strong) UILabel *nowPlayerNum;
+
 @property (nonatomic, strong) PlayerBean *mainPlayer;
 @property (nonatomic, strong) NSMutableArray *otherPlayer;
 

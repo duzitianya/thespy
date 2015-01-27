@@ -11,19 +11,18 @@
 @implementation PlayerBean
 @synthesize img;
 @synthesize name;
-@synthesize id;
+@synthesize deviceName;
 @synthesize word;
 @synthesize role;
 @synthesize status;
 @synthesize connection;
 
-+ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word {
++ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName {
     PlayerBean *bean = [[PlayerBean alloc] init];
     bean.img = img;
     bean.name = name;
-    bean.id = id;
-    bean.word = word;
-    bean.status = BLE_ONLINE;
+    bean.deviceName = deviceName;
+    bean.status = BLE_OFFLINE;
     return bean;
 }
 

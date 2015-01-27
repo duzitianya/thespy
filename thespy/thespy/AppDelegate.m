@@ -22,11 +22,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    NSString *deviceName = [UIDevice currentDevice].name;
-    PlayerBean *selfPlayer = [PlayerBean initWithData:@"http://p1.a.58cdn.com.cn/enterprise/mingqi/n_s02287152410186101156_0869c3300cb192ea.jpg" Name:deviceName ID:@"ID:0x20140620" Word:@""];
+//    NSString *deviceName = [UIDevice currentDevice].name;
+//    PlayerBean *selfPlayer = [PlayerBean initWithData:nil Name:deviceName DeviceName:deviceName Word:@""];
     
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
-    vc.mainPlayer = selfPlayer;
+//    vc.mainPlayer = selfPlayer;
     vc.title = @"我的游戏";
     
     self.navController = [[UINavigationController alloc] init];

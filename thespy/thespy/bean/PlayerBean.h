@@ -36,6 +36,6 @@ typedef enum{
 @property (nonatomic) PlayerRole role;         //角色
 @property (nonatomic, strong) SPYConnection *connection;//与服务器的链接
 
-+ (PlayerBean*) initWithData:(NSData *)img Name:(NSString *)name DeviceName:(NSString*)deviceName;
++ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName;
 
 @end

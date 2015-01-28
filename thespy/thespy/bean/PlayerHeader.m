@@ -40,6 +40,7 @@
 - (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<TopViewDelegate,CameraOpenDelegate>)delegate{
     _nickName.text = bean.name;
     _deviceName.text = bean.deviceName;
+    _headImg.image = bean.img;
     [_historyButton addTarget:self action:@selector(historyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     _delegate = delegate;

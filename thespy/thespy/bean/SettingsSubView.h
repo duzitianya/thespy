@@ -21,8 +21,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UISwitch *useNickName;
 
+@property (strong, nonatomic) NSString *nickName;
+
 @property (strong, nonatomic) id<SavePhotoDelegate> delegate;
 
 - (IBAction)saveData:(UIButton *)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

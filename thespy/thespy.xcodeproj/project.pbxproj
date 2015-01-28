@@ -11,6 +11,7 @@
 		BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BF201FA11A72452D00A571C8 /* SPYConnection.m */; };
 		BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */; };
 		BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */; };
+		BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */ = {isa = PBXBuildFile; fileRef = BF341FD31A78C28A00E5C0FC /* UIImage+category.m */; };
 		BF3DBBFD1A76243500A87FD2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBBFB1A76243500A87FD2 /* Main.storyboard */; };
 		BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC021A76277A00A87FD2 /* GameRoomView.m */; };
 		BF3DBC061A76350B00A87FD2 /* GameRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */; };
@@ -62,6 +63,8 @@
 		BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BF341FCF1A7890AA00E5C0FC /* SettingsBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBoardView.h; sourceTree = "<group>"; };
 		BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBoardView.m; sourceTree = "<group>"; };
+		BF341FD21A78C28A00E5C0FC /* UIImage+category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+category.h"; sourceTree = "<group>"; };
+		BF341FD31A78C28A00E5C0FC /* UIImage+category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+category.m"; sourceTree = "<group>"; };
 		BF3DBBFC1A76243500A87FD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF3DBC011A76277A00A87FD2 /* GameRoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomView.h; sourceTree = "<group>"; };
 		BF3DBC021A76277A00A87FD2 /* GameRoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomView.m; sourceTree = "<group>"; };
@@ -251,6 +254,8 @@
 				BF3DBC041A76350B00A87FD2 /* GameRoomCell.h */,
 				BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */,
 				BF3DBC071A76351700A87FD2 /* GameRoomCell.xib */,
+				BF341FD21A78C28A00E5C0FC /* UIImage+category.h */,
+				BF341FD31A78C28A00E5C0FC /* UIImage+category.m */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */,
 				BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */,
 				BF77AD2E1A6E47FF008CCFB9 /* PlayerBean.m in Sources */,
+				BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */,
 				BF77AD331A6E47FF008CCFB9 /* PlayerListViewController.m in Sources */,
 				BF3DBC061A76350B00A87FD2 /* GameRoomCell.m in Sources */,
 				BF77AD321A6E47FF008CCFB9 /* PlayerInfoViewController.m in Sources */,

@@ -11,6 +11,8 @@
 #import "PlayerBean.h"
 #import "AppDelegate.h"
 #import "SettingsView.h"
+#import "SPYFileUtil.h"
+#import "UIImage+category.h"
 
 @protocol CameraOpenDelegate <NSObject>
 
@@ -20,9 +22,10 @@
 
 @end
 
-@interface SettingsBoardView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, SavePhotoDelegate>
+@interface SettingsBoardView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, SavePhotoDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *camera;
+@property (nonatomic, strong) SettingsView *settingsview;
 
 @property (nonatomic, weak) id<CameraOpenDelegate> delegate;
 

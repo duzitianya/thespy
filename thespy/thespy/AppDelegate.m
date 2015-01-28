@@ -23,6 +23,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
+//    vc.navController = [[UINavigationController alloc] init];
     vc.title = @"我的游戏";
     
     self.navController = [[UINavigationController alloc] init];

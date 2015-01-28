@@ -41,10 +41,14 @@
                         <action selector="saveData:" destination="fep-5Q-Lso" eventType="touchUpInside" id="zI4-0w-6RU"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="设置昵称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TSA-54-qTc">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="设置昵称" minimumFontSize="15" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="TSA-54-qTc">
                     <rect key="frame" x="111" y="72.5" width="176" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                    <connections>
+                        <action selector="cancel:" destination="fep-5Q-Lso" eventType="touchCancel" id="pZo-kE-FLd"/>
+                        <outlet property="delegate" destination="fep-5Q-Lso" id="lRt-gh-HMb"/>
+                    </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvd-u8-dB0">
                     <rect key="frame" x="107" y="30" width="42" height="20.5"/>

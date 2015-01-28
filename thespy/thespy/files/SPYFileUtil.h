@@ -6,10 +6,11 @@
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-#define APP_PLAYER_DATA_HOME @"/thespy/playerdata"
-#define APP_PLAYER_HEADER @"/thespy/headerdata"
+#define APP_PLAYER_DATA_HOME @"/Documents/thespy/playerdata"
+#define APP_PLAYER_HEADER @"/Documents/thespy/headerdata"
 
 @interface SPYFileUtil : NSObject
 
@@ -17,11 +18,11 @@
 
 - (BOOL) isUserDataExist;
 
-- (void) saveUserHeader:(NSData*)header;
+- (void) saveUserHeader:(UIImage*)header;
 
 - (void) saveUserName:(NSString*)userName;
 
-- (NSData*) getUserHeader;
+- (UIImage*) getUserHeader;
 
 - (NSString*) getUserName;
 

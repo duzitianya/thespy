@@ -26,18 +26,20 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         _camera.sourceType = UIImagePickerControllerSourceTypeCamera;
         _camera.cameraDevice = UIImagePickerControllerCameraDeviceFront;//前置摄像头
-        CGFloat cameraTransformX = 0.5;
-        CGFloat cameraTransformY = 0.35;
+        
+        CGFloat scale = 150*1.0/kMAIN_SCREEN_WIDTH;
+        CGFloat cameraTransformX = scale;
+        CGFloat cameraTransformY = scale;
         _camera.cameraViewTransform = CGAffineTransformScale(_camera.cameraViewTransform, cameraTransformX, cameraTransformY);
-        //            camera.cameraViewTransform = CGAffineTransformMakeTranslation(-10, -10);
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, -150);
         _camera.showsCameraControls = NO;
         
         //此处设置只能使用相机，禁止使用视频功能
         _camera.mediaTypes = @[(NSString*)kUTTypeImage];
         
-        SettingsView *sv = [[SettingsView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
-        [sv addSavePhotoDelegate:self];
-        _camera.cameraOverlayView = sv;
+        _settingsview = [[SettingsView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
+        [_settingsview addSavePhotoDelegate:self];
+        _camera.cameraOverlayView = _settingsview;
         
     } else {
         NSLog(@"相机功能不可用");
@@ -47,7 +49,25 @@
 
 //点击相册中的图片或照相机照完后点击use后触发的方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (_settingsview.subview.nickName==nil||[_settingsview.subview.nickName length]==0) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+        [alert show];
+        return ;
+    }
+    
+    UIImage *img;
+    if ([info objectForKey:UIImagePickerControllerEditedImage]) {
+        img = [info objectForKey:UIImagePickerControllerEditedImage];
+    }else{
+        img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+    
+    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
+//    img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
+    [[SPYFileUtil shareInstance] saveUserHeader:img];
+    [[SPYFileUtil shareInstance] saveUserName:_settingsview.subview.nickName];
     
     [self.delegate dismissViewController];
 }

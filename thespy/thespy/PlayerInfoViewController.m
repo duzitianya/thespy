@@ -28,7 +28,6 @@
     CGFloat currentY = barHeight;
     header = [[[NSBundle mainBundle] loadNibNamed:@"PlayerHeader" owner:self.view options:nil] lastObject];
     header.frame = CGRectMake(0, currentY, width, header.frame.size.height);
-    [header initWithPlayerBean:self.mainPlayer Delegate:self];
     [self.view addSubview:header];
     
     //游戏设置面板
@@ -63,8 +62,10 @@
     
     //读取初始化数据
     NSString *name = [util getUserName];
-    NSData *headerData = [util getUserHeader];
+    UIImage *headerData = [util getUserHeader];
     self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name];
+    
+    [header initWithPlayerBean:self.mainPlayer Delegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,8 +77,6 @@
     NSInteger citizenNum = self.mainGameView.citizenNum;
     NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
-    
-    self.mainPlayer.img = header.headImg.image;
     
     GameRoomView *room = [[GameRoomView alloc] init];
     [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer];
@@ -103,11 +102,13 @@
 }
 
 - (void) presentViewController:(UIViewController*)viewcontroller{
-    [self presentModalViewController:viewcontroller animated:YES];
+//    [self presentModalViewController:viewcontroller animated:YES];
+    [self presentViewController:viewcontroller animated:YES completion:nil];
 }
 
 - (void) dismissViewController{
-    [self dismissModalViewControllerAnimated:YES];
+//    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

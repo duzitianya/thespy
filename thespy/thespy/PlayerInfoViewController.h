@@ -23,11 +23,13 @@
 @interface PlayerInfoViewController : UIViewController<ActionViewDelegate, CameraOpenDelegate, TopViewDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
-//@property (nonatomic, strong) PlayerHeader *header;
+
 @property (nonatomic, strong) GameInitionView *mainGameView;
 
 @property (nonatomic) NSInteger totalNum;       //参与者总数
 @property (nonatomic) NSInteger citizenNum;     //平民数
 @property (nonatomic) NSInteger whiteBoardNum;  //白板数
+
+//@property (strong, nonatomic) UINavigationController *navController;
 
 @end

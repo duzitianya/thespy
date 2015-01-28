@@ -10,6 +10,7 @@
 		BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF201F9E1A71F10900A571C8 /* SpyResource.bundle */; };
 		BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BF201FA11A72452D00A571C8 /* SPYConnection.m */; };
 		BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */; };
+		BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */; };
 		BF3DBBFD1A76243500A87FD2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBBFB1A76243500A87FD2 /* Main.storyboard */; };
 		BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC021A76277A00A87FD2 /* GameRoomView.m */; };
 		BF3DBC061A76350B00A87FD2 /* GameRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */; };
@@ -59,6 +60,8 @@
 		BF201FA01A72452D00A571C8 /* SPYConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYConnection.h; path = networking/SPYConnection.h; sourceTree = "<group>"; };
 		BF201FA11A72452D00A571C8 /* SPYConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYConnection.m; path = networking/SPYConnection.m; sourceTree = "<group>"; };
 		BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BF341FCF1A7890AA00E5C0FC /* SettingsBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBoardView.h; sourceTree = "<group>"; };
+		BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBoardView.m; sourceTree = "<group>"; };
 		BF3DBBFC1A76243500A87FD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF3DBC011A76277A00A87FD2 /* GameRoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomView.h; sourceTree = "<group>"; };
 		BF3DBC021A76277A00A87FD2 /* GameRoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomView.m; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */,
 				BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */,
 				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
+				BF341FCF1A7890AA00E5C0FC /* SettingsBoardView.h */,
+				BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */,
 				BFC3B2B11A736FC0001FB912 /* SettingsView.h */,
 				BFC3B2B21A736FC0001FB912 /* SettingsView.m */,
 				BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */,
@@ -393,6 +398,7 @@
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
+				BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */,
 				BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,

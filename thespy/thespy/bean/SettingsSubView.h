@@ -8,11 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SavePhotoDelegate <NSObject>
+
+@optional
+- (void)savePhoto;
+
+@end
+
 @interface SettingsSubView : UIView
 @property (strong, nonatomic) IBOutlet UILabel *deviceLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nickNameTextField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UISwitch *useNickName;
+
+@property (strong, nonatomic) id<SavePhotoDelegate> delegate;
+
 - (IBAction)saveData:(UIButton *)sender;
 
 @end

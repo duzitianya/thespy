@@ -72,7 +72,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lis-dE-pXv">
-                    <rect key="frame" x="141" y="200" width="38" height="26"/>
+                    <rect key="frame" x="141" y="200" width="48" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="-2" maxY="0.0"/>
                     <state key="normal" title="减少">
@@ -83,7 +83,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="21" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JKZ-hj-hN3">
-                    <rect key="frame" x="141" y="255" width="38" height="26"/>
+                    <rect key="frame" x="141" y="255" width="48" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="-2" maxY="0.0"/>
                     <state key="normal" title="减少">
@@ -94,7 +94,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="raf-lQ-9qm">
-                    <rect key="frame" x="212" y="200" width="35" height="26"/>
+                    <rect key="frame" x="212" y="200" width="48" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="-2" maxY="0.0"/>
                     <state key="normal" title="增加">
@@ -137,7 +137,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vvb-Cc-q8j">
-                    <rect key="frame" x="212" y="255" width="35" height="26"/>
+                    <rect key="frame" x="212" y="255" width="48" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="-2" maxY="0.0"/>
                     <state key="normal" title="增加">

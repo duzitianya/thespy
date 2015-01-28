@@ -22,16 +22,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    NSString *deviceName = [UIDevice currentDevice].name;
-//    PlayerBean *selfPlayer = [PlayerBean initWithData:nil Name:deviceName DeviceName:deviceName Word:@""];
-    
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
-//    vc.mainPlayer = selfPlayer;
     vc.title = @"我的游戏";
     
     self.navController = [[UINavigationController alloc] init];
     [self.navController pushViewController:vc animated:YES];
     [self.window addSubview:self.navController.view];
+//    [self.window setRootViewController:vc];
     [self.window makeKeyAndVisible];
     
     //初始化数据库，如果已经初始化过，不再继续

@@ -11,26 +11,26 @@
 #import "PlayerBean.h"
 #import "AppDelegate.h"
 #import "SettingsView.h"
+#import "SettingsBoardView.h"
 
 @protocol TopViewDelegate <NSObject>
 
 @optional
 
 - (void) gotoHistoryList;
-- (void) presentViewController:(UIViewController*)view;
-- (void) dismissViewController;
 
 @end
 
-@interface PlayerHeader : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface PlayerHeader : UIView
+
 @property (strong, nonatomic) IBOutlet UIImageView *headImg;
 @property (strong, nonatomic) IBOutlet UILabel *deviceName;
 @property (strong, nonatomic) IBOutlet UILabel *nickName;
 @property (strong, nonatomic) IBOutlet UIButton *historyButton;
-@property (weak, nonatomic) id<TopViewDelegate> delegate;
+@property (weak, nonatomic) id<TopViewDelegate,CameraOpenDelegate> delegate;
 @property (strong, nonatomic) UIButton *changeButton;
 
-- (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<TopViewDelegate>)delegate;
+- (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<TopViewDelegate,CameraOpenDelegate>)delegate;
 - (void)changeHeadImg:(UIButton *)sender;
 
 @end

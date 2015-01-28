@@ -10,26 +10,8 @@
 
 @implementation SettingsView
 
-- (void)awakeFromNib{
-//    CGFloat x = _headImg.frame.origin.x;
-//    CGFloat y = _headImg.frame.origin.y;
-//    CGFloat width = _headImg.frame.size.width;
-//    CGFloat height = _headImg.frame.size.height;
-//    
-//    _headImg.layer.borderWidth = 1;
-//    _headImg.layer.borderColor = [[UIColor greenColor] CGColor];
-//    _headImg.layer.cornerRadius = height/2;
-////    _headImg.layer.masksToBounds = YES;
-//    _headImg.alpha = 0;
-//    
-//    UIButton *confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(x, y, width, height)];
-//    confirmButton.layer.cornerRadius = height/2;
-//    confirmButton.alpha = 0;
-//    [confirmButton addTarget:self action:@selector(confirmHeadImg:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (instancetype) init{
-    self = [super init];
+- (instancetype) initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
         [self setupFrame];
     }
@@ -37,8 +19,6 @@
 }
 
 - (void) setupFrame{
-    [self setUserInteractionEnabled:NO];
-    
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, 75)];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2+75, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
@@ -72,8 +52,13 @@
     [self addSubview:_subview];
 }
 
+- (void) addSavePhotoDelegate:(id<SavePhotoDelegate>)delegate{
+    _subview.delegate = delegate;
+}
+
 - (void) confirmHeadImg:(UIButton*)sender{
     
 }
+
 
 @end

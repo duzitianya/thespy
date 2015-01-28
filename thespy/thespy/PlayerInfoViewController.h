@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 #import "PlayerBean.h"
 #import "PlayerListViewController.h"
 #import "PlayerHeader.h"
@@ -17,8 +18,9 @@
 #import "SPYServiceBrowser.h"
 #import "GameRoomView.h"
 #import "SPYFileUtil.h"
+#import "SettingsBoardView.h"
 
-@interface PlayerInfoViewController : UIViewController<ActionViewDelegate, TopViewDelegate>
+@interface PlayerInfoViewController : UIViewController<ActionViewDelegate, CameraOpenDelegate, TopViewDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
 //@property (nonatomic, strong) PlayerHeader *header;

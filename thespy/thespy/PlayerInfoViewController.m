@@ -20,23 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    SPYFileUtil *util = [SPYFileUtil shareInstance];
-    //判断app是否未初始化过
-    //如果尚未初始化，则进行初始化
-    if ([util isUserDataExist]==NO) {
-        //弹出初始化视图
-        UIViewController *vc = [[UIViewController alloc] init];
-        SettingsView *sv = [[SettingsView alloc] init];
-        [vc.view addSubview:sv];
-        [self presentViewController:vc];
-    }else{
-        //读取初始化数据
-        NSString *name = [util getUserName];
-        NSData *header = [util getUserHeader];
-        PlayerBean *player = [PlayerBean initWithData:header Name:name DeviceName:[UIDevice currentDevice].name];
-        self.mainPlayer = player;
-    }
-    
     CGFloat width = kMAIN_SCREEN_WIDTH;
     CGFloat height = kMAIN_SCREEN_HEIGHT;
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height+20;
@@ -67,6 +50,21 @@
     actionView.delegate = self;
     [self.view addSubview:actionView];
     
+    
+    //判断app是否未初始化过
+    //如果尚未初始化，则进行初始化
+    SPYFileUtil *util = [SPYFileUtil shareInstance];
+    if ([util isUserDataExist]==NO) {
+        //弹出初始化视图
+        SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
+        [sv setupWithDelegate:self];
+        [self presentViewController:sv.camera];
+    }
+    
+    //读取初始化数据
+    NSString *name = [util getUserName];
+    NSData *headerData = [util getUserHeader];
+    self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name];
 }
 
 - (void)didReceiveMemoryWarning {

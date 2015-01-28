@@ -15,4 +15,6 @@
 @property (strong, nonatomic) UIImageView *headImg;
 @property (strong, nonatomic) SettingsSubView *subview;
 
+- (void) addSavePhotoDelegate:(id<SavePhotoDelegate>)delegate;
+
 @end

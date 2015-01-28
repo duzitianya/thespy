@@ -69,11 +69,17 @@
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     [[SPYFileUtil shareInstance] saveUserName:_settingsview.subview.nickName];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
+    
     [self.delegate dismissViewController];
 }
 
 - (void) savePhoto{
     [_camera takePicture];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }
 
 @end

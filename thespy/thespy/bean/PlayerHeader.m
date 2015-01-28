@@ -44,6 +44,8 @@
     [_historyButton addTarget:self action:@selector(historyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     _delegate = delegate;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadHeaderData) name:@"reloadHeaderData" object:nil];
 }
 
 - (void)changeHeadImg:(UIButton *)sender {
@@ -54,6 +56,19 @@
 
 - (void) historyButtonClick:(id)sender{
     [self.delegate gotoHistoryList];
+}
+
+- (void) reloadHeaderData{
+    SPYFileUtil *util = [SPYFileUtil shareInstance];
+    NSString *name = [util getUserName];
+    UIImage *headerData = [util getUserHeader];
+    
+    _nickName.text = name;
+    _headImg.image = headerData;
+}
+
+- (void) dealloc{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }
 
 @end

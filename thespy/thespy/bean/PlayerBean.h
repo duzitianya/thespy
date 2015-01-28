@@ -29,8 +29,8 @@ typedef enum{
 @interface PlayerBean : NSObject
 
 @property (nonatomic, strong) UIImage *img;         //头像
-@property (nonatomic, weak) NSString *name;         //昵称
-@property (nonatomic, weak) NSString *deviceName;   //设备名称
+@property (nonatomic, strong) NSString *name;         //昵称
+@property (nonatomic, strong) NSString *deviceName;   //设备名称
 @property (nonatomic, strong) NSString *word;       //词条
 @property (nonatomic) PlayerOnlineStatus status;    //状态
 @property (nonatomic) PlayerRole role;         //角色

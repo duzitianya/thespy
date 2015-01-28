@@ -66,6 +66,8 @@
     self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name];
     
     [header initWithPlayerBean:self.mainPlayer Delegate:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadHeaderData) name:@"reloadHeaderData" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,6 +111,19 @@
 - (void) dismissViewController{
 //    [self dismissModalViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)reloadHeaderData{
+    SPYFileUtil *util = [SPYFileUtil shareInstance];
+    NSString *name = [util getUserName];
+    UIImage *headerData = [util getUserHeader];
+    
+    self.mainPlayer.img = headerData;
+    self.mainPlayer.name = name;
+}
+
+- (void) dealloc{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }
 
 @end

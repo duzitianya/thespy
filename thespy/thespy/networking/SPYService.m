@@ -38,7 +38,7 @@
     NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",deviceName]];
     server.includesPeerToPeer = NO;
     [server setDelegate:self];
-    [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+//    [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [server publishWithOptions:NSNetServiceListenForConnections];
     self.server = server;
 }
@@ -63,22 +63,22 @@
     [self.delegate reloadClientListTable:player];
 }
 
-- (void)netServiceDidResolveAddress:(NSNetService *)sender{
-    NSLog(@"netServiceDidResolveAddress from server.....");
-}
-
 //服务发布成功后回调，打开输入输出流
 - (void) netServiceDidPublish:(NSNetService *)sender{
-//    NSInputStream *inputstr = nil;
-//    NSOutputStream *outputstr = nil;
-//    [self.server getInputStream:&inputstr outputStream:&outputstr];
+    NSInputStream *inputstr = nil;
+    NSOutputStream *outputstr = nil;
+    [self.server getInputStream:&inputstr outputStream:&outputstr];
     
-//    self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
+    self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
     
     NSLog(@"%@------%d", self.server.hostName, (int)self.server.port);
     
     self.isServerOpen = YES;
 }
 
+- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
+
+    NSLog(@"event-->%ld", eventCode);
+}
 
 @end

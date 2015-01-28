@@ -176,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				BF3DBC191A77762F00A87FD2 /* files */,
-				BF3DBBFB1A76243500A87FD2 /* Main.storyboard */,
 				BF77AD4A1A70D48A008CCFB9 /* networking */,
 				BF77AD3E1A6F8A2E008CCFB9 /* db_sqlite3 */,
 				BF77AD1F1A6E47FF008CCFB9 /* bean */,
@@ -197,6 +196,7 @@
 				BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */,
 				BF77ACF51A6E4725008CCFB9 /* Images.xcassets */,
 				BF77ACF71A6E4725008CCFB9 /* LaunchScreen.xib */,
+				BF3DBBFB1A76243500A87FD2 /* Main.storyboard */,
 				BF77ACE81A6E4725008CCFB9 /* Supporting Files */,
 			);
 			path = thespy;

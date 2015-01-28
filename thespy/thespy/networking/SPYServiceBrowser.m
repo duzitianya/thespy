@@ -91,6 +91,11 @@
 
 //解析成功
 - (void)netServiceDidResolveAddress:(NSNetService *)server{
+    
+    NSInteger port = [server port];
+    NSString *hostname = [server hostName];
+    NSLog(@"host:%@,  port:%d", hostname, (int)port);
+    
     NSInputStream *inputs;
     NSOutputStream *outputs;
     if ([server getInputStream:&inputs outputStream:&outputs]) {
@@ -101,6 +106,5 @@
 
     }
 }
-
 
 @end

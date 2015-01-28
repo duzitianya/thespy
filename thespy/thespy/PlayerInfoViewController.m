@@ -53,7 +53,7 @@
     //判断app是否未初始化过
     //如果尚未初始化，则进行初始化
     SPYFileUtil *util = [SPYFileUtil shareInstance];
-    if ([util isUserDataExist]==NO) {
+    if ([util isUserDataExist]==NO&&[UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==YES) {
         //弹出初始化视图
         SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
         [sv setupWithDelegate:self];

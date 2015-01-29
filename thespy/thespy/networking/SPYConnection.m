@@ -39,6 +39,16 @@
     }
 }
 
+- (NSData*)readGameData{
+    uint8_t buf[1024];
+    int numBytesRead = [self.input read:buf maxLength:sizeof(buf)-1];
+    if (numBytesRead > 0) {
+        //读取数据
+        return [[NSData alloc] initWithBytes:buf length:numBytesRead];
+    }
+    return NULL;
+}
+
 //发送数据
 - (NSInteger) writeData:(NSData*)data{
     //发送数据

@@ -68,9 +68,9 @@
 - (void) netServiceDidPublish:(NSNetService *)sender{
     NSInputStream *inputstr = nil;
     NSOutputStream *outputstr = nil;
-    [self.server getInputStream:&inputstr outputStream:&outputstr];
+//    [self.server getInputStream:&inputstr outputStream:&outputstr];
     
-    self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
+//    self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
     
     NSLog(@"%@------%d", self.server.hostName, (int)self.server.port);
     

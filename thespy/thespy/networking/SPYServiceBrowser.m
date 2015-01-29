@@ -84,27 +84,35 @@
 
 //连接到选定的服务器
 - (void) connectNSServer:(NSInteger)index{
-    NSNetService *server = [self.servers objectAtIndex:index];
-    server.delegate = self;
-    [server resolveWithTimeout:3];
+    self.service = [self.servers objectAtIndex:index];
+    self.service.delegate = self;
+    [self.service resolveWithTimeout:30];
 }
 
 //解析成功
 - (void)netServiceDidResolveAddress:(NSNetService *)server{
+    self.service = server;
     
     NSInteger port = [server port];
     NSString *hostname = [server hostName];
-    NSLog(@"host:%@,  port:%d", hostname, (int)port);
+    NSString *type = [server type];
+    NSLog(@"host:%@,  port:%d,  type:%@", hostname, (int)port, type);
     
+    //解析成功后连接服务器
     NSInputStream *inputs;
     NSOutputStream *outputs;
-    if ([server getInputStream:&inputs outputStream:&outputs]) {
-        
+    [NSStream getStreamsToHostWithName:hostname port:port inputStream:&inputs outputStream:&outputs];
+    if (inputs!=nil&&outputs!=nil) {
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
-        
-//        [self.serversConnections addObject:connection];
-
+        //向服务器发送客户端数据
+//        [connection writeData:<#(NSData *)#>];//写入头像数据
+//        [connection writeData:<#(NSData *)#>];//写入用户名
     }
+}
+
+- (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
+    SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
+    NSLog(@"client didAcceptConnection");
 }
 
 @end

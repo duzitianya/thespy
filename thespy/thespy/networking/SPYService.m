@@ -38,7 +38,8 @@
     NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",deviceName]];
     server.includesPeerToPeer = NO;
     [server setDelegate:self];
-//    [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+//    [server resolveWithTimeout:30];
+    [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [server publishWithOptions:NSNetServiceListenForConnections];
     self.server = server;
 }

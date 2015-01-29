@@ -21,6 +21,7 @@
 
 @property (nonatomic, weak) id<SPYServiceBrowserDelegate> delegate;
 
+@property (nonatomic, strong) NSNetService *service;
 @property (nonatomic, strong) NSNetServiceBrowser *browser;
 @property (nonatomic, strong) NSMutableArray *servers;//SPYService
 @property (nonatomic, strong) SPYConnection *connection;//SPYConnection

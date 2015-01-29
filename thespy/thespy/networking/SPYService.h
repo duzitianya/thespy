@@ -19,7 +19,7 @@
 
 @end
 
-@interface SPYService : NSObject<NSNetServiceDelegate, NSStreamDelegate>
+@interface SPYService : NSObject<NSNetServiceDelegate>
 @property (nonatomic, strong) id<SPYServiceDelegate> delegate;
 @property (nonatomic, strong) NSNetService *server;
 @property (nonatomic, strong) SPYConnection *connection;

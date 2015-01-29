@@ -49,6 +49,9 @@
 }
 
 - (void)changeHeadImg:(UIButton *)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO) {
+        return;
+    }
     SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
     [sv setupWithDelegate:_delegate];
     [_delegate presentViewController:sv.camera];

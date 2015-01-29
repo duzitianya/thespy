@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SPYConnection : NSObject
+@interface SPYConnection : NSObject<NSStreamDelegate>
 
 @property (nonatomic, strong) NSInputStream *input;
 @property (nonatomic, strong) NSOutputStream *output;

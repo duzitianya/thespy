@@ -14,7 +14,14 @@
     self = [super init];
     if (self) {
         self.input = inputs;
+        self.input.delegate = self;
+        [self.input scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        [self.input open];
+        
         self.output = outputs;
+        self.output.delegate = self;
+        [self.output scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        [self.output open];
     }
     return self;
 }
@@ -32,18 +39,6 @@
     }
 }
 
-//读数据
-- (NSData*)readGameData{
-    uint8_t buffer[1024];
-    bzero(buffer, sizeof(buffer));
-    NSInteger length;
-    NSInteger len = [self.input read:buffer maxLength:sizeof(buffer)-1];
-    if (len==length) {
-        buffer[len] = '\0';
-    }
-    return [[NSData alloc] initWithBytes:buffer length:len];
-}
-
 //发送数据
 - (NSInteger) writeData:(NSData*)data{
     //发送数据
@@ -54,6 +49,38 @@
     uint8_t *buffer;
     [data getBytes:buffer length:length];
     return [self.output write:buffer maxLength:length];
+}
+
+- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
+    NSLog(@" >> NSStreamDelegate in Thread %@", [NSThread currentThread]);
+    
+    switch (eventCode) {
+        case NSStreamEventHasBytesAvailable: {
+            uint8_t buf[1024];
+            int numBytesRead = [(NSInputStream *)aStream read:buf maxLength:sizeof(buf)-1];
+            if (numBytesRead > 0) {
+                //读取数据
+                [[NSData alloc] initWithBytes:buf length:numBytesRead];
+            }
+//            [self cleanUpStream:aStream];
+            break;
+        }
+        case NSStreamEventErrorOccurred: {
+            break;
+        }
+        case NSStreamEventEndEncountered: {
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)cleanUpStream:(NSStream *)stream{
+    [stream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [stream close];
+    
+    stream = nil;
 }
 
 @end

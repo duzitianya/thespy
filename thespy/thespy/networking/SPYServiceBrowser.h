@@ -6,9 +6,12 @@
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "SPYConnection.h"
 #import "SPYServiceBrowser.h"
+#import "NSStream+StreamsToHost.h"
+#import "SPYFileUtil.h"
 
 @protocol SPYServiceBrowserDelegate <NSObject>
 

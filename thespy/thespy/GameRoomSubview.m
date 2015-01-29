@@ -17,6 +17,10 @@
 
 static NSString * const reuseIdentifier = @"Cell";
 
+- (void)dealloc{
+    NSLog(@"GameRoomSubview dealloc....");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -39,6 +43,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"self.allPlayer count====>%d", (int)[self.allPlayer count]);
     return [self.allPlayer count];
 }
 

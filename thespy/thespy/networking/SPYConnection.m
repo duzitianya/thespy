@@ -40,13 +40,19 @@
 }
 
 - (NSData*)readGameData{
+    NSMutableData *mdata = [[NSMutableData alloc] initWithCapacity:1024];
     uint8_t buf[1024];
-    int numBytesRead = [self.input read:buf maxLength:sizeof(buf)-1];
-    if (numBytesRead > 0) {
-        //读取数据
-        return [[NSData alloc] initWithBytes:buf length:numBytesRead];
+    BOOL shouldBreak = NO;
+    while (!shouldBreak) {
+        long numBytesRead = [self.input read:buf maxLength:sizeof(buf)-1];
+        if (numBytesRead > 0) {
+            //读取数据
+            [mdata appendData:[[NSData alloc] initWithBytes:buf length:numBytesRead]];
+        }else{
+            shouldBreak = YES;
+        }
     }
-    return NULL;
+    return [mdata subdataWithRange:NSMakeRange(0, [mdata length])];
 }
 
 //发送数据
@@ -54,9 +60,9 @@
     //发送数据
 //    NSData *data = [@"ready" dataUsingEncoding:NSUTF8StringEncoding];
 //    [self.output write:[data bytes] maxLength:[data length]];
-    
+    NSLog(@"writeData length---->%d", (int)[data length]);
     NSInteger length = [data length];
-    uint8_t *buffer;
+    uint8_t buffer[length];
     [data getBytes:buffer length:length];
     return [self.output write:buffer maxLength:length];
 }

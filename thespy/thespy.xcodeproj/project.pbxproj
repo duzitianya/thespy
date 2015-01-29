@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84018D2F1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 84018D2E1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m */; };
 		BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF201F9E1A71F10900A571C8 /* SpyResource.bundle */; };
 		BF201FA21A72452D00A571C8 /* SPYConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BF201FA11A72452D00A571C8 /* SPYConnection.m */; };
 		BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */; };
@@ -57,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84018D2D1A7A6AEE00DDF07E /* NSStream+StreamsToHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSStream+StreamsToHost.h"; path = "networking/NSStream+StreamsToHost.h"; sourceTree = "<group>"; };
+		84018D2E1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSStream+StreamsToHost.m"; path = "networking/NSStream+StreamsToHost.m"; sourceTree = "<group>"; };
 		BF201F9E1A71F10900A571C8 /* SpyResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpyResource.bundle; path = thespy/SpyResource.bundle; sourceTree = "<group>"; };
 		BF201FA01A72452D00A571C8 /* SPYConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYConnection.h; path = networking/SPYConnection.h; sourceTree = "<group>"; };
 		BF201FA11A72452D00A571C8 /* SPYConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYConnection.m; path = networking/SPYConnection.m; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 				BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */,
 				BF201FA01A72452D00A571C8 /* SPYConnection.h */,
 				BF201FA11A72452D00A571C8 /* SPYConnection.m */,
+				84018D2D1A7A6AEE00DDF07E /* NSStream+StreamsToHost.h */,
+				84018D2E1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m */,
 			);
 			name = networking;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 				BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */,
 				BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */,
 				BF77AD3B1A6F808A008CCFB9 /* HistoryListViewController.m in Sources */,
+				84018D2F1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m in Sources */,
 				BF77AD2C1A6E47FF008CCFB9 /* ActionView.m in Sources */,
 				BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */,
 				BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */,

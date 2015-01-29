@@ -97,16 +97,21 @@
     NSString *hostname = [server hostName];
     NSString *type = [server type];
     NSLog(@"host:%@,  port:%d,  type:%@", hostname, (int)port, type);
+    NSArray *arr = [server addresses];
     
     //解析成功后连接服务器
     NSInputStream *inputs;
     NSOutputStream *outputs;
-    [NSStream getStreamsToHostWithName:hostname port:port inputStream:&inputs outputStream:&outputs];
+//    BOOL success = [server getInputStream:&inputs outputStream:&outputs];
+
+    [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
     if (inputs!=nil&&outputs!=nil) {
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
         //向服务器发送客户端数据
-//        [connection writeData:<#(NSData *)#>];//写入头像数据
-//        [connection writeData:<#(NSData *)#>];//写入用户名
+        UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+//        NSString *name = [[SPYFileUtil shareInstance]getUserName];
+        [connection writeData:UIImagePNGRepresentation(img)];//写入头像数据
+//        [connection writeData:[type dataUsingEncoding:NSUTF8StringEncoding]];//写入用户名
     }
 }
 

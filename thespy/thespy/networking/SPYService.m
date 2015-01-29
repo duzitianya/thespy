@@ -51,14 +51,18 @@
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    NSData *himg = connection.readGameData;//first read HeadImg;
-    NSData *nameAndId = connection.readGameData;//second read name,id
+    NSData *himg = [connection readGameData];//first read HeadImg;
+    NSLog(@"reciveData length--->%d", (int)[himg length]);
+//    NSData *nameAndId = connection.readGameData;//second read name,id
+    NSString *strs = @"abc,abc";
+    NSData *name = [strs dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *str = [[NSString alloc] initWithData:nameAndId encoding:NSUTF8StringEncoding];
+    NSString *str = [[NSString alloc] initWithData:name encoding:NSUTF8StringEncoding];
     NSString *nickname = [str componentsSeparatedByString:@","][0];
     NSString *devicename = [str componentsSeparatedByString:@","][1];
     
-    PlayerBean *player = [PlayerBean initWithData:himg Name:nickname DeviceName:devicename];
+    UIImage *img = [UIImage imageWithData:himg];
+    PlayerBean *player = [PlayerBean initWithData:img Name:nickname DeviceName:devicename];
     player.connection = connection;
 //    [self.clients addObject:player];
     [self.delegate reloadClientListTable:player];

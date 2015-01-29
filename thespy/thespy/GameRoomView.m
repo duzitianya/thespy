@@ -42,11 +42,11 @@
     [self.view addSubview:self.nowPlayerNum];
     currentY += 30;
     
-    GameRoomSubview *subview = [[GameRoomSubview alloc] initWithNibName:@"GameRoomSubview" bundle:[NSBundle mainBundle]];
-    subview.view.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-currentY);
-    [subview setMainPlayer:self.mainPlayer];
-    [self addChildViewController:subview];
-    [self.view addSubview:subview.view];
+    self.subRoomView = [[GameRoomSubview alloc] initWithNibName:@"GameRoomSubview" bundle:[NSBundle mainBundle]];
+    self.subRoomView.view.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-currentY);
+    [self.subRoomView setMainPlayer:self.mainPlayer];
+    [self addChildViewController:self.subRoomView];
+    [self.view addSubview:self.subRoomView.view];
     
     self.server = [SPYService shareInstance];
     self.server.delegate = self;
@@ -60,6 +60,7 @@
 - (void) reloadClientListTable:(PlayerBean*)player{
     [self.subRoomView.allPlayer addObject:player];
     [self.subRoomView.collectionView reloadData];
+    [self.subRoomView reloadInputViews];
     [self updateOnlinePlayer];
 }
 

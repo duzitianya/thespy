@@ -17,31 +17,6 @@
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat currentY = barHeight + 20;
     
-//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 30)];
-//    title.text = [NSString stringWithFormat:@"总人数:%d,平民:%d,卧底:%d,白板:%d", (int)_totalNum, (int)_citizenNum,(int) _spyNum, (int)_whiteBoardNum];
-//    title.backgroundColor = [UIColor darkGrayColor];
-//    title.textAlignment = UITextAlignmentCenter;
-//    [self.view addSubview:title];
-//    currentY += 30;
-//    
-//    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 5)];
-//    line.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:line];
-//    currentY += 5;
-//    
-//    UILabel *nowPlayer = [[UILabel alloc]initWithFrame:CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH/2, 30)];
-//    nowPlayer.text = @"目前参与人数:";
-//    nowPlayer.backgroundColor = [UIColor darkGrayColor];
-//    nowPlayer.textAlignment = UITextAlignmentRight;
-//    [self.view addSubview:nowPlayer];
-    
-//    self.nowPlayerNum = [[UILabel alloc] initWithFrame:CGRectMake(nowPlayer.frame.size.width, currentY, kMAIN_SCREEN_WIDTH/2, 30)];
-//    self.nowPlayerNum.text = @"1";
-//    self.nowPlayerNum.backgroundColor = [UIColor darkGrayColor];
-//    self.nowPlayerNum.textAlignment = UITextAlignmentLeft;
-//    [self.view addSubview:self.nowPlayerNum];
-//    currentY += 30;
-    
     self.subRoomView = [[GameRoomSubview alloc] initWithNibName:@"GameRoomSubview" bundle:[NSBundle mainBundle]];
     self.subRoomView.view.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-currentY);
     [self.subRoomView setMainPlayer:self.mainPlayer];

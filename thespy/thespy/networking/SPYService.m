@@ -69,6 +69,7 @@
     [self.server removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.server setDelegate:nil];
     [self.server stop];
+    self.isServerOpen = NO;
     NSLog(@"SPYService is stop...");
 }
 

@@ -13,6 +13,7 @@
 #import "GameRoomSubview.h"
 #import "PlayerListViewController.h"
 #import "SPYService.h"
+#import "GameRoomHeader.h"
 
 @interface GameRoomView : UIViewController<SPYServiceDelegate, UIAlertViewDelegate>
 @property (nonatomic) NSInteger totalNum;       //参与者总数

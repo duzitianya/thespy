@@ -21,6 +21,8 @@
 		BF3DBC121A76449600A87FD2 /* GameRoomSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */; };
 		BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */; };
 		BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */; };
+		BF6D252A1A7B760C001F698A /* GameRoomHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D25291A7B760C001F698A /* GameRoomHeader.m */; };
+		BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */; };
 		BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACEA1A6E4725008CCFB9 /* main.m */; };
 		BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77ACED1A6E4725008CCFB9 /* AppDelegate.m */; };
 		BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF77ACF51A6E4725008CCFB9 /* Images.xcassets */; };
@@ -81,6 +83,9 @@
 		BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYFileUtil.m; path = files/SPYFileUtil.m; sourceTree = "<group>"; };
 		BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSubView.h; sourceTree = "<group>"; };
 		BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSubView.m; sourceTree = "<group>"; };
+		BF6D25281A7B760C001F698A /* GameRoomHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomHeader.h; sourceTree = "<group>"; };
+		BF6D25291A7B760C001F698A /* GameRoomHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomHeader.m; sourceTree = "<group>"; };
+		BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomHeader.xib; sourceTree = "<group>"; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -259,6 +264,9 @@
 				BF3DBC071A76351700A87FD2 /* GameRoomCell.xib */,
 				BF341FD21A78C28A00E5C0FC /* UIImage+category.h */,
 				BF341FD31A78C28A00E5C0FC /* UIImage+category.m */,
+				BF6D25281A7B760C001F698A /* GameRoomHeader.h */,
+				BF6D25291A7B760C001F698A /* GameRoomHeader.m */,
+				BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -384,6 +392,7 @@
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
 				BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */,
+				BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */,
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
@@ -409,6 +418,7 @@
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
 				BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */,
+				BF6D252A1A7B760C001F698A /* GameRoomHeader.m in Sources */,
 				BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,

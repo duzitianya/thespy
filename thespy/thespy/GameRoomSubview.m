@@ -43,21 +43,23 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"self.allPlayer count====>%d", (int)[self.allPlayer count]);
-    return [self.allPlayer count];
+//    return [self.allPlayer count];
+    return 20;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
+    [cell.contentView subviews];
     GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-    [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
+    //    [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
+    [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:0]];
     gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (int)(indexPath.row+1)];
     [cell.contentView addSubview:gameRoomCell];
+    
     return cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
 
 
 

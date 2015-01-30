@@ -43,8 +43,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return [self.allPlayer count];
-    return 20;
+    return [self.allPlayer count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,14 +52,13 @@ static NSString * const reuseIdentifier = @"Cell";
     NSArray *subs = [cell.contentView subviews];
     if (subs==nil||[subs count]==0) {//说明第一次初始化
         GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-        //    [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
-        [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:0]];
+        [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
         gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (int)(indexPath.row+1)];
         [cell.contentView addSubview:gameRoomCell];
     }else{
         if ([subs[0] isKindOfClass:[GameRoomCell class]]) {
             GameRoomCell *gameRoomCell = (GameRoomCell*)subs[0];
-            [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:0]];
+            [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
             gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (int)(indexPath.row+1)];
         }
     }

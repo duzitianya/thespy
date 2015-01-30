@@ -39,18 +39,25 @@
 - (void) sliderValueChanged:(id)sender{
     UISlider *s = sender;
     self.totalNum = [[NSNumber numberWithFloat:s.value] intValue];
-    self.totalLabel.text = [NSString stringWithFormat:@"%d", self.totalNum];
+    self.totalLabel.text = [NSString stringWithFormat:@"%d", (int)self.totalNum];
+    
+    self.whiteboardLabel.text = @"0";
+    self.whiteBoardNum = 0;
+    
+    self.spyLabel.text = @"1";
+    self.spyNum = 1;
     
     self.citizenNum = self.totalNum - self.whiteBoardNum - self.spyNum;
-    self.citizenLabel.text = [NSString stringWithFormat:@"%d", self.citizenNum];
+    self.citizenLabel.text = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
+    
 }
 
 - (NSInteger) getMaxSpyCount:(NSInteger)total{
-    return total * 3 / 7;
+    return total * 8 / 20;
 }
 
 - (IBAction)whiteboardButtonClick:(UIButton *)sender {
-    int tag = sender.tag;
+    NSInteger tag = sender.tag;
     if (tag == 21) {
         if (self.whiteBoardNum>0) {
             self.whiteBoardNum -= 1;
@@ -63,12 +70,12 @@
             self.citizenNum -= 1;
         }
     }
-    self.whiteboardLabel.text = [NSString stringWithFormat:@"%d", self.whiteBoardNum];
-    self.citizenLabel.text = [NSString stringWithFormat:@"%d", self.citizenNum];
+    self.whiteboardLabel.text = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
+    self.citizenLabel.text = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
 }
 
 - (IBAction)spyButtonClick:(UIButton *)sender {
-    int tag = sender.tag;
+    NSInteger tag = sender.tag;
     if (tag == 11) {
         if (self.spyNum>1) {
             self.spyNum -= 1;
@@ -81,8 +88,8 @@
             self.citizenNum -= 1;
         }
     }
-    self.spyLabel.text = [NSString stringWithFormat:@"%d", self.spyNum];
-    self.citizenLabel.text = [NSString stringWithFormat:@"%d", self.citizenNum];
+    self.spyLabel.text = [NSString stringWithFormat:@"%d", (int)self.spyNum];
+    self.citizenLabel.text = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
 }
 
 

@@ -19,8 +19,9 @@
     
     self.layer.cornerRadius = 4;
     self.playerHeader.layer.cornerRadius = 4;
-//    self.playerHeader.layer.cornerRadius = 35;
-//    self.playerHeader.layer.masksToBounds = YES;
+    
+    self.countLabel.layer.cornerRadius = 10;
+    self.countLabel.layer.masksToBounds = YES;
 }
 
 @end

@@ -18,4 +18,6 @@
 - (NSData*)readGameData;
 //发送数据
 - (NSInteger) writeData:(NSData*)data;
+
+- (void) closeConnection;
 @end

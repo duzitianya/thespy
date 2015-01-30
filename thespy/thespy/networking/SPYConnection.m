@@ -27,6 +27,10 @@
 }
 
 - (void) dealloc{
+    [self closeConnection];
+}
+
+- (void) closeConnection{
     if (self.input!=nil) {
         [self.input close];
         [self.input removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -37,6 +41,7 @@
         [self.output close];
         self.output = nil;
     }
+    NSLog(@"SPYConccetion is close...");
 }
 
 - (NSData*)readGameData{

@@ -81,8 +81,9 @@
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
     GameRoomView *room = [[GameRoomView alloc] init];
-    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer];
+    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer asServer:YES];
     room.title = @"等待加入";
+    
     [self.navigationController pushViewController:room animated:YES];
 }
 
@@ -93,7 +94,8 @@
     NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
     PlayerListViewController *plvc = [[PlayerListViewController alloc] init:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum];
-    plvc.title = @"查找服务";
+    plvc.title = @"游戏列表";
+    
     [self.navigationController pushViewController:plvc animated:YES];
 }
 
@@ -125,5 +127,6 @@
 - (void) dealloc{
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }
+
 
 @end

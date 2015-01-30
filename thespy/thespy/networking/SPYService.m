@@ -19,18 +19,8 @@
     return shared;
 }
 
-- (id) init{
-    self = [super init];
-    if (self) {
-//        self.clients = [[NSMutableArray alloc] initWithCapacity:5];
-//        [self publishServer];
-    }
-    return self;
-}
-
 - (void) dealloc{
-    [self.server setDelegate:nil];
-    [self.server stop];
+    [self closeService];
 }
 
 - (void) publishServer{
@@ -38,22 +28,18 @@
     NSNetService *server = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",deviceName]];
     server.includesPeerToPeer = NO;
     [server setDelegate:self];
-//    [server resolveWithTimeout:30];
     [server scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [server publishWithOptions:NSNetServiceListenForConnections];
     self.server = server;
 }
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
-    NSLog(@"-------------did not publish-----------");
     self.isServerOpen = NO;
 }
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
     NSData *himg = [connection readGameData];//first read HeadImg;
-    NSLog(@"reciveData length--->%d", (int)[himg length]);
-//    NSData *nameAndId = connection.readGameData;//second read name,id
     NSString *strs = @"abc,abc";
     NSData *name = [strs dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -64,26 +50,26 @@
     UIImage *img = [UIImage imageWithData:himg];
     PlayerBean *player = [PlayerBean initWithData:img Name:nickname DeviceName:devicename];
     player.connection = connection;
-//    [self.clients addObject:player];
     [self.delegate reloadClientListTable:player];
+    
+    //获得客户端成功后，写会服务器端基础数据
+    
 }
 
-//服务发布成功后回调，打开输入输出流
+//服务发布成功后回调
 - (void) netServiceDidPublish:(NSNetService *)sender{
-    NSInputStream *inputstr = nil;
-    NSOutputStream *outputstr = nil;
-//    [self.server getInputStream:&inputstr outputStream:&outputstr];
-    
-//    self.connection = [[SPYConnection alloc] initWithInput:inputstr output:outputstr];
-    
-    NSLog(@"%@------%d", self.server.hostName, (int)self.server.port);
-    
     self.isServerOpen = YES;
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
+    NSLog(@"event-->%d", (int)eventCode);
+}
 
-    NSLog(@"event-->%ld", eventCode);
+- (void) closeService{
+    [self.server removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [self.server setDelegate:nil];
+    [self.server stop];
+    NSLog(@"SPYService is stop...");
 }
 
 @end

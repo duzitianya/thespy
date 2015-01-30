@@ -52,6 +52,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
     [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
+    gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (int)(indexPath.row+1)];
     [cell.contentView addSubview:gameRoomCell];
     return cell;
 }

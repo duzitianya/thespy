@@ -28,5 +28,6 @@
 
 +(SPYService *)shareInstance;
 - (void) publishServer;
+- (void) closeService;
 
 @end

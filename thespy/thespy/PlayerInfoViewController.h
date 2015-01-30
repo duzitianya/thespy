@@ -30,6 +30,4 @@
 @property (nonatomic) NSInteger citizenNum;     //平民数
 @property (nonatomic) NSInteger whiteBoardNum;  //白板数
 
-//@property (strong, nonatomic) UINavigationController *navController;
-
 @end

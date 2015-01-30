@@ -23,7 +23,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
-//    vc.navController = [[UINavigationController alloc] init];
     vc.title = @"我的游戏";
     
     self.navController = [[UINavigationController alloc] init];
@@ -31,10 +30,6 @@
     [self.window addSubview:self.navController.view];
 //    [self.window setRootViewController:vc];
     [self.window makeKeyAndVisible];
-    
-    //初始化数据库，如果已经初始化过，不再继续
-//    GameResult *result = [[GameResult alloc] initWithName:@"小红帽" Role:@"卧底" Victory:@"胜利"];
-//    [[GameDB shareInstance] addGameResult:result];
     
     return YES;
 }

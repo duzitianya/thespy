@@ -48,23 +48,22 @@
     [self addChildViewController:self.subRoomView];
     [self.view addSubview:self.subRoomView.view];
     
-    self.server = [SPYService shareInstance];
-    self.server.delegate = self;
-    if (!self.server.isServerOpen) {
-        [self.server publishServer];
-    }
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(closeService)];
+    UIImage *image = [UIImage imageNamed:@"SpyResource.bundle/left_icon"];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeService)];
+    leftButton.title = @"退出游戏";
+    self.navigationItem.leftBarButtonItem = leftButton;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOnlinePlayer:) name:@"updateOnlinePlayer" object:nil];
 }
 
 - (void) reloadClientListTable:(PlayerBean*)player{
     [self.subRoomView.allPlayer addObject:player];
     [self.subRoomView.collectionView reloadData];
-    [self.subRoomView reloadInputViews];
+//    [self.subRoomView reloadInputViews];
     [self updateOnlinePlayer];
 }
 
-- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer{
+- (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer asServer:(BOOL)asServer{
     self.totalNum = totalNum;
     self.spyNum = spyNum;
     self.citizenNum = citizenNum;
@@ -72,10 +71,33 @@
     self.mainPlayer = mainPlayer;
     
     self.otherPlayer = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    self.asServer = asServer;
+    if (self.asServer) {
+        self.server = [SPYService shareInstance];
+        self.server.delegate = self;
+        if (!self.server.isServerOpen) {
+            [self.server publishServer];
+        }
+    }
 }
 
 - (void) updateOnlinePlayer{
     self.nowPlayerNum.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
+}
+
+- (void)closeService{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"终止", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        [self.server closeService];
+        [self.connection closeConnection];
+        self.connections = nil;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

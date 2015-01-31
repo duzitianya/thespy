@@ -21,11 +21,11 @@
     NSString *dname = [UIDevice currentDevice].name;
     PlayerBean *bean = [[PlayerBean alloc] init];
     bean.img = img;
-    if (name||[name length]==0) {
+    if (name==nil||[name length]==0) {
         name = dname;
     }
     bean.name = name;
-    if (deviceName||[deviceName length]==0) {
+    if (deviceName==nil||[deviceName length]==0) {
         deviceName = dname;
     }
     bean.deviceName = deviceName;

@@ -25,7 +25,7 @@
     
     GameRoomHeader *nowPlayer = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomHeader" owner:self options:nil] lastObject];
     nowPlayer.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 117);
-    [self.view insertSubview:nowPlayer aboveSubview:self.subRoomView];
+    [self.view insertSubview:nowPlayer aboveSubview:self.subRoomView.view];
 
     UIImage *image = [UIImage imageNamed:@"SpyResource.bundle/left_icon"];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeService)];

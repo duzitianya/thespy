@@ -11,8 +11,7 @@
 @implementation GameRoomHeader
 
 - (void)awakeFromNib{
-    self.optionView.layer.cornerRadius = 5;
-    self.playerNumView.layer.cornerRadius = 5;
+    self.containerView.layer.cornerRadius = 5;
 }
 
 @end

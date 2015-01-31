@@ -23,9 +23,14 @@
     [self addChildViewController:self.subRoomView];
     [self.view addSubview:self.subRoomView.view];
     
-    GameRoomHeader *nowPlayer = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomHeader" owner:self options:nil] lastObject];
-    nowPlayer.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 117);
-    [self.view insertSubview:nowPlayer aboveSubview:self.subRoomView.view];
+    self.gameRoomHeader = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomHeader" owner:self options:nil] lastObject];
+    self.gameRoomHeader.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, 117);
+    [self updateOnlinePlayer];//更新当前参与人数
+    self.gameRoomHeader.totalLabel.text = [NSString stringWithFormat:@"总人数 %d 人", (int)self.totalNum];
+    self.gameRoomHeader.citizenLabel.text = [NSString stringWithFormat:@"平民数 %d 人", (int)self.citizenNum];
+    self.gameRoomHeader.spyLabel.text = [NSString stringWithFormat:@"卧底数 %d 人", (int)self.spyNum];
+    self.gameRoomHeader.whiteboardLabel.text = [NSString stringWithFormat:@"白板数 %d 人", (int)self.whiteBoardNum];
+    [self.view insertSubview:self.gameRoomHeader aboveSubview:self.subRoomView.view];
 
     UIImage *image = [UIImage imageNamed:@"SpyResource.bundle/left_icon"];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeService)];
@@ -60,7 +65,7 @@
 }
 
 - (void) updateOnlinePlayer{
-    self.nowPlayerNum.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
+    self.gameRoomHeader.currentLabel.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
 }
 
 - (void)closeService{

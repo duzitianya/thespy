@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UILabel *nowPlayerNum;
 @property (nonatomic, strong) GameRoomSubview *subRoomView;
 @property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong) GameRoomHeader *gameRoomHeader;
 
 @property (nonatomic) BOOL asServer;//标记是否为主机
 @property (nonatomic, strong) SPYService *server;//作为主机时不为空

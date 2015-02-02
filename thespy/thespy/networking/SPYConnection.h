@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface SPYConnection : NSObject<NSStreamDelegate>
 
@@ -15,7 +16,7 @@
 
 - (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs;
 //读数据
-- (NSData*)readGameData;
+- (NSData*)readGameDataWithInput:(NSInputStream*)input;
 //发送数据
 - (NSInteger) writeData:(NSData*)data;
 

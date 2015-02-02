@@ -39,7 +39,7 @@
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    NSData *data = [connection readGameData];
+    NSData *data = [connection readGameDataWithInput:nil];
     NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if ([arrs count]==3) {
         NSData *imgData = arrs[0];
@@ -50,12 +50,13 @@
         PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
         player.connection = connection;
         [self.delegate reloadClientListTable:player];
-        
-        //获得客户端成功后，向所有已连接客户端写回服务器端基础数据
-        NSString *repeat = @"success";
-        NSInteger dataLength = [connection writeData:[repeat dataUsingEncoding:NSUTF8StringEncoding]];
-        NSLog(@"repeat length ... %d", (int)dataLength);
     }
+    
+    //获得客户端成功后，向所有已连接客户端写回服务器端基础数据
+    NSArray *gamedata =[[NSArray alloc]initWithObjects:@"15", @"10", @"3", @"2", nil];
+    NSData *repeatData = [NSKeyedArchiver archivedDataWithRootObject:gamedata];
+    NSInteger dataLength = [connection writeData:repeatData];
+    NSLog(@"repeat length ... %d", (int)dataLength);
     
 }
 

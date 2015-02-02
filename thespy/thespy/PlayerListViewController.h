@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SPYServiceBrowser.h"
 #import "SPYService.h"
+#import "GameRoomView.h"
 
 @interface PlayerListViewController : UITableViewController<SPYServiceBrowserDelegate>
 @property (nonatomic) NSInteger totalNum;
@@ -16,10 +17,6 @@
 @property (nonatomic) NSInteger whiteBoardNum;
 @property (nonatomic) NSInteger spyNum;
 
-@property (nonatomic, strong) SPYService *server;
 @property (nonatomic, strong) SPYServiceBrowser *serverBrowser;
-@property (nonatomic, strong) NSArray *playerList;
-
--(instancetype)init:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteboardNum;
 
 @end

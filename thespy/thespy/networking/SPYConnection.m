@@ -28,6 +28,7 @@
 
 - (void) dealloc{
     [self closeConnection];
+    NSLog(@"SPYConnection's dealloc has called....%@", [UIDevice currentDevice].name);
 }
 
 - (void) closeConnection{
@@ -41,15 +42,17 @@
         [self.output close];
         self.output = nil;
     }
-    NSLog(@"SPYConccetion is close...");
 }
 
-- (NSData*)readGameData{
+- (NSData*)readGameDataWithInput:(NSInputStream*)input{
+    if (input==nil) {
+        input = self.input;
+    }
     NSMutableData *mdata = [[NSMutableData alloc] initWithCapacity:1024];
     uint8_t buf[1024];
     BOOL shouldBreak = NO;
     while (!shouldBreak) {
-        long numBytesRead = [self.input read:buf maxLength:sizeof(buf)-1];
+        long numBytesRead = [input read:buf maxLength:sizeof(buf)-1];
         if (numBytesRead > 0) {
             //读取数据
             [mdata appendData:[[NSData alloc] initWithBytes:buf length:numBytesRead]];
@@ -63,8 +66,6 @@
 //发送数据
 - (NSInteger) writeData:(NSData*)data{
     //发送数据
-//    NSData *data = [@"ready" dataUsingEncoding:NSUTF8StringEncoding];
-//    [self.output write:[data bytes] maxLength:[data length]];
     NSLog(@"writeData length---->%d", (int)[data length]);
     NSInteger length = [data length];
     uint8_t buffer[length];
@@ -73,27 +74,15 @@
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    NSLog(@" >> NSStreamDelegate in Thread %@", [NSThread currentThread]);
-    
-    switch (eventCode) {
-        case NSStreamEventHasBytesAvailable: {
-            uint8_t buf[1024];
-            int numBytesRead = [(NSInputStream *)aStream read:buf maxLength:sizeof(buf)-1];
-            if (numBytesRead > 0) {
-                //读取数据
-                [[NSData alloc] initWithBytes:buf length:numBytesRead];
-            }
-//            [self cleanUpStream:aStream];
-            break;
-        }
-        case NSStreamEventErrorOccurred: {
-            break;
-        }
-        case NSStreamEventEndEncountered: {
-            break;
-        }
-        default:
-            break;
+    if (eventCode==NSStreamEventHasSpaceAvailable&&[aStream isKindOfClass:[NSOutputStream class]]) {//写操作
+        NSOutputStream *out = (NSOutputStream*)aStream;
+        NSLog(@"write----from--->%@,  %@", [UIDevice currentDevice].name, [out description]);
+    }
+    if (eventCode==NSStreamEventHasBytesAvailable&&[aStream isKindOfClass:[NSInputStream class]]) {//读操作
+        NSInputStream *input = (NSInputStream *)aStream;
+        NSLog(@"read----from--->%@,  %@", [UIDevice currentDevice].name, [input description]);
+        NSData *data = [self readGameDataWithInput:input];
+//        NSLog(@"read data>>>>>>>length : %d, content : %@", (int)[data length], [NSKeyedUnarchiver unarchiveObjectWithData:data]);
     }
 }
 

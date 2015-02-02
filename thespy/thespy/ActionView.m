@@ -51,8 +51,8 @@
 - (void) buttonClick:(id)sender{
     if(sender&&[sender isKindOfClass:[UIButton class]]){
         //查看设备蓝牙状态
-        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-        NSLog(@"BLE state...%ld", self.centralManager.state);
+//        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+//        NSLog(@"BLE state...%ld", self.centralManager.state);
         
         UIButton *button = sender;
         NSInteger tag = button.tag;

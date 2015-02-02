@@ -13,23 +13,6 @@
 @end
 
 @implementation PlayerListViewController
-@synthesize playerList ;
-
-- (void)awakeFromNib{
-    
-}
-
--(instancetype)init:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteboardNum{
-    
-    self = [super init];
-    if (self) {
-        self.totalNum = totalNum;
-        self.spyNum = spyNum;
-        self.citizenNum = citizenNum;
-        self.whiteBoardNum = whiteboardNum;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,12 +41,6 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *key = @"browserCell";
-    
-    /*UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:key forIndexPath:indexPath];
-    if (cell==nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:key];
-    }*/
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     
     NSNetService *service = self.serverBrowser.servers[indexPath.row];
@@ -80,6 +57,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.serverBrowser connectNSServer:indexPath.row];
+    
+//    GameRoomView *room = [[GameRoomView alloc] init];
+//    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer asServer:YES];
+//    room.title = @"等待开始";
+    
+//    [self.navigationController pushViewController:room animated:YES];
 }
 
 @end

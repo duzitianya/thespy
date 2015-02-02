@@ -17,10 +17,8 @@
         shared = [[SPYFileUtil alloc] init];
         NSString *dataDirectory = [NSHomeDirectory() stringByAppendingString:@"/Documents/thespy"];
         BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:dataDirectory];
-        NSLog(@"exist>>>>>%d", exist);
         if (!exist) {
             BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:dataDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-            NSLog(@"create dir success >>> %d", success);
         }
     });
     return shared;
@@ -41,7 +39,6 @@
 - (void) saveUserName:(NSString*)userName{
     NSString *dataDirectory = [NSHomeDirectory() stringByAppendingString:APP_PLAYER_DATA_HOME];
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:dataDirectory contents:[userName dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
-    NSLog(@"write to file %d", success);
 }
 
 - (UIImage*) getUserHeader{

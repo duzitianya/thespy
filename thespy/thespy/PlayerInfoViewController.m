@@ -88,12 +88,8 @@
 }
 
 - (void) asClient{
-    NSInteger totalNum = self.mainGameView.totalNum;
-    NSInteger citizenNum = self.mainGameView.citizenNum;
-    NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
-    NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    PlayerListViewController *plvc = [[PlayerListViewController alloc] init:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum];
+    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
     plvc.title = @"游戏列表";
     
     [self.navigationController pushViewController:plvc animated:YES];

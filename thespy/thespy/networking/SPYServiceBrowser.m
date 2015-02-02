@@ -86,7 +86,7 @@
 - (void) connectNSServer:(NSInteger)index{
     self.service = [self.servers objectAtIndex:index];
     self.service.delegate = self;
-    [self.service resolveWithTimeout:30];
+    [self.service resolveWithTimeout:5];
 }
 
 //解析成功
@@ -111,17 +111,13 @@
         NSString *deviceName = [UIDevice currentDevice].name;
         NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
         NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-//        NSMutableData *mdata = [[NSMutableData alloc]init];
-//        [mdata appendData:sendData];
-//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:mdata];
-//        [archiver finishEncoding];
         [connection writeData:sendData];
+        
+        NSData *repeatData = [connection readGameDataWithInput:inputs];
+        NSArray *rarr = [NSKeyedUnarchiver unarchiveObjectWithData:repeatData];
+        NSLog(@"rarr--->%d", [rarr count]);
     }
 }
 
-- (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
-    SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    NSLog(@"client didAcceptConnection");
-}
 
 @end

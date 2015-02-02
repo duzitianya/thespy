@@ -22,7 +22,7 @@
 @interface SPYService : NSObject<NSNetServiceDelegate>
 @property (nonatomic, strong) id<SPYServiceDelegate> delegate;
 @property (nonatomic, strong) NSNetService *server;
-@property (nonatomic, strong) SPYConnection *connection;
+@property (nonatomic, strong) SPYConnection *connection;//客户端SPYConnection
 //@property (nonatomic, strong) NSMutableArray *clients;//PlayerBean
 @property (nonatomic) BOOL isServerOpen;
 

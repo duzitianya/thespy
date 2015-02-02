@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "thespy/networking/SPYConnection.m"
-            timestampString = "444294840.627813"
+            filePath = "thespy/networking/SPYService.m"
+            timestampString = "444556273.17106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "-closeConnection"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-netService:didAcceptConnectionWithInputStream:outputStream:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

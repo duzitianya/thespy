@@ -41,7 +41,6 @@
 - (void) reloadClientListTable:(PlayerBean*)player{
     [self.subRoomView.allPlayer addObject:player];
     [self.subRoomView.collectionView reloadData];
-//    [self.subRoomView reloadInputViews];
     [self updateOnlinePlayer];
 }
 

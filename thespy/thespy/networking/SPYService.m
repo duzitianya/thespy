@@ -39,20 +39,23 @@
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    NSData *himg = [connection readGameData];//first read HeadImg;
-    NSString *strs = @"abc,abc";
-    NSData *name = [strs dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSString *str = [[NSString alloc] initWithData:name encoding:NSUTF8StringEncoding];
-    NSString *nickname = [str componentsSeparatedByString:@","][0];
-    NSString *devicename = [str componentsSeparatedByString:@","][1];
-    
-    UIImage *img = [UIImage imageWithData:himg];
-    PlayerBean *player = [PlayerBean initWithData:img Name:nickname DeviceName:devicename];
-    player.connection = connection;
-    [self.delegate reloadClientListTable:player];
-    
-    //获得客户端成功后，写会服务器端基础数据
+    NSData *data = [connection readGameData];
+    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if ([arrs count]==3) {
+        NSData *imgData = arrs[0];
+        NSString *name = arrs[1];
+        NSString *deviceName = arrs[2];
+        
+        UIImage *img = [UIImage imageWithData:imgData];
+        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
+        player.connection = connection;
+        [self.delegate reloadClientListTable:player];
+        
+        //获得客户端成功后，向所有已连接客户端写回服务器端基础数据
+        NSString *repeat = @"success";
+        NSInteger dataLength = [connection writeData:[repeat dataUsingEncoding:NSUTF8StringEncoding]];
+        NSLog(@"repeat length ... %d", (int)dataLength);
+    }
     
 }
 

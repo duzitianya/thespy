@@ -106,10 +106,16 @@
     if (inputs!=nil&&outputs!=nil) {
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
         //向服务器发送客户端数据
-        UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
-        NSString *name = [[SPYFileUtil shareInstance]getUserName];
-        [connection writeData:UIImagePNGRepresentation(img)];//写入头像数据
-        [connection writeData:[type dataUsingEncoding:NSUTF8StringEncoding]];//写入用户名
+        UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
+        NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+        NSString *deviceName = [UIDevice currentDevice].name;
+        NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+        NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+//        NSMutableData *mdata = [[NSMutableData alloc]init];
+//        [mdata appendData:sendData];
+//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:mdata];
+//        [archiver finishEncoding];
+        [connection writeData:sendData];
     }
 }
 

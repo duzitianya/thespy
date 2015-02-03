@@ -47,6 +47,7 @@
 		BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD4F1A70E593008CCFB9 /* SPYServiceBrowser.m */; };
 		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
 		BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */; };
+		BFFA69551A80B4CF0097C85D /* NetWorkingDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA69541A80B4CF0097C85D /* NetWorkingDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,8 @@
 		BFC3B2B11A736FC0001FB912 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSubView.xib; sourceTree = "<group>"; };
+		BFFA69531A80B4CF0097C85D /* NetWorkingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetWorkingDelegate.h; path = networking/NetWorkingDelegate.h; sourceTree = "<group>"; };
+		BFFA69541A80B4CF0097C85D /* NetWorkingDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetWorkingDelegate.m; path = networking/NetWorkingDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +304,8 @@
 				BF201FA11A72452D00A571C8 /* SPYConnection.m */,
 				84018D2D1A7A6AEE00DDF07E /* NSStream+StreamsToHost.h */,
 				84018D2E1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m */,
+				BFFA69531A80B4CF0097C85D /* NetWorkingDelegate.h */,
+				BFFA69541A80B4CF0097C85D /* NetWorkingDelegate.m */,
 			);
 			name = networking;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */,
+				BFFA69551A80B4CF0097C85D /* NetWorkingDelegate.m in Sources */,
 				BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */,
 				BF77AD3B1A6F808A008CCFB9 /* HistoryListViewController.m in Sources */,
 				84018D2F1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m in Sources */,

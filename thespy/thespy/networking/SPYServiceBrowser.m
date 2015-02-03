@@ -86,7 +86,7 @@
 - (void) connectNSServer:(NSInteger)index{
     self.service = [self.servers objectAtIndex:index];
     self.service.delegate = self;
-    [self.service resolveWithTimeout:5];
+    [self.service resolveWithTimeout:50];
 }
 
 //解析成功
@@ -104,18 +104,19 @@
 
     [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
     if (inputs!=nil&&outputs!=nil) {
-        SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
+        self.connection = [[SPYConnection alloc] initWithInput:inputs output:outputs];
         //向服务器发送客户端数据
         UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
         NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
         NSString *deviceName = [UIDevice currentDevice].name;
         NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
         NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-        [connection writeData:sendData];
+        [self.connection writeData:sendData];
         
-        NSData *repeatData = [connection readGameDataWithInput:inputs];
+        NSData *repeatData = [self.connection readGameDataWithInput:inputs];
         NSArray *rarr = [NSKeyedUnarchiver unarchiveObjectWithData:repeatData];
-        NSLog(@"rarr--->%d", [rarr count]);
+        NSLog(@"rarr--->%d", (int)[rarr count]);
+        [self.connection closeConnection];
     }
 }
 

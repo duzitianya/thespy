@@ -66,23 +66,51 @@
 //发送数据
 - (NSInteger) writeData:(NSData*)data{
     //发送数据
-    NSLog(@"writeData length---->%d", (int)[data length]);
     NSInteger length = [data length];
     uint8_t buffer[length];
     [data getBytes:buffer length:length];
+    [self.output open];
+    NSLog(@"writeData length---->%d, %d", (int)[data length], [self.output hasSpaceAvailable]);
     return [self.output write:buffer maxLength:length];
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    if (eventCode==NSStreamEventHasSpaceAvailable&&[aStream isKindOfClass:[NSOutputStream class]]) {//写操作
-        NSOutputStream *out = (NSOutputStream*)aStream;
-        NSLog(@"write----from--->%@,  %@", [UIDevice currentDevice].name, [out description]);
-    }
-    if (eventCode==NSStreamEventHasBytesAvailable&&[aStream isKindOfClass:[NSInputStream class]]) {//读操作
-        NSInputStream *input = (NSInputStream *)aStream;
-        NSLog(@"read----from--->%@,  %@", [UIDevice currentDevice].name, [input description]);
-        NSData *data = [self readGameDataWithInput:input];
-//        NSLog(@"read data>>>>>>>length : %d, content : %@", (int)[data length], [NSKeyedUnarchiver unarchiveObjectWithData:data]);
+    NSLog(@"NSStreamDelegate--->stream status : %d", (int)[aStream streamStatus]);
+    switch (eventCode) {
+        case NSStreamEventNone:
+            NSLog(@"SPYConnection-->NSStreamEventNone");
+            break;
+        case NSStreamEventOpenCompleted:
+            NSLog(@"SPYConnection-->NSStreamEventOpenCompleted");
+            break;
+        case NSStreamEventHasBytesAvailable:
+            NSLog(@"SPYConnection-->NSStreamEventHasBytesAvailable");
+            NSLog(@"%@", [aStream description]);
+            break;
+        case NSStreamEventHasSpaceAvailable:
+            NSLog(@"SPYConnection-->NSStreamEventHasSpaceAvailable");
+            NSLog(@"%@", [aStream description]);
+            break;
+        case NSStreamEventErrorOccurred:{
+            NSLog(@"SPYConnection-->NSStreamEventErrorOccurred");
+            //出错的时候
+            NSError *error = [aStream streamError];
+            if (error != NULL){
+                UIAlertView *errorAlert = [[UIAlertView alloc]
+                                           initWithTitle: [error localizedDescription]
+                                           message: [error localizedFailureReason]
+                                           delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+                [errorAlert show];
+            }
+            break;
+        }
+        case NSStreamEventEndEncountered:
+            NSLog(@"SPYConnection-->NSStreamEventEndEncountered");
+            break;
+        default:
+            break;
     }
 }
 

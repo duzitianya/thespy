@@ -10,16 +10,16 @@
 
 @implementation SPYConnection
 
-- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs {
+- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs delegate:(id<NSStreamDelegate>)delegate{
     self = [super init];
     if (self) {
         self.input = inputs;
-        self.input.delegate = self;
+        self.input.delegate = delegate;
         [self.input scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [self.input open];
         
         self.output = outputs;
-        self.output.delegate = self;
+        self.output.delegate = delegate;
         [self.output scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [self.output open];
     }
@@ -72,46 +72,6 @@
     [self.output open];
     NSLog(@"writeData length---->%d, %d", (int)[data length], [self.output hasSpaceAvailable]);
     return [self.output write:buffer maxLength:length];
-}
-
-- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    NSLog(@"NSStreamDelegate--->stream status : %d", (int)[aStream streamStatus]);
-    switch (eventCode) {
-        case NSStreamEventNone:
-            NSLog(@"SPYConnection-->NSStreamEventNone");
-            break;
-        case NSStreamEventOpenCompleted:
-            NSLog(@"SPYConnection-->NSStreamEventOpenCompleted");
-            break;
-        case NSStreamEventHasBytesAvailable:
-            NSLog(@"SPYConnection-->NSStreamEventHasBytesAvailable");
-            NSLog(@"%@", [aStream description]);
-            break;
-        case NSStreamEventHasSpaceAvailable:
-            NSLog(@"SPYConnection-->NSStreamEventHasSpaceAvailable");
-            NSLog(@"%@", [aStream description]);
-            break;
-        case NSStreamEventErrorOccurred:{
-            NSLog(@"SPYConnection-->NSStreamEventErrorOccurred");
-            //出错的时候
-            NSError *error = [aStream streamError];
-            if (error != NULL){
-                UIAlertView *errorAlert = [[UIAlertView alloc]
-                                           initWithTitle: [error localizedDescription]
-                                           message: [error localizedFailureReason]
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-                [errorAlert show];
-            }
-            break;
-        }
-        case NSStreamEventEndEncountered:
-            NSLog(@"SPYConnection-->NSStreamEventEndEncountered");
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)cleanUpStream:(NSStream *)stream{

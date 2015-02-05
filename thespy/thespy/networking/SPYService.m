@@ -37,6 +37,7 @@
     self.isServerOpen = NO;
 }
 
+//获得客户端连接，建立连接并保存
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     NSInteger port = [sender port];
     NSString *hostname = [sender hostName];
@@ -44,25 +45,25 @@
     NSLog(@"from SPYService-->hostname:%@,  port:%d,  type:%@", hostname, (int)port, type);
     
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
-    NSData *data = [connection readGameDataWithInput:nil];
-    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    if ([arrs count]==3) {
-        NSData *imgData = arrs[0];
-        NSString *name = arrs[1];
-        NSString *deviceName = arrs[2];
-        
-        UIImage *img = [UIImage imageWithData:imgData];
-        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
-        player.connection = connection;
-        [self.delegate reloadClientListTable:player];
-        
-        //获得客户端成功后，向所有已连接客户端写回服务器端基础数据
-        NSArray *gamedata =[[NSArray alloc]initWithObjects:@"15", @"10", @"3", @"2", nil];
-        NSData *repeatData = [NSKeyedArchiver archivedDataWithRootObject:gamedata];
-        NSInteger dataLength = [connection writeData:repeatData];
-        NSLog(@"repeat length ... %d", (int)dataLength);
-        [connection closeConnection];
-    }
+//    NSData *data = [connection readGameDataWithInput:nil];
+//    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    if ([arrs count]==3) {
+//        NSData *imgData = arrs[0];
+//        NSString *name = arrs[1];
+//        NSString *deviceName = arrs[2];
+//        
+//        UIImage *img = [UIImage imageWithData:imgData];
+//        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
+//        player.connection = connection;
+//        [self.delegate reloadClientListTable:player];
+//        
+//        //获得客户端成功后，向所有已连接客户端写回服务器端基础数据
+//        NSArray *gamedata =[[NSArray alloc]initWithObjects:@"15", @"10", @"3", @"2", nil];
+//        NSData *repeatData = [NSKeyedArchiver archivedDataWithRootObject:gamedata];
+//        NSInteger dataLength = [connection writeData:repeatData];
+//        NSLog(@"repeat length ... %d", (int)dataLength);
+//        [connection closeConnection];
+//    }
 }
 
 //服务发布成功后回调

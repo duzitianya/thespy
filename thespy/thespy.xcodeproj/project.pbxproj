@@ -35,7 +35,7 @@
 		BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD261A6E47FF008CCFB9 /* GameInitionView.xib */; };
 		BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */; };
 		BF77AD321A6E47FF008CCFB9 /* PlayerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */; };
-		BF77AD331A6E47FF008CCFB9 /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */; };
+		BF77AD331A6E47FF008CCFB9 /* ServerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD2B1A6E47FF008CCFB9 /* ServerListViewController.m */; };
 		BF77AD351A6E5484008CCFB9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */; };
 		BF77AD3B1A6F808A008CCFB9 /* HistoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */; };
 		BF77AD3D1A6F88F6008CCFB9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF77AD3C1A6F88F6008CCFB9 /* libsqlite3.dylib */; };
@@ -109,8 +109,8 @@
 		BF77AD271A6E47FF008CCFB9 /* PlayerHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerHeader.xib; path = ../PlayerHeader.xib; sourceTree = "<group>"; };
 		BF77AD281A6E47FF008CCFB9 /* PlayerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerInfoViewController.h; sourceTree = "<group>"; };
 		BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerInfoViewController.m; sourceTree = "<group>"; };
-		BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewController.h; sourceTree = "<group>"; };
-		BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewController.m; sourceTree = "<group>"; };
+		BF77AD2A1A6E47FF008CCFB9 /* ServerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerListViewController.h; sourceTree = "<group>"; };
+		BF77AD2B1A6E47FF008CCFB9 /* ServerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerListViewController.m; sourceTree = "<group>"; };
 		BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListViewController.h; sourceTree = "<group>"; };
 		BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListViewController.m; sourceTree = "<group>"; };
@@ -194,8 +194,8 @@
 				BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */,
 				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
 				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
-				BF77AD2A1A6E47FF008CCFB9 /* PlayerListViewController.h */,
-				BF77AD2B1A6E47FF008CCFB9 /* PlayerListViewController.m */,
+				BF77AD2A1A6E47FF008CCFB9 /* ServerListViewController.h */,
+				BF77AD2B1A6E47FF008CCFB9 /* ServerListViewController.m */,
 				BF3DBC011A76277A00A87FD2 /* GameRoomView.h */,
 				BF3DBC021A76277A00A87FD2 /* GameRoomView.m */,
 				BF3DBC0E1A76449600A87FD2 /* GameRoomSubview.h */,
@@ -437,7 +437,7 @@
 				BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */,
 				BF77AD2E1A6E47FF008CCFB9 /* PlayerBean.m in Sources */,
 				BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */,
-				BF77AD331A6E47FF008CCFB9 /* PlayerListViewController.m in Sources */,
+				BF77AD331A6E47FF008CCFB9 /* ServerListViewController.m in Sources */,
 				BF3DBC061A76350B00A87FD2 /* GameRoomCell.m in Sources */,
 				BF77AD321A6E47FF008CCFB9 /* PlayerInfoViewController.m in Sources */,
 				BF77AD501A70E593008CCFB9 /* SPYServiceBrowser.m in Sources */,

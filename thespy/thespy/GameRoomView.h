@@ -6,16 +6,24 @@
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "GameRoomCell.h"
 #import "AppDelegate.h"
 #import "PlayerBean.h"
 #import "GameRoomSubview.h"
-#import "PlayerListViewController.h"
-#import "SPYService.h"
 #import "GameRoomHeader.h"
+#import "ServerListViewController.h"
+#import "NSStream+StreamsToHost.h"
 
-@interface GameRoomView : UIViewController<SPYServiceDelegate, UIAlertViewDelegate>
+@interface GameRoomView : UIViewController<
+        ServerListViewControllerDelegate,
+        NSStreamDelegate,
+        UIAlertViewDelegate,
+        NSNetServiceDelegate,
+        NSNetServiceBrowserDelegate
+>
+
 @property (nonatomic) NSInteger totalNum;       //参与者总数
 @property (nonatomic) NSInteger spyNum;         //卧底数
 @property (nonatomic) NSInteger citizenNum;     //平民数
@@ -28,11 +36,13 @@
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) GameRoomHeader *gameRoomHeader;
 
+@property (nonatomic) BOOL isServerOpen;
 @property (nonatomic) BOOL asServer;//标记是否为主机
-@property (nonatomic, strong) SPYService *server;//作为主机时不为空
-@property (nonatomic, strong) NSArray *connections;//客户端SPYConnection
+@property (nonatomic, strong) NSNetService *service;
+@property (nonatomic, strong) NSMutableArray *connections;//客户端SPYConnection
 
 @property (nonatomic, strong) SPYConnection *connection;//与主机的链接，作为客户端时不为空
+@property (nonatomic, strong) ServerListViewController *plvc;
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 

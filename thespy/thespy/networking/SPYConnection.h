@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface SPYConnection : NSObject<NSStreamDelegate>
+@interface SPYConnection : NSObject
 
 @property (nonatomic, strong) NSInputStream *input;
 @property (nonatomic, strong) NSOutputStream *output;
 
-- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs;
+- (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs delegate:(id<NSStreamDelegate>)delegate;
 //读数据
 - (NSData*)readGameDataWithInput:(NSInputStream*)input;
 //发送数据

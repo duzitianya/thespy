@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "PlayerBean.h"
-#import "PlayerListViewController.h"
 #import "PlayerHeader.h"
 #import "ActionView.h"
 #import "GameInitionView.h"

@@ -16,6 +16,7 @@
 
 @optional
 - (void) reloadClientListTable:(PlayerBean*)player;
+- (void) addSPYConnection:(SPYConnection*)conn;
 
 @end
 

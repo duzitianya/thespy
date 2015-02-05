@@ -88,11 +88,17 @@
 }
 
 - (void) asClient{
+    NSInteger totalNum = self.mainGameView.totalNum;
+    NSInteger citizenNum = self.mainGameView.citizenNum;
+    NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
+    NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
-    PlayerListViewController *plvc = [[PlayerListViewController alloc] init];
-    plvc.title = @"游戏列表";
+    GameRoomView *room = [[GameRoomView alloc] init];
+    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer asServer:NO];
+    room.title = @"等待开始";
     
-    [self.navigationController pushViewController:plvc animated:YES];
+    [self.navigationController pushViewController:room animated:YES];
+    
 }
 
 - (void) gotoHistoryList{

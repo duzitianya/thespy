@@ -111,7 +111,7 @@
         NSString *deviceName = [UIDevice currentDevice].name;
         NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
         NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-        [self.connection writeData:sendData];
+        [self.connection writeData:sendData withStream:nil];
         
         NSData *repeatData = [self.connection readGameDataWithInput:inputs];
         NSArray *rarr = [NSKeyedUnarchiver unarchiveObjectWithData:repeatData];

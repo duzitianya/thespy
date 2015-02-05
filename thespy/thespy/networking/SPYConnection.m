@@ -64,13 +64,19 @@
 }
 
 //发送数据
-- (NSInteger) writeData:(NSData*)data{
-    //发送数据
-    NSInteger length = [data length];
-    uint8_t buffer[length];
-    [data getBytes:buffer length:length];
-    NSLog(@"writeData length---->%d, %d", (int)[data length], [self.output hasSpaceAvailable]);
-    return [self.output write:buffer maxLength:length];
+- (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream{
+    if (aStream==nil) {
+        aStream = self.output;
+    }
+    if ([aStream hasSpaceAvailable]) {
+        //发送数据
+        NSInteger length = [data length];
+        uint8_t buffer[length];
+        [data getBytes:buffer length:length];
+        NSLog(@"writeData length---->%d", (int)[data length]);
+        return [aStream write:buffer maxLength:length];
+    }
+    return -1;
 }
 
 - (void)cleanUpStream:(NSStream *)stream{

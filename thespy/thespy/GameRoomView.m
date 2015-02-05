@@ -114,15 +114,10 @@
 
 //获得客户端连接，建立连接并保存
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
-    NSInteger port = [sender port];
-    NSString *hostname = [sender hostName];
-    NSString *type = [sender type];
-    NSLog(@"from SPYService-->hostname:%@,  port:%d,  type:%@", hostname, (int)port, type);
-    
-    SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
-    if (![self.connections containsObject:connection]) {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
         [self.connections addObject:connection];
-    }
+    }];
 }
 
 - (void) publishServer{
@@ -137,30 +132,38 @@
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
     self.isServerOpen = NO;
 }
-
-//解析成功
-- (void)netServiceDidResolveAddress:(NSNetService *)server{
-    self.service = server;
-    
-    NSInteger port = [server port];
-    NSString *hostname = [server hostName];
-    NSString *type = [server type];
-    NSLog(@"host:%@,  port:%d,  type:%@", hostname, (int)port, type);
-    
-    //解析成功后连接服务器
-    NSInputStream *inputs;
-    NSOutputStream *outputs;
-    
-    [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
-    self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
-
-}
+//
+////解析成功
+//- (void)netServiceDidResolveAddress:(NSNetService *)server{
+//    self.service = server;
+//    
+//    NSInteger port = [server port];
+//    NSString *hostname = [server hostName];
+//    NSString *type = [server type];
+//    NSLog(@"host:%@,  port:%d,  type:%@", hostname, (int)port, type);
+//    
+//    //解析成功后连接服务器
+//    NSInputStream *inputs;
+//    NSOutputStream *outputs;
+//    
+//    [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
+//    self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
+//
+//}
 
 //连接到选定的服务器
 - (void)connectToServer:(NSNetService*)service{
+    BOOL                success;
+    NSInputStream *     inputs;
+    NSOutputStream *    outputs;
+
     self.service = service;
     self.service.delegate = self;
-    [self.service resolveWithTimeout:10];
+    success = [self.service getInputStream:&inputs outputStream:&outputs];
+    if (success) {
+        self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
+    }
+//    [self.service resolveWithTimeout:10];
 }
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
@@ -191,19 +194,22 @@
             break;
         case NSStreamEventOpenCompleted:
             self.streamOpenCount++;
-            if (self.streamOpenCount==2&&self.asServer==NO) {//说明输入输出流都已经开启完毕
-                //发送本机数据
-                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
-                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
-                NSString *deviceName = [UIDevice currentDevice].name;
-                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
-                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-                NSInteger length = [self.connection writeData:sendData];
-                if (length==sizeof(sendData)) {
-                    [self dismissViewControllerAnimated:NO completion:nil];
-                }
-                
-            }
+            break;
+        case NSStreamEventHasSpaceAvailable:
+//            if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]) {//说明输入输出流都已经开启完毕
+//                //发送本机数据
+//                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
+//                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+//                NSString *deviceName = [UIDevice currentDevice].name;
+//                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+//                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+//                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
+//                NSLog(@"length:%d------sendData:%d", length, [sendData length]);
+//                if (length==sizeof(sendData)) {
+//                    [self dismissViewControllerAnimated:NO completion:nil];
+//                }
+//                
+//            }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
             if ([aStream isKindOfClass:[NSInputStream class]]) {
@@ -225,6 +231,7 @@
                         PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
                         [self reloadClientListTable:player];
                     }
+
                 }
             }
             break;
@@ -244,6 +251,20 @@
         }
         case NSStreamEventEndEncountered:
             NSLog(@"####################NSStreamEventEndEncountered###################");
+            if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]) {//说明输入输出流都已经开启完毕
+                //发送本机数据
+                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
+                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+                NSString *deviceName = [UIDevice currentDevice].name;
+                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
+                NSLog(@"length:%d------sendData:%d", (int)length, (int)[sendData length]);
+                if (length==sizeof(sendData)) {
+                    [self dismissViewControllerAnimated:NO completion:nil];
+                }
+                
+            }
             break;
         default:
             break;

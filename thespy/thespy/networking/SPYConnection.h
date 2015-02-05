@@ -18,7 +18,7 @@
 //读数据
 - (NSData*)readGameDataWithInput:(NSInputStream*)input;
 //发送数据
-- (NSInteger) writeData:(NSData*)data;
+- (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream;
 
 - (void) closeConnection;
 @end

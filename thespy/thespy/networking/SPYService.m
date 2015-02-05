@@ -44,7 +44,7 @@
     NSString *type = [sender type];
     NSLog(@"from SPYService-->hostname:%@,  port:%d,  type:%@", hostname, (int)port, type);
     
-    SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream];
+//    SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
 //    NSData *data = [connection readGameDataWithInput:nil];
 //    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 //    if ([arrs count]==3) {

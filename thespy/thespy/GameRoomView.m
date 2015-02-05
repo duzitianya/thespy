@@ -7,6 +7,7 @@
 //
 
 #import "GameRoomView.h"
+#import "SPYFileUtil.h"
 
 @implementation GameRoomView
 @synthesize subRoomView;
@@ -14,12 +15,13 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    if (!self.asServer) {
+    if (!self.asServer) {//如果是客户端，则弹出连接列表
         self.plvc = [[ServerListViewController alloc] init];
         self.plvc.title = @"游戏列表";
         self.plvc.delegate = self;
         
-        [self.navigationController pushViewController:self.plvc animated:YES];
+//        [self.navigationController pushViewController:self.plvc animated:NO];
+        [self presentViewController:self.plvc animated:NO completion:nil];
     }
     
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height;
@@ -44,6 +46,7 @@
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeCurrentGame)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
+    self.connections = [[NSMutableArray alloc]initWithCapacity:5];
 }
 
 - (void) reloadClientListTable:(PlayerBean*)player{
@@ -117,7 +120,9 @@
     NSLog(@"from SPYService-->hostname:%@,  port:%d,  type:%@", hostname, (int)port, type);
     
     SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
-    [self.connections addObject:connection];
+    if (![self.connections containsObject:connection]) {
+        [self.connections addObject:connection];
+    }
 }
 
 - (void) publishServer{
@@ -147,6 +152,7 @@
     NSOutputStream *outputs;
     
     [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
+    self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
 
 }
 
@@ -154,7 +160,7 @@
 - (void)connectToServer:(NSNetService*)service{
     self.service = service;
     self.service.delegate = self;
-    [self.service resolveWithTimeout:50];
+    [self.service resolveWithTimeout:10];
 }
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
@@ -180,24 +186,49 @@
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    NSLog(@"NSStreamDelegate--->stream status : %d", (int)[aStream streamStatus]);
     switch (eventCode) {
         case NSStreamEventNone:
-            NSLog(@"SPYConnection-->NSStreamEventNone");
             break;
         case NSStreamEventOpenCompleted:
-            NSLog(@"SPYConnection-->NSStreamEventOpenCompleted");
+            self.streamOpenCount++;
+            if (self.streamOpenCount==2&&self.asServer==NO) {//说明输入输出流都已经开启完毕
+                //发送本机数据
+                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
+                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+                NSString *deviceName = [UIDevice currentDevice].name;
+                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                NSInteger length = [self.connection writeData:sendData];
+                if (length==sizeof(sendData)) {
+                    [self dismissViewControllerAnimated:NO completion:nil];
+                }
+                
+            }
             break;
-        case NSStreamEventHasBytesAvailable:
-            NSLog(@"SPYConnection-->NSStreamEventHasBytesAvailable");
-            NSLog(@"%@", [aStream description]);
-            break;
-        case NSStreamEventHasSpaceAvailable:
-            NSLog(@"SPYConnection-->NSStreamEventHasSpaceAvailable");
-            NSLog(@"%@", [aStream description]);
+        case NSStreamEventHasBytesAvailable://读取数据
+            if ([aStream isKindOfClass:[NSInputStream class]]) {
+                NSInputStream *in = (NSInputStream*)aStream;
+                NSData *data;
+                if (self.asServer) {
+                    data = [(SPYConnection*)[self.connections firstObject] readGameDataWithInput:in];
+                }else{
+                    data = [self.connection readGameDataWithInput:in];
+                }
+                if (data!=nil&&[data length]>0) {
+                    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                    if ([arrs count]==3) {
+                        NSData *imgData = arrs[0];
+                        NSString *name = arrs[1];
+                        NSString *deviceName = arrs[2];
+                        
+                        UIImage *img = [UIImage imageWithData:imgData];
+                        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
+                        [self reloadClientListTable:player];
+                    }
+                }
+            }
             break;
         case NSStreamEventErrorOccurred:{
-            NSLog(@"SPYConnection-->NSStreamEventErrorOccurred");
             //出错的时候
             NSError *error = [aStream streamError];
             if (error != NULL){
@@ -212,7 +243,7 @@
             break;
         }
         case NSStreamEventEndEncountered:
-            NSLog(@"SPYConnection-->NSStreamEventEndEncountered");
+            NSLog(@"####################NSStreamEventEndEncountered###################");
             break;
         default:
             break;

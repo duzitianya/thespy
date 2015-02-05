@@ -69,7 +69,6 @@
     NSInteger length = [data length];
     uint8_t buffer[length];
     [data getBytes:buffer length:length];
-    [self.output open];
     NSLog(@"writeData length---->%d, %d", (int)[data length], [self.output hasSpaceAvailable]);
     return [self.output write:buffer maxLength:length];
 }

@@ -15,7 +15,6 @@
 @synthesize word;
 @synthesize role;
 @synthesize status;
-@synthesize connection;
 
 + (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName {
     NSString *dname = [UIDevice currentDevice].name;

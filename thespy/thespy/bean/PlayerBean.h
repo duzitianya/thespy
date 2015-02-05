@@ -34,7 +34,6 @@ typedef enum{
 @property (nonatomic, strong) NSString *word;       //词条
 @property (nonatomic) PlayerOnlineStatus status;    //状态
 @property (nonatomic) PlayerRole role;         //角色
-@property (nonatomic, strong) SPYConnection *connection;//与服务器的链接
 
 + (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName;
 

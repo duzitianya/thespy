@@ -48,6 +48,7 @@
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
     self.remainingToRead = -2;
+    self.step = 1;
 }
 
 - (void) reloadClientListTable:(PlayerBean*)player{
@@ -133,24 +134,6 @@
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
     self.isServerOpen = NO;
 }
-//
-////解析成功
-//- (void)netServiceDidResolveAddress:(NSNetService *)server{
-//    self.service = server;
-//    
-//    NSInteger port = [server port];
-//    NSString *hostname = [server hostName];
-//    NSString *type = [server type];
-//    NSLog(@"host:%@,  port:%d,  type:%@", hostname, (int)port, type);
-//    
-//    //解析成功后连接服务器
-//    NSInputStream *inputs;
-//    NSOutputStream *outputs;
-//    
-//    [NSStream getStreamsToHostNamed:hostname port:port inputStream:&inputs outputStream:&outputs];
-//    self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
-//
-//}
 
 //连接到选定的服务器
 - (void)connectToServer:(NSNetService*)service{
@@ -164,7 +147,6 @@
     if (success) {
         self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
     }
-//    [self.service resolveWithTimeout:10];
 }
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
@@ -191,14 +173,10 @@
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
     switch (eventCode) {
-        case NSStreamEventNone:
-            break;
         case NSStreamEventOpenCompleted:
-            NSLog(@"####################NSStreamEventOpenCompleted#################");
             self.streamOpenCount++;
             break;
         case NSStreamEventHasSpaceAvailable:
-            NSLog(@"####################NSStreamEventHasSpaceAvailable#################");
             if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
                 //发送本机数据
                 UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
@@ -207,7 +185,6 @@
                 NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
                 NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
                 NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
-                NSLog(@"length:%d------sendData:%d", (int)length, (int)[sendData length]);
                 if (length==[sendData length]) {
                     [self dismissViewControllerAnimated:NO completion:nil];
                 }
@@ -215,7 +192,6 @@
             }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
-            NSLog(@"####################NSStreamEventHasBytesAvailable#################");
             if ([aStream isKindOfClass:[NSInputStream class]]) {
                 NSInputStream *in = (NSInputStream*)aStream;
                 NSData *data;
@@ -261,9 +237,6 @@
             }
             break;
         }
-        case NSStreamEventEndEncountered:
-            NSLog(@"####################NSStreamEventEndEncountered###################");
-            break;
         default:
             break;
     }

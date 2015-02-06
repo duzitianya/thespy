@@ -48,6 +48,8 @@
 
 @property (nonatomic, assign) int remainingToRead;//网络传输的流大小
 
+@property (nonatomic, assign) int step;//状态，1：读取4字节作为操作类型；2：读取4字节作为后续流大小；3：读取真实数据
+
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 
 - (void) reloadClientListTable:(PlayerBean*)player;

@@ -22,6 +22,6 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
 @interface NetWorkingDelegate : NSObject
 
 +(NetWorkingDelegate *)shareInstance;
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step;
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj,...;
 
 @end

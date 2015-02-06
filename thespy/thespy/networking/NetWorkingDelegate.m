@@ -9,6 +9,7 @@
 #import "NetWorkingDelegate.h"
 #import "SPYConnection.h"
 #import "PlayerBean.h"
+#import "SPYFileUtil.h"
  
 @implementation NetWorkingDelegate{
     int remainingToRead;
@@ -23,7 +24,7 @@
     return shared;
 }
 
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step{
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj,...{
     switch (oper) {
         case SPYGetGameRoomInfo://获取游戏房间基本信息
             break;
@@ -39,13 +40,79 @@
     }
 }
 
-- (void) initGameRoomData:(NSStream*)aStream{
-    if ([aStream isKindOfClass:[NSInputStream class]]) {
-        NSInputStream *in = (NSInputStream*)aStream;
-        
+//杀掉指定用户
+- (void)killPlayer:(NSStream*)aStream{
+    if ([aStream isKindOfClass:[NSOutputStream class]]) {
+        uint8_t buf[1];
+        buf[0] = '1';
+        NSOutputStream *out = (NSOutputStream*)aStream;
+        [out write:buf maxLength:sizeof(buf)];
     }
 }
 
+//为所有客户端初始化角色
+- (void)pushRole:(NSArray*)connections Roles:(NSArray*)role{
+    if (connections!=nil) {
+        for (int i=0; i<[connections count]; i++) {
+            SPYConnection *conn = connections[i];
+            NSOutputStream *out = conn.output;
+            uint8_t buf[1];
+            buf[0] = (int)role[i];
+            [out write:buf maxLength:sizeof(buf)];
+        }
+    }
+}
+
+//将新用户注册到其他用户
+- (void)pushNewPlayerToOthers:(NSArray*)spyconnections ignoreStream:(NSStream*)aStream WithPlayer:(PlayerBean*)bean{
+    if (spyconnections!=nil) {
+        for (int i=0; i<[spyconnections count]; i++) {
+            SPYConnection *conn = spyconnections[i];
+            NSOutputStream *out = conn.output;
+            NSInputStream *in = conn.input;
+            if([out isEqual:aStream]||[in isEqual:aStream]){
+                continue;
+            }
+            [self newPlayerPush:out WithPlayer:bean];
+        }
+    }
+}
+
+//发送游戏房间基本数据
+- (void)gameRoomDataPush:(NSStream*)aStream WithData:(NSData*)data{
+    if ([aStream isKindOfClass:[NSOutputStream class]]) {
+        NSOutputStream *out = (NSOutputStream*)aStream;
+        uint8_t buf[32768];
+        [data getBytes:buf length:[data length]];
+        [out write:buf maxLength:sizeof(buf)];
+    }
+}
+
+//读取游戏房间基本数据
+- (void)gameRoomDataRead:(NSStream*)aStream{
+    if ([aStream isKindOfClass:[NSOutputStream class]]) {
+        uint8_t buf[32768];
+        NSInputStream *in = (NSInputStream*)aStream;
+        NSInteger length = [in read:buf maxLength:sizeof(buf)];
+        NSData *data = [NSData dataWithBytes:buf length:length];
+    }
+}
+
+//新客户端连接后发送本机数据
+- (void)newPlayerPush:(NSStream*)aStream WithPlayer:(PlayerBean*)bean{
+    //发送本机数据
+    UIImage *img = bean.img;//头像数据
+    NSString *name = bean.name;//用户名
+    NSString *deviceName = bean.deviceName;
+    NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+    NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+    NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
+    if (length==[sendData length]) {
+//        [self dismissViewControllerAnimated:NO completion:nil];
+    }
+}
+
+//获得新连接用户数据
 - (void)newPlayerArraive:(NSStream*)aStream Step:(int)step{
     NSData *data;
     if ([aStream isKindOfClass:[NSInputStream class]]) {

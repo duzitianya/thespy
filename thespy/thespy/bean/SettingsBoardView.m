@@ -78,6 +78,10 @@
     [_camera takePicture];
 }
 
+- (void) cancelSave{
+    [self.delegate dismissViewController];
+}
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }

@@ -12,6 +12,7 @@
 
 @optional
 - (void)savePhoto;
+- (void)cancelSave;
 
 @end
 
@@ -27,5 +28,6 @@
 
 - (IBAction)saveData:(UIButton *)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)cancelView:(id)sender;
 
 @end

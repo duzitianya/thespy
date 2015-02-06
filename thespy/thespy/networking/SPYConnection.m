@@ -44,23 +44,34 @@
     }
 }
 
-- (NSData*)readGameDataWithInput:(NSInputStream*)input{
+/*
+ * 协议：4字节(流大小)+4字节(进行的操作)+N字节(传输的数据)
+ */
+
+- (int)readGameDataDirectWithInput:(NSInputStream*)input{
     if (input==nil) {
         input = self.input;
     }
-    NSMutableData *mdata = [[NSMutableData alloc] initWithCapacity:1024];
-    uint8_t buf[1024];
-    BOOL shouldBreak = NO;
-    while (!shouldBreak) {
-        long numBytesRead = [input read:buf maxLength:sizeof(buf)-1];
-        if (numBytesRead > 0) {
-            //读取数据
-            [mdata appendData:[[NSData alloc] initWithBytes:buf length:numBytesRead]];
-        }else{
-            shouldBreak = YES;
-        }
+    uint8_t streamSize[4];
+    long size = [input read:streamSize maxLength:sizeof(streamSize)];
+    int remainingToRead = -1;
+    if (size==4) {
+        remainingToRead = ((streamSize[0]<<24)&0xff000000)+((streamSize[1]<<16)&0xff0000)+((streamSize[2]<<8)&0xff00)+(streamSize[3] & 0xff);
+        NSLog(@"===========remaining to read size is : %d============", remainingToRead);
     }
-    return [mdata subdataWithRange:NSMakeRange(0, [mdata length])];
+    return remainingToRead;
+}
+
+- (NSData*)readGameDataWithInput:(NSInputStream*)input size:(int)size{
+    if (input==nil) {
+        input = self.input;
+    }
+    uint8_t buf[size];
+    long numBytesRead = [input read:buf maxLength:sizeof(buf)];
+    if (numBytesRead>0&&numBytesRead==size) {
+        return [NSData dataWithBytes:buf length:numBytesRead];
+    }
+    return NULL;
 }
 
 //发送数据
@@ -69,12 +80,18 @@
         aStream = self.output;
     }
     if ([aStream hasSpaceAvailable]) {
-        //发送数据
         NSInteger length = [data length];
+        //先行发送流长度标记
+        uint8_t size[4];
+        for(int i = 0;i<4;i++){
+            size[i] = (Byte)(length>>8*(3-i)&0xff);
+        }
+        [aStream write:size maxLength:4];
+        
+        //发送真实数据
         uint8_t buffer[length];
         [data getBytes:buffer length:length];
-        NSLog(@"writeData length---->%d", (int)[data length]);
-        return [aStream write:buffer maxLength:length];
+        return [aStream write:buffer maxLength:sizeof(buffer)];
     }
     return -1;
 }

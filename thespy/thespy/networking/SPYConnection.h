@@ -16,7 +16,9 @@
 
 - (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs delegate:(id<NSStreamDelegate>)delegate;
 //读数据
-- (NSData*)readGameDataWithInput:(NSInputStream*)input;
+- (NSData*)readGameDataWithInput:(NSInputStream*)input size:(int)size;
+- (int)readGameDataDirectWithInput:(NSInputStream*)input;
+
 //发送数据
 - (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream;
 

@@ -45,13 +45,15 @@
 }
 
 - (void) browseService{
-    [self.browser stop];
     self.browser.delegate = nil;
     self.browser = nil;
+    [self.browser removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [self.browser stop];
     
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.includesPeerToPeer = YES;
     self.browser.delegate = self.delegate;
+    [self.browser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.browser searchForServicesOfType:@"_thespy._tcp." inDomain:@"local"];
 }
 

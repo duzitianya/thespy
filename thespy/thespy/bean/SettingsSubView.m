@@ -7,6 +7,7 @@
 //
 
 #import "SettingsSubView.h"
+#import "SPYFileUtil.h"
 
 @implementation SettingsSubView
 
@@ -18,6 +19,10 @@
     _confirmButton.layer.cornerRadius = 3;
     _confirmButton.layer.borderColor = [_confirmButton.titleLabel.textColor CGColor];
     
+    NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+    if (name!=nil&&[name length]>0) {
+        _nickNameTextField.text = name;
+    }
 }
 
 - (IBAction)saveData:(UIButton *)sender {
@@ -28,6 +33,10 @@
     if ([sender isKindOfClass:[UITextField class]]) {
         [sender resignFirstResponder];
     }
+}
+
+- (IBAction)cancelView:(id)sender {
+    [_delegate cancelSave];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

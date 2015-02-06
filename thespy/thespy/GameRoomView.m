@@ -47,6 +47,7 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
+    self.remainingToRead = -2;
 }
 
 - (void) reloadClientListTable:(PlayerBean*)player{
@@ -193,45 +194,56 @@
         case NSStreamEventNone:
             break;
         case NSStreamEventOpenCompleted:
+            NSLog(@"####################NSStreamEventOpenCompleted#################");
             self.streamOpenCount++;
             break;
         case NSStreamEventHasSpaceAvailable:
-//            if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]) {//说明输入输出流都已经开启完毕
-//                //发送本机数据
-//                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
-//                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
-//                NSString *deviceName = [UIDevice currentDevice].name;
-//                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
-//                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-//                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
-//                NSLog(@"length:%d------sendData:%d", length, [sendData length]);
-//                if (length==sizeof(sendData)) {
-//                    [self dismissViewControllerAnimated:NO completion:nil];
-//                }
-//                
-//            }
+            NSLog(@"####################NSStreamEventHasSpaceAvailable#################");
+            if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
+                //发送本机数据
+                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
+                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
+                NSString *deviceName = [UIDevice currentDevice].name;
+                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
+                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
+                NSLog(@"length:%d------sendData:%d", (int)length, (int)[sendData length]);
+                if (length==[sendData length]) {
+                    [self dismissViewControllerAnimated:NO completion:nil];
+                }
+                self.isRemoteInit = YES;
+            }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
+            NSLog(@"####################NSStreamEventHasBytesAvailable#################");
             if ([aStream isKindOfClass:[NSInputStream class]]) {
                 NSInputStream *in = (NSInputStream*)aStream;
                 NSData *data;
-                if (self.asServer) {
-                    data = [(SPYConnection*)[self.connections firstObject] readGameDataWithInput:in];
-                }else{
-                    data = [self.connection readGameDataWithInput:in];
-                }
-                if (data!=nil&&[data length]>0) {
-                    NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                    if ([arrs count]==3) {
-                        NSData *imgData = arrs[0];
-                        NSString *name = arrs[1];
-                        NSString *deviceName = arrs[2];
-                        
-                        UIImage *img = [UIImage imageWithData:imgData];
-                        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
-                        [self reloadClientListTable:player];
+                if (self.remainingToRead==-2) {
+                    if (self.asServer) {
+                        self.remainingToRead = [(SPYConnection*)[self.connections lastObject] readGameDataDirectWithInput:in];
+                    }else{
+                        self.remainingToRead = [self.connection readGameDataDirectWithInput:in];
                     }
-
+                }else if(self.remainingToRead>0){
+                    if (self.asServer) {
+                        data = [(SPYConnection*)[self.connections firstObject] readGameDataWithInput:in size:self.remainingToRead];
+                    }else{
+                        data = [self.connection readGameDataWithInput:in size:self.remainingToRead];
+                    }
+                    if (data!=nil&&[data length]==self.remainingToRead) {
+                        NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                        if ([arrs count]==3) {
+                            NSData *imgData = arrs[0];
+                            NSString *name = arrs[1];
+                            NSString *deviceName = arrs[2];
+                            
+                            UIImage *img = [UIImage imageWithData:imgData];
+                            PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
+                            [self reloadClientListTable:player];
+                        }
+                    }
+                    self.remainingToRead = -2;
                 }
             }
             break;
@@ -251,20 +263,6 @@
         }
         case NSStreamEventEndEncountered:
             NSLog(@"####################NSStreamEventEndEncountered###################");
-            if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]) {//说明输入输出流都已经开启完毕
-                //发送本机数据
-                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
-                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
-                NSString *deviceName = [UIDevice currentDevice].name;
-                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
-                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
-                NSLog(@"length:%d------sendData:%d", (int)length, (int)[sendData length]);
-                if (length==sizeof(sendData)) {
-                    [self dismissViewControllerAnimated:NO completion:nil];
-                }
-                
-            }
             break;
         default:
             break;

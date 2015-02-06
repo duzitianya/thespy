@@ -44,6 +44,9 @@
 @property (nonatomic, strong) SPYConnection *connection;//与主机的链接，作为客户端时不为空
 @property (nonatomic, strong) ServerListViewController *plvc;
 @property (nonatomic, assign) int streamOpenCount;
+@property (nonatomic, assign) BOOL isRemoteInit;//是否进行过服务器注册
+
+@property (nonatomic, assign) int remainingToRead;//网络传输的流大小
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 

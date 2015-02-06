@@ -113,9 +113,9 @@
         NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
         [self.connection writeData:sendData withStream:nil];
         
-        NSData *repeatData = [self.connection readGameDataWithInput:inputs];
-        NSArray *rarr = [NSKeyedUnarchiver unarchiveObjectWithData:repeatData];
-        NSLog(@"rarr--->%d", (int)[rarr count]);
+//        NSData *repeatData = [self.connection readGameDataWithInput:inputs];
+//        NSArray *rarr = [NSKeyedUnarchiver unarchiveObjectWithData:repeatData];
+//        NSLog(@"rarr--->%d", (int)[rarr count]);
         [self.connection closeConnection];
     }
 }

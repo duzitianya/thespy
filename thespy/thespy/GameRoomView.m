@@ -8,9 +8,14 @@
 
 #import "GameRoomView.h"
 #import "SPYFileUtil.h"
+#import "NetWorkingDelegate.h"
 
 @implementation GameRoomView
 @synthesize subRoomView;
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+}
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -20,7 +25,6 @@
         self.plvc.title = @"游戏列表";
         self.plvc.delegate = self;
         
-//        [self.navigationController pushViewController:self.plvc animated:NO];
         [self presentViewController:self.plvc animated:NO completion:nil];
     }
     
@@ -184,7 +188,7 @@
                 NSString *deviceName = [UIDevice currentDevice].name;
                 NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
                 NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-                NSInteger length = [self.connection writeData:sendData withStream:(NSOutputStream*)aStream];
+                NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
                 if (length==[sendData length]) {
                     [self dismissViewControllerAnimated:NO completion:nil];
                 }
@@ -192,36 +196,15 @@
             }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
-            if ([aStream isKindOfClass:[NSInputStream class]]) {
+            if ([aStream isKindOfClass:[NSInputStream class]]&&self.step==1) {
                 NSInputStream *in = (NSInputStream*)aStream;
-                NSData *data;
-                if (self.remainingToRead==-2) {
-                    if (self.asServer) {
-                        self.remainingToRead = [(SPYConnection*)[self.connections lastObject] readGameDataDirectWithInput:in];
-                    }else{
-                        self.remainingToRead = [self.connection readGameDataDirectWithInput:in];
-                    }
-                }else if(self.remainingToRead>0){
-                    if (self.asServer) {
-                        data = [(SPYConnection*)[self.connections firstObject] readGameDataWithInput:in size:self.remainingToRead];
-                    }else{
-                        data = [self.connection readGameDataWithInput:in size:self.remainingToRead];
-                    }
-                    if (data!=nil&&[data length]==self.remainingToRead) {
-                        NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                        if ([arrs count]==3) {
-                            NSData *imgData = arrs[0];
-                            NSString *name = arrs[1];
-                            NSString *deviceName = arrs[2];
-                            
-                            UIImage *img = [UIImage imageWithData:imgData];
-                            PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
-                            [self reloadClientListTable:player];
-                        }
-                    }
-                    self.remainingToRead = -2;
-                }
+                int operType = [SPYConnection readOperationType:in];
+                self.step++;
+                [[NetWorkingDelegate shareInstance]dataOperation:operType WithStream:aStream Step:self.step];
             }
+            break;
+        case NSStreamEventEndEncountered:
+            self.step = 1;
             break;
         case NSStreamEventErrorOccurred:{
             //出错的时候

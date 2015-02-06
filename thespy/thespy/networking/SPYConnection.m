@@ -44,14 +44,23 @@
     }
 }
 
-/*
- * 协议：4字节(流大小)+4字节(进行的操作)+N字节(传输的数据)
- */
-
-- (int)readGameDataDirectWithInput:(NSInputStream*)input{
-    if (input==nil) {
-        input = self.input;
++ (int)readOperationType:(NSInputStream*)input{
+    int oper = -1;
+    uint8_t buf[1];
+    long size = [input read:buf maxLength:sizeof(buf)];
+    if (size==1) {
+        oper = buf[0];
     }
+    return oper;
+}
+
++ (void)writeOperationType:(NSOutputStream*)out OperType:(int)oper{
+    uint8_t size[1];
+    size[0] = oper;
+    [out write:size maxLength:sizeof(size)];
+}
+
++ (int)readGameDataDirectWithInput:(NSInputStream*)input{
     uint8_t streamSize[4];
     long size = [input read:streamSize maxLength:sizeof(streamSize)];
     int remainingToRead = -1;
@@ -62,10 +71,7 @@
     return remainingToRead;
 }
 
-- (NSData*)readGameDataWithInput:(NSInputStream*)input size:(int)size{
-    if (input==nil) {
-        input = self.input;
-    }
++ (NSData*)readGameDataWithInput:(NSInputStream*)input size:(int)size{
     uint8_t buf[size];
     long numBytesRead = [input read:buf maxLength:sizeof(buf)];
     if (numBytesRead>0&&numBytesRead==size) {
@@ -75,10 +81,7 @@
 }
 
 //发送数据
-- (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream{
-    if (aStream==nil) {
-        aStream = self.output;
-    }
++ (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream{
     if ([aStream hasSpaceAvailable]) {
         NSInteger length = [data length];
         //先行发送流长度标记

@@ -24,17 +24,24 @@
     return shared;
 }
 
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj{
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj{
     switch (oper) {
         case SPYNewPlayerPush://客户端连接后向服务端发送自身数据
             [self newPlayerPush:stream WithPlayer:(PlayerBean*)obj];
             break;
         case SPYNewPlayerGet://服务器端收取
-            [self newPlayerArraive:stream Step:step];
+            [self newPlayerArraive:stream Step:[(NSString*)obj intValue]];
             break;
-        case SPYAllPlayerPush://发送所有（新增）用户
+        case SPYNewPlayerToOtherPush://发送所有（新增）用户
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary*)obj;
+                NSArray *conns = [dict objectForKey:@"conn"];
+                PlayerBean *bean = [dict objectForKey:@"player"];
+                [self pushNewPlayerToOthers:conns WithPlayer:bean];
+            }
             break;
-        case SPYAllPlayerGet://请求获得所有（新增）用户
+        case SPYNewPlayerToOtherGet://请求获得所有（新增）用户
+            [self newPlayerArraive:stream Step:[(NSString*)obj intValue]];
             break;
         case SPYGameRoomInfoPush://发送游戏房间信息
             [self gameRoomDataPush:stream WithData:(NSData*)obj];
@@ -64,6 +71,12 @@
         case SPYKillPlayerGet:
             [self getKilledPlayer:stream WithIndex:(NSInteger)obj];
             break;
+        case SPYAllPlayerPush:
+            [self allPlayerPush:stream WithAllPlayer:(NSArray*)obj];
+            break;
+        case SPYAllPlayerGet:
+            [self allPlayerGet:stream Step:[(NSString*)obj intValue]];
+            break;
         default:
             break;
     }
@@ -75,6 +88,7 @@
         for (int i=0; i<[connections count]; i++) {
             SPYConnection *conn = connections[i];
             NSOutputStream *out = conn.output;
+            [SPYConnection writeOperationType:out OperType:SPYKillPlayerPush];
             uint8_t buf[1];
             buf[0] = index;
             [out write:buf maxLength:sizeof(buf)];
@@ -99,6 +113,7 @@
         for (int i=0; i<[connections count]; i++) {
             SPYConnection *conn = connections[i];
             NSOutputStream *out = conn.output;
+            [SPYConnection writeOperationType:out OperType:SPYRolePush];
             uint8_t buf[1];
             buf[0] = (int)role[i];
             [out write:buf maxLength:sizeof(buf)];
@@ -119,15 +134,12 @@
 }
 
 //将新用户注册到其他用户
-- (void)pushNewPlayerToOthers:(NSArray*)spyconnections ignoreStream:(NSStream*)aStream WithPlayer:(PlayerBean*)bean{
+- (void)pushNewPlayerToOthers:(NSArray*)spyconnections WithPlayer:(PlayerBean*)bean{
     if (spyconnections!=nil) {
         for (int i=0; i<[spyconnections count]; i++) {
             SPYConnection *conn = spyconnections[i];
             NSOutputStream *out = conn.output;
-            NSInputStream *in = conn.input;
-            if([out isEqual:aStream]||[in isEqual:aStream]){
-                continue;
-            }
+            [SPYConnection writeOperationType:out OperType:SPYNewPlayerPush];
             [self newPlayerPush:out WithPlayer:bean];
         }
     }
@@ -190,6 +202,34 @@
                         PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
                         [temp addObject:player];
                     }
+                }
+                //[self reloadClientListTable:player];//刷新房间参与者列表
+            }
+            remainingToRead = -2;
+        }
+    }
+}
+
+- (void)allPlayerPush:(NSStream*)stream WithAllPlayer:(NSArray*)all{
+    if ([stream isKindOfClass:[NSOutputStream class]]) {
+        NSOutputStream *out = (NSOutputStream*)stream;
+        NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:all];
+        NSInteger length = [SPYConnection writeData:sendData withStream:out];
+    }
+}
+
+- (void)allPlayerGet:(NSStream*)stream Step:(int)step{
+    NSData *data;
+    if ([stream isKindOfClass:[NSInputStream class]]) {
+        NSInputStream *in = (NSInputStream*)stream;
+        if (step==2) {
+            remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
+        }else if(remainingToRead>0&&step==3){
+            data = [SPYConnection readGameDataWithInput:in size:remainingToRead];
+            if (data!=nil&&[data length]==remainingToRead) {
+                NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];//全部封装PlayerBean
+                if ([arrs count]>0) {
+                    
                 }
                 //[self reloadClientListTable:player];//刷新房间参与者列表
             }

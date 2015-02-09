@@ -189,7 +189,7 @@
                 NSString *nick = [[SPYFileUtil shareInstance]getUserName];
                 NSString *device = [UIDevice currentDevice].name;
                 PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
-                [[NetWorkingDelegate shareInstance]dataOperation:0 WithStream:aStream Step:1 Objects:bean];
+                [[NetWorkingDelegate shareInstance]dataOperation:0 WithStream:aStream Objects:bean];
                 self.isRemoteInit = YES;
             }
             break;
@@ -198,12 +198,8 @@
                 NSInputStream *in = (NSInputStream*)aStream;
                 self.operType = [SPYConnection readOperationType:in]+1;//push转get
             }else{
-                [[NetWorkingDelegate shareInstance]dataOperation:self.operType WithStream:aStream Step:self.step Objects:nil];
-                if (self.step==3) {
-                    self.step=1;
-                }else{
-                    self.step++;
-                }
+                NSString *obj = [NSString stringWithFormat:@"%d", self.step];
+                [[NetWorkingDelegate shareInstance]dataOperation:self.operType WithStream:aStream Objects:obj];
             }
             self.step++;
             break;

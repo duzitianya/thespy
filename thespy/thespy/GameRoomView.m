@@ -8,7 +8,7 @@
 
 #import "GameRoomView.h"
 #import "SPYFileUtil.h"
-#import "NetWorkingDelegate.h"
+#import "SPYConnection+Delegate.h"
 
 @implementation GameRoomView
 @synthesize subRoomView;
@@ -189,7 +189,7 @@
                 NSString *nick = [[SPYFileUtil shareInstance]getUserName];
                 NSString *device = [UIDevice currentDevice].name;
                 PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
-                [[NetWorkingDelegate shareInstance]dataOperation:0 WithStream:aStream Objects:bean];
+                [[SPYConnection alloc] dataOperation:0 WithStream:aStream Objects:bean];
                 self.isRemoteInit = YES;
             }
             break;
@@ -199,7 +199,7 @@
                 self.operType = [SPYConnection readOperationType:in]+1;//push转get
             }else{
                 NSString *obj = [NSString stringWithFormat:@"%d", self.step];
-                [[NetWorkingDelegate shareInstance]dataOperation:self.operType WithStream:aStream Objects:obj];
+                [[SPYConnection alloc]dataOperation:self.operType WithStream:aStream Objects:obj];
             }
             self.step++;
             break;

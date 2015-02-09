@@ -1,12 +1,12 @@
 //
-//  NetWorkingDelegate.h
+//  SPYConnection+Delegate.h
 //  thespy
 //
-//  Created by zhaoquan on 15/2/3.
+//  Created by zhaoquan on 15/2/9.
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "SPYConnection.h"
 
 typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYNewPlayerPush = 10,//客户端连接后向服务端发送自身数据
@@ -23,11 +23,13 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYAllPlayerGet = 61
 };
 
-@interface NetWorkingDelegate : NSObject
+@protocol NetWorkingDelegate <NSObject>
+@optional
 
-+(NetWorkingDelegate *)shareInstance;
+@end
 
-//- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj,...;
+@interface SPYConnection (Delegate)
+
 - (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj;
 
 @end

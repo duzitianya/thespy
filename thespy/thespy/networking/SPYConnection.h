@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSInputStream *input;
 @property (nonatomic, strong) NSOutputStream *output;
+@property (nonatomic, assign) int remainingToRead;
 
 - (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs delegate:(id<NSStreamDelegate>)delegate;
 //读数据

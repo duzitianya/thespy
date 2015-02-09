@@ -1,28 +1,16 @@
 //
-//  NetWorkingDelegate.m
+//  SPYConnection+Delegate.m
 //  thespy
 //
-//  Created by zhaoquan on 15/2/3.
+//  Created by zhaoquan on 15/2/9.
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
 
-#import "NetWorkingDelegate.h"
-#import "SPYConnection.h"
+#import "SPYConnection+Delegate.h"
 #import "PlayerBean.h"
 #import "SPYFileUtil.h"
- 
-@implementation NetWorkingDelegate{
-    int remainingToRead;
-}
 
-+(NetWorkingDelegate *)shareInstance{
-    static dispatch_once_t pred;
-    static NetWorkingDelegate *shared = nil;
-    dispatch_once(&pred, ^{
-        shared = [[NetWorkingDelegate alloc] init];
-    });
-    return shared;
-}
+@implementation SPYConnection (Delegate)
 
 - (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj{
     switch (oper) {
@@ -103,6 +91,7 @@
         long length = [in read:buf maxLength:sizeof(buf)];
         if (length>0) {
             NSInteger index = buf[0];
+            
         }
     }
 }
@@ -175,7 +164,7 @@
     NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
     NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
     if (length==[sendData length]) {
-//        [self dismissViewControllerAnimated:NO completion:nil];
+        //        [self dismissViewControllerAnimated:NO completion:nil];
     }
 }
 
@@ -185,10 +174,10 @@
     if ([aStream isKindOfClass:[NSInputStream class]]) {
         NSInputStream *in = (NSInputStream*)aStream;
         if (step==2) {
-            remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
-        }else if(remainingToRead>0&&step==3){
-            data = [SPYConnection readGameDataWithInput:in size:remainingToRead];
-            if (data!=nil&&[data length]==remainingToRead) {
+            self.remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
+        }else if(self.remainingToRead>0&&step==3){
+            data = [SPYConnection readGameDataWithInput:in size:self.remainingToRead];
+            if (data!=nil&&[data length]==self.remainingToRead) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
                 if ([arrs count]>0) {
                     NSMutableArray *temp = [[NSMutableArray alloc]initWithCapacity:[arrs count]];
@@ -205,7 +194,7 @@
                 }
                 //[self reloadClientListTable:player];//刷新房间参与者列表
             }
-            remainingToRead = -2;
+            self.remainingToRead = -2;
         }
     }
 }
@@ -223,19 +212,21 @@
     if ([stream isKindOfClass:[NSInputStream class]]) {
         NSInputStream *in = (NSInputStream*)stream;
         if (step==2) {
-            remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
-        }else if(remainingToRead>0&&step==3){
-            data = [SPYConnection readGameDataWithInput:in size:remainingToRead];
-            if (data!=nil&&[data length]==remainingToRead) {
+            self.remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
+        }else if(self.remainingToRead>0&&step==3){
+            data = [SPYConnection readGameDataWithInput:in size:self.remainingToRead];
+            if (data!=nil&&[data length]==self.remainingToRead) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];//全部封装PlayerBean
                 if ([arrs count]>0) {
                     
                 }
                 //[self reloadClientListTable:player];//刷新房间参与者列表
             }
-            remainingToRead = -2;
+            self.remainingToRead = -2;
         }
     }
 }
+
+
 
 @end

@@ -24,16 +24,45 @@
     return shared;
 }
 
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj,...{
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Step:(int)step Objects:(NSObject*)obj{
     switch (oper) {
-        case SPYGetGameRoomInfo://获取游戏房间基本信息
+        case SPYNewPlayerPush://客户端连接后向服务端发送自身数据
+            [self newPlayerPush:stream WithPlayer:(PlayerBean*)obj];
             break;
-        case SPYGetAllPlayer://新增用户（需要获取数据长度）
+        case SPYNewPlayerGet://服务器端收取
             [self newPlayerArraive:stream Step:step];
             break;
-        case SPYGetRole://开始游戏分发角色
+        case SPYAllPlayerPush://发送所有（新增）用户
             break;
-        case SPYKillPlayer://杀死参与者
+        case SPYAllPlayerGet://请求获得所有（新增）用户
+            break;
+        case SPYGameRoomInfoPush://发送游戏房间信息
+            [self gameRoomDataPush:stream WithData:(NSData*)obj];
+            break;
+        case SPYGameRoomInfoGet://请求获得游戏房间信息
+            [self gameRoomDataRead:stream];
+            break;
+        case SPYRolePush://发送角色
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary*)obj;
+                NSArray *conns = [dict objectForKey:@"conn"];
+                NSArray *roles = [dict objectForKey:@"roles"];
+                [self pushRole:conns Roles:roles];
+            }
+            break;
+        case SPYRoleGet://请求角色
+            [self getRole:stream];
+            break;
+        case SPYKillPlayerPush://杀
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary*)obj;
+                NSArray *conns = [dict objectForKey:@"conn"];
+                NSString *index = [dict objectForKey:@"index"];
+                [self killPlayer:conns WithIndex:[index intValue]];
+            }
+            break;
+        case SPYKillPlayerGet:
+            [self getKilledPlayer:stream WithIndex:(NSInteger)obj];
             break;
         default:
             break;
@@ -41,12 +70,26 @@
 }
 
 //杀掉指定用户
-- (void)killPlayer:(NSStream*)aStream{
-    if ([aStream isKindOfClass:[NSOutputStream class]]) {
+- (void)killPlayer:(NSArray*)connections WithIndex:(NSInteger)index{
+    if (connections!=nil) {
+        for (int i=0; i<[connections count]; i++) {
+            SPYConnection *conn = connections[i];
+            NSOutputStream *out = conn.output;
+            uint8_t buf[1];
+            buf[0] = index;
+            [out write:buf maxLength:sizeof(buf)];
+        }
+    }
+}
+
+- (void)getKilledPlayer:(NSStream*)stream WithIndex:(NSInteger)index{
+    if ([stream isKindOfClass:[NSInputStream class]]) {
+        NSInputStream *in = (NSInputStream*)stream;
         uint8_t buf[1];
-        buf[0] = '1';
-        NSOutputStream *out = (NSOutputStream*)aStream;
-        [out write:buf maxLength:sizeof(buf)];
+        long length = [in read:buf maxLength:sizeof(buf)];
+        if (length>0) {
+            NSInteger index = buf[0];
+        }
     }
 }
 
@@ -59,6 +102,18 @@
             uint8_t buf[1];
             buf[0] = (int)role[i];
             [out write:buf maxLength:sizeof(buf)];
+        }
+    }
+}
+
+- (void)getRole:(NSStream*)stream{
+    if ([stream isKindOfClass:[NSInputStream class]]) {
+        NSInputStream *in = (NSInputStream*)stream;
+        uint8_t buf[1];
+        int role;
+        long length = [in read:buf maxLength:sizeof(buf)];
+        if (length==1) {
+            role = buf[0];
         }
     }
 }

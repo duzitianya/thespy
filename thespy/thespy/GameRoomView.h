@@ -47,7 +47,7 @@
 @property (nonatomic, assign) BOOL isRemoteInit;//是否进行过服务器注册
 
 @property (nonatomic, assign) int remainingToRead;//网络传输的流大小
-
+@property (nonatomic, assign) int operType;//操作类型
 @property (nonatomic, assign) int step;//状态，1：读取1字节作为操作类型；2：操作数据
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;

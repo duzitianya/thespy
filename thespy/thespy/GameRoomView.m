@@ -182,29 +182,34 @@
             break;
         case NSStreamEventHasSpaceAvailable:
             if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
-                //发送本机数据
-                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];//头像数据
-                NSString *name = [[SPYFileUtil shareInstance]getUserName];//用户名
-                NSString *deviceName = [UIDevice currentDevice].name;
-                NSArray *arr = [NSArray arrayWithObjects:UIImagePNGRepresentation(img), name, deviceName, nil];
-                NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
-                NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
-                if (length==[sendData length]) {
-                    [self dismissViewControllerAnimated:NO completion:nil];
-                }
+                //发送操作类型标记
+                [SPYConnection writeOperationType:(NSOutputStream*)aStream OperType:SPYNewPlayerPush];
+                //发送本机数据到服务器
+                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+                NSString *nick = [[SPYFileUtil shareInstance]getUserName];
+                NSString *device = [UIDevice currentDevice].name;
+                PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
+                [[NetWorkingDelegate shareInstance]dataOperation:0 WithStream:aStream Step:1 Objects:bean];
                 self.isRemoteInit = YES;
             }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
             if ([aStream isKindOfClass:[NSInputStream class]]&&self.step==1) {
                 NSInputStream *in = (NSInputStream*)aStream;
-                int operType = [SPYConnection readOperationType:in];
-                self.step++;
-                [[NetWorkingDelegate shareInstance]dataOperation:operType WithStream:aStream Step:self.step];
+                self.operType = [SPYConnection readOperationType:in]+1;//push转get
+            }else{
+                [[NetWorkingDelegate shareInstance]dataOperation:self.operType WithStream:aStream Step:self.step Objects:nil];
+                if (self.step==3) {
+                    self.step=1;
+                }else{
+                    self.step++;
+                }
             }
+            self.step++;
             break;
         case NSStreamEventEndEncountered:
             self.step = 1;
+            self.operType = 0;
             break;
         case NSStreamEventErrorOccurred:{
             //出错的时候

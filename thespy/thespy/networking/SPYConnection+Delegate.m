@@ -151,6 +151,7 @@
         NSInputStream *in = (NSInputStream*)aStream;
         NSInteger length = [in read:buf maxLength:sizeof(buf)];
         NSData *data = [NSData dataWithBytes:buf length:length];
+        [self.delegate initGameRoomData:data];
     }
 }
 
@@ -164,7 +165,7 @@
     NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
     NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
     if (length==[sendData length]) {
-        //        [self dismissViewControllerAnimated:NO completion:nil];
+        [self.delegate dismissViewController];
     }
 }
 
@@ -180,19 +181,15 @@
             if (data!=nil&&[data length]==self.remainingToRead) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
                 if ([arrs count]>0) {
-                    NSMutableArray *temp = [[NSMutableArray alloc]initWithCapacity:[arrs count]];
-                    for (int i=0; i<[arrs count]; i++) {
-                        NSArray *a = [arrs objectAtIndex:i];
-                        NSData *imgData = a[0];
-                        NSString *name = a[1];
-                        NSString *deviceName = a[2];
-                        
-                        UIImage *img = [UIImage imageWithData:imgData];
-                        PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
-                        [temp addObject:player];
-                    }
+                    NSData *imgData = arrs[0];
+                    NSString *name = arrs[1];
+                    NSString *deviceName = arrs[2];
+                    
+                    UIImage *img = [UIImage imageWithData:imgData];
+                    PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
+                    NSArray *list = [[NSArray alloc]initWithObjects:player, nil];
+                    [self.delegate reloadClientListTable:list];//刷新房间参与者列表
                 }
-                //[self reloadClientListTable:player];//刷新房间参与者列表
             }
             self.remainingToRead = -2;
         }
@@ -218,9 +215,8 @@
             if (data!=nil&&[data length]==self.remainingToRead) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];//全部封装PlayerBean
                 if ([arrs count]>0) {
-                    
+                    [self.delegate reloadClientListTable:arrs];//刷新房间参与者列表
                 }
-                //[self reloadClientListTable:player];//刷新房间参与者列表
             }
             self.remainingToRead = -2;
         }

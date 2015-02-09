@@ -14,7 +14,25 @@
 @synthesize subRoomView;
 
 - (void)viewDidAppear:(BOOL)animated{
-    
+    if (self.isRemoteInit) {//注册过的才可以拉取房间信息
+        //初始化:
+        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        //设置显示样式,见UIActivityIndicatorViewStyle的定义
+        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        //设置显示位置
+        [self.indicator setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+        //设置背景色
+        self.indicator.backgroundColor = [UIColor blackColor];
+        //设置背景透明
+        self.indicator.alpha = 0.5f;
+        //设置背景为圆角矩形
+        self.indicator.layer.cornerRadius = 6;
+        self.indicator.layer.masksToBounds = YES;
+        //将初始化好的indicator add到view中
+        [self.view addSubview:self.indicator];
+        //开始显示Loading动画
+//        [indicator startAnimating];
+    }
 }
 
 - (void)viewDidLoad{

@@ -25,10 +25,15 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
 
 @protocol NetWorkingDelegate <NSObject>
 @optional
+-(void)dismissViewController;//取消连接列表
+-(void)reloadClientListTable:(NSArray*)list;//刷新用户列表
+-(void)initGameRoomData:(NSData*)data;
 
 @end
 
 @interface SPYConnection (Delegate)
+
+@property (nonatomic, weak) id<NetWorkingDelegate> delegate;
 
 - (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj;
 

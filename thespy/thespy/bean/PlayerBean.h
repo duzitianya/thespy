@@ -10,23 +10,22 @@
 #import "SPYConnection.h"
 #import <UIKit/UIKit.h>
 
-//当前链接状态类型
-typedef enum {
-    BLE_ONLINE,//在线
-    BLE_OFFLINE,//离线
-    BLE_CONNECTTING//正在链接
-}PlayerOnlineStatus;
+typedef NS_ENUM(NSInteger, PlayerOnlineStatus){
+    BLE_ONLINE = 0,//在线
+    BLE_OFFLINE = 1,//离线
+    BLE_CONNECTTING = 2//正在链接
+};
 
 //游戏角色定义
-typedef enum{
-    SPY,//卧底
-    CITIZEN,//平民
-    WHITE//白板
-}PlayerRole;
+typedef NS_ENUM(NSInteger, PlayerRole){
+    SPY = 0,//卧底
+    CITIZEN = 1,//平民
+    WHITE = 2//白板
+};
 
 @class UIImage;
 
-@interface PlayerBean : NSObject
+@interface PlayerBean : NSObject<NSCoding>
 
 @property (nonatomic, strong) UIImage *img;         //头像
 @property (nonatomic, strong) NSString *name;         //昵称

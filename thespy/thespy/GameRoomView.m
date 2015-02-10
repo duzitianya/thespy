@@ -14,7 +14,7 @@
 @synthesize subRoomView;
 
 - (void)viewDidAppear:(BOOL)animated{
-    if (self.isRemoteInit) {//注册过的才可以拉取房间信息
+    if ([self.subRoomView.allPlayer count]<=1&&!self.asServer) {//注册过的才可以拉取房间信息
         //初始化:
         self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         //设置显示样式,见UIActivityIndicatorViewStyle的定义
@@ -31,7 +31,7 @@
         //将初始化好的indicator add到view中
         [self.view addSubview:self.indicator];
         //开始显示Loading动画
-//        [indicator startAnimating];
+        [self.indicator startAnimating];
     }
 }
 
@@ -43,7 +43,8 @@
         self.plvc.title = @"游戏列表";
         self.plvc.delegate = self;
         
-        [self presentViewController:self.plvc animated:NO completion:nil];
+//        [self presentViewController:self.plvc animated:NO completion:nil];
+        [self presentModalViewController:self.plvc animated:NO];
     }
     
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height;
@@ -73,10 +74,17 @@
     self.step = 1;
 }
 
-- (void) reloadClientListTable:(PlayerBean*)player{
-    [self.subRoomView.allPlayer addObject:player];
+
+#pragma NetWorkingDelegate
+-(void)dismissViewController{//取消连接列表
+    [self dismissModalViewControllerAnimated:NO];
+}
+
+- (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
+    [self.subRoomView.allPlayer addObjectsFromArray:list];
     [self.subRoomView.collectionView reloadData];
     [self updateOnlinePlayer];
+    [self.indicator stopAnimating];
 }
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer asServer:(BOOL)asServer{
@@ -194,36 +202,44 @@
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
     switch (eventCode) {
         case NSStreamEventOpenCompleted:
             self.streamOpenCount++;
             break;
         case NSStreamEventHasSpaceAvailable:
+            NSLog(@"NSStreamEventHasSpaceAvailable--->%f", [date timeIntervalSince1970]);
             if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
-                //发送操作类型标记
-                [SPYConnection writeOperationType:(NSOutputStream*)aStream OperType:SPYNewPlayerPush];
-                //发送本机数据到服务器
-                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
-                NSString *nick = [[SPYFileUtil shareInstance]getUserName];
-                NSString *device = [UIDevice currentDevice].name;
-                PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
-                [[SPYConnection alloc] dataOperation:0 WithStream:aStream Objects:bean];
-                self.isRemoteInit = YES;
+                if (self.step==1) {
+                    //发送操作类型标记
+                    [SPYConnection writeOperationType:(NSOutputStream*)aStream OperType:SPYNewPlayerPush];
+                }else if(self.step==2){
+                    //发送本机数据到服务器
+                    UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+                    NSString *nick = [[SPYFileUtil shareInstance]getUserName];
+                    NSString *device = [UIDevice currentDevice].name;
+                    PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
+                    [[SPYConnection alloc] dataOperation:SPYNewPlayerPush WithStream:aStream Objects:bean Delegate:self];
+                }
+                self.step++;
             }
             break;
         case NSStreamEventHasBytesAvailable://读取数据
+            NSLog(@"NSStreamEventHasBytesAvailable--->%f", [date timeIntervalSince1970]);
             if ([aStream isKindOfClass:[NSInputStream class]]&&self.step==1) {
                 NSInputStream *in = (NSInputStream*)aStream;
                 self.operType = [SPYConnection readOperationType:in]+1;//push转get
             }else{
-                NSString *obj = [NSString stringWithFormat:@"%d", self.step];
-                [[SPYConnection alloc]dataOperation:self.operType WithStream:aStream Objects:obj];
+                NSString *step = [NSString stringWithFormat:@"%d", self.step];
+                NSString *length = [NSString stringWithFormat:@"%d", self.remainingToRead];
+                NSArray *arr = [[NSArray alloc]initWithObjects:step, length, nil];
+                [[SPYConnection alloc]dataOperation:self.operType WithStream:aStream Objects:arr Delegate:self];
             }
             self.step++;
-            break;
-        case NSStreamEventEndEncountered:
-            self.step = 1;
-            self.operType = 0;
+            if (self.step>3) {
+                self.step=1;
+                self.operType = 0;
+            }
             break;
         case NSStreamEventErrorOccurred:{
             //出错的时候
@@ -242,6 +258,10 @@
         default:
             break;
     }
+}
+
+-(void)setReadLength:(int)length{
+    self.remainingToRead = length;
 }
 
 @end

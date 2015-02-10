@@ -89,6 +89,7 @@
 		BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomHeader.xib; sourceTree = "<group>"; };
 		BF74DEAB1A88A91C00E8744B /* SPYConnection+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SPYConnection+Delegate.h"; path = "networking/SPYConnection+Delegate.h"; sourceTree = "<group>"; };
 		BF74DEAC1A88A91D00E8744B /* SPYConnection+Delegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SPYConnection+Delegate.m"; path = "networking/SPYConnection+Delegate.m"; sourceTree = "<group>"; };
+		BF74DEAE1A89DEC400E8744B /* NetWorkingDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetWorkingDelegate.h; sourceTree = "<group>"; };
 		BF77ACE51A6E4725008CCFB9 /* thespy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thespy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF77ACE91A6E4725008CCFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF77ACEA1A6E4725008CCFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -306,6 +307,7 @@
 				84018D2E1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m */,
 				BF74DEAB1A88A91C00E8744B /* SPYConnection+Delegate.h */,
 				BF74DEAC1A88A91D00E8744B /* SPYConnection+Delegate.m */,
+				BF74DEAE1A89DEC400E8744B /* NetWorkingDelegate.h */,
 			);
 			name = networking;
 			sourceTree = "<group>";

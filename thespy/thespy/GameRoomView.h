@@ -15,9 +15,11 @@
 #import "GameRoomHeader.h"
 #import "ServerListViewController.h"
 #import "NSStream+StreamsToHost.h"
+#import "SPYConnection+Delegate.h"
 
 @interface GameRoomView : UIViewController<
         ServerListViewControllerDelegate,
+        NetWorkingDelegate,
         NSStreamDelegate,
         UIAlertViewDelegate,
         NSNetServiceDelegate,

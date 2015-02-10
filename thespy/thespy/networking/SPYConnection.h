@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "NetWorkingDelegate.h"
 
 @interface SPYConnection : NSObject
 
 @property (nonatomic, strong) NSInputStream *input;
 @property (nonatomic, strong) NSOutputStream *output;
-@property (nonatomic, assign) int remainingToRead;
+
+@property (nonatomic, weak) id<NetWorkingDelegate> netDelegate;
 
 - (id) initWithInput:(NSInputStream*)inputs output:(NSOutputStream*)outputs delegate:(id<NSStreamDelegate>)delegate;
 //读数据

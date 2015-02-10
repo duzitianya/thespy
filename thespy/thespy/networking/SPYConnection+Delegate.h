@@ -5,8 +5,8 @@
 //  Created by zhaoquan on 15/2/9.
 //  Copyright (c) 2015年 zhaoquan. All rights reserved.
 //
-
 #import "SPYConnection.h"
+#import "NetWorkingDelegate.h"
 
 typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYNewPlayerPush = 10,//客户端连接后向服务端发送自身数据
@@ -23,18 +23,8 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYAllPlayerGet = 61
 };
 
-@protocol NetWorkingDelegate <NSObject>
-@optional
--(void)dismissViewController;//取消连接列表
--(void)reloadClientListTable:(NSArray*)list;//刷新用户列表
--(void)initGameRoomData:(NSData*)data;
-
-@end
-
 @interface SPYConnection (Delegate)
 
-@property (nonatomic, weak) id<NetWorkingDelegate> delegate;
-
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj;
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj Delegate:(id<NetWorkingDelegate>)delegate;
 
 @end

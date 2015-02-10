@@ -12,13 +12,17 @@
 
 @implementation SPYConnection (Delegate)
 
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj{
+- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj Delegate:(id<NetWorkingDelegate>)delegate{
+    self.netDelegate = delegate;
     switch (oper) {
         case SPYNewPlayerPush://客户端连接后向服务端发送自身数据
             [self newPlayerPush:stream WithPlayer:(PlayerBean*)obj];
             break;
         case SPYNewPlayerGet://服务器端收取
-            [self newPlayerArraive:stream Step:[(NSString*)obj intValue]];
+            if ([obj isKindOfClass:[NSArray class]]) {
+                NSArray *arr = (NSArray*)obj;
+                [self newPlayerArraive:stream Step:[(NSString*)arr[0] intValue] ReadLength:[(NSString*)arr[1] intValue]];
+            }
             break;
         case SPYNewPlayerToOtherPush://发送所有（新增）用户
             if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -29,7 +33,10 @@
             }
             break;
         case SPYNewPlayerToOtherGet://请求获得所有（新增）用户
-            [self newPlayerArraive:stream Step:[(NSString*)obj intValue]];
+            if ([obj isKindOfClass:[NSArray class]]) {
+                NSArray *arr = (NSArray*)obj;
+                [self newPlayerArraive:stream Step:[(NSString*)arr[0] intValue] ReadLength:[(NSString*)arr[1] intValue]];
+            }
             break;
         case SPYGameRoomInfoPush://发送游戏房间信息
             [self gameRoomDataPush:stream WithData:(NSData*)obj];
@@ -63,7 +70,10 @@
             [self allPlayerPush:stream WithAllPlayer:(NSArray*)obj];
             break;
         case SPYAllPlayerGet:
-            [self allPlayerGet:stream Step:[(NSString*)obj intValue]];
+            if ([obj isKindOfClass:[NSArray class]]) {
+                NSArray *arr = (NSArray*)obj;
+                [self allPlayerGet:stream Step:[(NSString*)arr[0] intValue] ReadLength:[(NSString*)arr[1] intValue]];
+            }
             break;
         default:
             break;
@@ -151,7 +161,7 @@
         NSInputStream *in = (NSInputStream*)aStream;
         NSInteger length = [in read:buf maxLength:sizeof(buf)];
         NSData *data = [NSData dataWithBytes:buf length:length];
-        [self.delegate initGameRoomData:data];
+        [self.netDelegate initGameRoomData:data];
     }
 }
 
@@ -165,20 +175,21 @@
     NSData *sendData = [NSKeyedArchiver archivedDataWithRootObject:arr];
     NSInteger length = [SPYConnection writeData:sendData withStream:(NSOutputStream*)aStream];
     if (length==[sendData length]) {
-        [self.delegate dismissViewController];
+        [self.netDelegate dismissViewController];
     }
 }
 
 //获得新连接用户数据
-- (void)newPlayerArraive:(NSStream*)aStream Step:(int)step{
+- (void)newPlayerArraive:(NSStream*)aStream Step:(int)step ReadLength:(int)length{
     NSData *data;
     if ([aStream isKindOfClass:[NSInputStream class]]) {
         NSInputStream *in = (NSInputStream*)aStream;
         if (step==2) {
-            self.remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
-        }else if(self.remainingToRead>0&&step==3){
-            data = [SPYConnection readGameDataWithInput:in size:self.remainingToRead];
-            if (data!=nil&&[data length]==self.remainingToRead) {
+            int remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
+            [self.netDelegate setReadLength:remainingToRead];
+        }else if(length>0&&step==3){
+            data = [SPYConnection readGameDataWithInput:in size:length];
+            if (data!=nil&&[data length]==length) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];
                 if ([arrs count]>0) {
                     NSData *imgData = arrs[0];
@@ -188,10 +199,9 @@
                     UIImage *img = [UIImage imageWithData:imgData];
                     PlayerBean *player = [PlayerBean initWithData:img Name:name DeviceName:deviceName];
                     NSArray *list = [[NSArray alloc]initWithObjects:player, nil];
-                    [self.delegate reloadClientListTable:list];//刷新房间参与者列表
+                    [self.netDelegate reloadClientListTable:list];//刷新房间参与者列表
                 }
             }
-            self.remainingToRead = -2;
         }
     }
 }
@@ -204,21 +214,21 @@
     }
 }
 
-- (void)allPlayerGet:(NSStream*)stream Step:(int)step{
+- (void)allPlayerGet:(NSStream*)stream Step:(int)step ReadLength:(int)length{
     NSData *data;
     if ([stream isKindOfClass:[NSInputStream class]]) {
         NSInputStream *in = (NSInputStream*)stream;
         if (step==2) {
-            self.remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
-        }else if(self.remainingToRead>0&&step==3){
-            data = [SPYConnection readGameDataWithInput:in size:self.remainingToRead];
-            if (data!=nil&&[data length]==self.remainingToRead) {
+            int length = [SPYConnection readGameDataDirectWithInput:in];
+            [self.netDelegate setReadLength:length];
+        }else if(length>0&&step==3){
+            data = [SPYConnection readGameDataWithInput:in size:length];
+            if (data!=nil&&[data length]==length) {
                 NSArray *arrs = [NSKeyedUnarchiver unarchiveObjectWithData:data];//全部封装PlayerBean
                 if ([arrs count]>0) {
-                    [self.delegate reloadClientListTable:arrs];//刷新房间参与者列表
+                    [self.netDelegate reloadClientListTable:arrs];//刷新房间参与者列表
                 }
             }
-            self.remainingToRead = -2;
         }
     }
 }

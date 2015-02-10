@@ -161,7 +161,8 @@
         NSInputStream *in = (NSInputStream*)aStream;
         NSInteger length = [in read:buf maxLength:sizeof(buf)];
         NSData *data = [NSData dataWithBytes:buf length:length];
-        [self.netDelegate initGameRoomData:data];
+        NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [self.netDelegate initGameRoomData:arr];
     }
 }
 

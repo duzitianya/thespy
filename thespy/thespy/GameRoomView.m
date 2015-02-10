@@ -84,7 +84,25 @@
     [self.subRoomView.allPlayer addObjectsFromArray:list];
     [self.subRoomView.collectionView reloadData];
     [self updateOnlinePlayer];
-    [self.indicator stopAnimating];
+    if (!self.asServer&&[self.indicator isAnimating]) {
+        [self.indicator stopAnimating];
+    }
+    if (self.asServer) {
+        //向新注册用户写回当前在线用户数据
+        //发送操作类型标记
+        [SPYConnection writeOperationType:((SPYConnection*)[self.connections lastObject]).output OperType:SPYAllPlayerPush];
+        [[SPYConnection alloc]dataOperation:SPYAllPlayerPush WithStream:((SPYConnection*)[self.connections lastObject]).output Objects:self.subRoomView.allPlayer Delegate:self];
+        
+        //写房间数据
+        [SPYConnection writeOperationType:((SPYConnection*)[self.connections lastObject]).output OperType:SPYGameRoomInfoPush];
+        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
+        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
+        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
+        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
+        NSArray *arr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
+        [[SPYConnection alloc]dataOperation:SPYGameRoomInfoPush WithStream:((SPYConnection*)[self.connections lastObject]).output Objects:data Delegate:self];
+    }
 }
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer asServer:(BOOL)asServer{
@@ -262,6 +280,24 @@
 
 -(void)setReadLength:(int)length{
     self.remainingToRead = length;
+}
+
+-(void)initGameRoomData:(NSArray*)arr{
+    NSString *total = arr[0];
+    NSString *citizen = arr[1];
+    NSString *spy = arr[2];
+    NSString *white = arr[3];
+    
+    self.totalNum = [total integerValue];
+    self.citizenNum = [citizen integerValue];
+    self.spyNum = [spy integerValue];
+    self.whiteBoardNum = [white integerValue];
+    
+    self.gameRoomHeader.totalLabel.text = total;
+    self.gameRoomHeader.citizenLabel.text = citizen;
+    self.gameRoomHeader.spyLabel.text = spy;
+    self.gameRoomHeader.whiteboardLabel.text = white;
+    
 }
 
 @end

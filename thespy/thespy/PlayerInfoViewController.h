@@ -13,8 +13,6 @@
 #import "ActionView.h"
 #import "GameInitionView.h"
 #import "HistoryListViewController.h"
-#import "SPYService.h"
-#import "SPYServiceBrowser.h"
 #import "GameRoomView.h"
 #import "SPYFileUtil.h"
 #import "SettingsBoardView.h"

@@ -32,14 +32,14 @@
     NSString *serverTxt = @"创建游戏";
     CGSize size = [serverTxt sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(width/2, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
     
-    self.server = [[UIButton alloc] initWithFrame:CGRectMake(0, height-size.height-30, width/2, size.height+30)];
+    self.server = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width/2, size.height+30)];
     [self.server setTitle:serverTxt forState:UIControlStateNormal];
     [self.server addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.server setTag:1];
     self.server.backgroundColor = [UIColor grayColor];
     [self addSubview:self.server];
     
-    self.client = [[UIButton alloc] initWithFrame:CGRectMake(width/2+1, height-size.height-30, width/2, size.height+30)];
+    self.client = [[UIButton alloc] initWithFrame:CGRectMake(width/2+1, 0, width/2, size.height+30)];
     [self.client setTitle:@"加入游戏" forState:UIControlStateNormal];
     [self.client addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.client setTag:2];
@@ -51,8 +51,8 @@
 - (void) buttonClick:(id)sender{
     if(sender&&[sender isKindOfClass:[UIButton class]]){
         //查看设备蓝牙状态
-        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-        NSLog(@"BLE state...%ld", self.centralManager.state);
+//        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+//        NSLog(@"BLE state...%ld", self.centralManager.state);
         
         UIButton *button = sender;
         NSInteger tag = button.tag;
@@ -66,6 +66,12 @@
             self.server.backgroundColor = [UIColor darkGrayColor];
         }
     }
+}
+
++ (CGFloat) getViewHeight{
+    NSString *serverTxt = @"创建游戏";
+    CGSize size = [serverTxt sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kMAIN_SCREEN_WIDTH/2, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    return size.height + 30;
 }
 
 @end

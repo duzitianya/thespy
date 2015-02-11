@@ -7,30 +7,33 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SPYConnection.h"
+#import <UIKit/UIKit.h>
 
-//当前链接状态类型
-typedef enum {
-    BLE_ONLINE,//在线
-    BLE_OFFLINE,//离线
-    BLE_CONNECTTING//正在链接
-}PlayerOnlineStatus;
+typedef NS_ENUM(NSInteger, PlayerOnlineStatus){
+    BLE_ONLINE = 0,//在线
+    BLE_OFFLINE = 1,//离线
+    BLE_CONNECTTING = 2//正在链接
+};
 
 //游戏角色定义
-typedef enum{
-    SPY,//卧底
-    CITIZEN,//平民
-    WHITE//白板
-}PlayerRole;
+typedef NS_ENUM(NSInteger, PlayerRole){
+    SPY = 0,//卧底
+    CITIZEN = 1,//平民
+    WHITE = 2//白板
+};
 
-@interface PlayerBean : NSObject
+@class UIImage;
 
-@property (nonatomic, strong) NSString *img;    //头像
-@property (nonatomic, weak) NSString *name;     //昵称
-@property (nonatomic, weak) NSString *id;       //唯一标识
-@property (nonatomic, strong) NSString *word;   //词条
-@property (nonatomic) PlayerOnlineStatus status;//状态
+@interface PlayerBean : NSObject<NSCoding>
+
+@property (nonatomic, strong) UIImage *img;         //头像
+@property (nonatomic, strong) NSString *name;         //昵称
+@property (nonatomic, strong) NSString *deviceName;   //设备名称
+@property (nonatomic, strong) NSString *word;       //词条
+@property (nonatomic) PlayerOnlineStatus status;    //状态
 @property (nonatomic) PlayerRole role;         //角色
 
-+ (PlayerBean*) initWithData:(NSString *)img Name:(NSString *)name ID:(NSString*)id Word:(NSString*)word;
++ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName;
 
 @end

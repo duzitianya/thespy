@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "AppDelegate.h"
 
 @protocol ActionViewDelegate <NSObject>
 
@@ -26,7 +27,7 @@
 @property (nonatomic, retain) CBCentralManager *centralManager;
 
 - (void)setUpFrame:(CGRect)frame;
-
++ (CGFloat) getViewHeight;
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central;
 
 @end

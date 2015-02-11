@@ -10,11 +10,11 @@
 
 @interface GameResult : NSObject
 
-@property (nonatomic, weak) NSString *_playerid;
-@property (nonatomic, weak) NSString *_name;
-@property (nonatomic, weak) NSString *_role;
-@property (nonatomic, weak) NSString *_victory;
-@property (nonatomic, weak) NSString *_date;
+@property (nonatomic, strong) NSString *_playerid;
+@property (nonatomic, strong) NSString *_name;
+@property (nonatomic, strong) NSString *_role;
+@property (nonatomic, strong) NSString *_victory;
+@property (nonatomic, strong) NSString *_date;
 
 - (id) initWithName:(NSString*)name Role:(NSString*)role Victory:(NSString*)victory;
 - (id) initWithPlayerID:(NSString*)playerID Name:(NSString*)name Role:(NSString*)role Victory:(NSString*)victory Date:(NSString*)date;

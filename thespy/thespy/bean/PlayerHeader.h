@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "PlayerBean.h"
 #import "AppDelegate.h"
+#import "SettingsView.h"
+#import "SettingsBoardView.h"
 
-@protocol HistoryDelegate <NSObject>
+@protocol TopViewDelegate <NSObject>
 
 @optional
 
@@ -19,12 +22,15 @@
 @end
 
 @interface PlayerHeader : UIView
-@property (strong, nonatomic) IBOutlet UIImageView *headImg;
-@property (strong, nonatomic) IBOutlet UILabel *name;
-@property (strong, nonatomic) IBOutlet UILabel *playerID;
-@property (strong, nonatomic) IBOutlet UIButton *historyButton;
-@property (weak, nonatomic) id<HistoryDelegate> delegate;
 
-- (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<HistoryDelegate>)delegate;
+@property (strong, nonatomic) IBOutlet UIImageView *headImg;
+@property (strong, nonatomic) IBOutlet UILabel *deviceName;
+@property (strong, nonatomic) IBOutlet UILabel *nickName;
+@property (strong, nonatomic) IBOutlet UIButton *historyButton;
+@property (weak, nonatomic) id<TopViewDelegate,CameraOpenDelegate> delegate;
+@property (strong, nonatomic) UIButton *changeButton;
+
+- (void) initWithPlayerBean:(PlayerBean *)bean Delegate:(id<TopViewDelegate,CameraOpenDelegate>)delegate;
+- (void)changeHeadImg:(UIButton *)sender;
 
 @end

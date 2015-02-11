@@ -14,6 +14,16 @@
 @synthesize subRoomView;
 
 - (void)viewDidAppear:(BOOL)animated{
+    
+    if (!self.asServer&&!self.isRemoteInit) {//如果是客户端，则弹出连接列表
+        self.plvc = [[ServerListViewController alloc] init];
+        self.plvc.title = @"游戏列表";
+        self.plvc.delegate = self;
+        
+//        [self presentModalViewController:self.plvc animated:NO];
+        [self.navigationController pushViewController:self.plvc animated:NO];
+    }
+    
     if ([self.subRoomView.allPlayer count]<=1&&!self.asServer) {//注册过的才可以拉取房间信息
         //初始化:
         self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -37,14 +47,6 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
-    if (!self.asServer) {//如果是客户端，则弹出连接列表
-        self.plvc = [[ServerListViewController alloc] init];
-        self.plvc.title = @"游戏列表";
-        self.plvc.delegate = self;
-        
-        [self presentModalViewController:self.plvc animated:NO];
-    }
     
     CGFloat barHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat currentY = barHeight + 20;
@@ -79,7 +81,8 @@
 
 #pragma NetWorkingDelegate
 -(void)dismissViewController{//取消连接列表
-    [self dismissModalViewControllerAnimated:NO];
+//    [self dismissModalViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
@@ -97,13 +100,13 @@
         [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:data OperType:SPYAllPlayerPush];
         
         //写房间数据
-//        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
-//        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
-//        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
-//        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
-//        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
-//        NSData *roomdata = [NSKeyedArchiver archivedDataWithRootObject:roomarr];
-//        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:roomdata OperType:SPYGameRoomInfoPush];
+        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
+        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
+        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
+        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
+        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
+        NSData *roomdata = [NSKeyedArchiver archivedDataWithRootObject:roomarr];
+        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:roomdata OperType:SPYGameRoomInfoPush];
     }
 }
 
@@ -255,13 +258,17 @@
                     [self.mdata getBytes:buf range:NSMakeRange(0, 4)];
                     self.remainingToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
                 }
-                if ([self.mdata length]==self.remainingToRead) {//相等，说明数据已经读取完毕
+                if ([self.mdata length]>=self.remainingToRead) {//说明数据已经读取完毕
                     uint8_t buf[1];
                     [self.mdata getBytes:buf range:NSMakeRange(4, 1)];
                     int oper = buf[0]&0xff;
-                    NSData *data = [self.mdata subdataWithRange:NSMakeRange(5, [self.mdata length]-5)];
-                    
+                    NSData *data = [self.mdata subdataWithRange:NSMakeRange(5, self.remainingToRead-5)];
                     [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
+                    
+                    NSData *subs = [self.mdata subdataWithRange:NSMakeRange(self.remainingToRead, [self.mdata length])];
+                    if ([subs length]>0) {
+                        self.mdata = [NSMutableData dataWithData:subs];
+                    }
                     self.remainingToRead = 0;
                 }
             }

@@ -106,7 +106,18 @@
         
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:roomarr, @"roomarr", arr, @"players", nil];
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
-        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:data OperType:SPYGameRoomInfoPush];
+        SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+        [conn writeData:conn.output WithData:data OperType:SPYGameRoomInfoPush];
+        
+        //向其他已连接客服端写出新用户数据
+        NSMutableArray *others = self.connections;
+        if (others&&[others count]>1) {
+            for (int i=0; i<[others count]-1; i++) {
+                SPYConnection *con = (SPYConnection*)others[i];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                [con writeData:con.output WithData:data OperType:SPYNewPlayerPush];
+            }
+        }
     }
 }
 

@@ -19,8 +19,6 @@
         self.plvc = [[ServerListViewController alloc] init];
         self.plvc.title = @"游戏列表";
         self.plvc.delegate = self;
-        
-//        [self presentModalViewController:self.plvc animated:NO];
         [self.navigationController pushViewController:self.plvc animated:NO];
     }
     
@@ -40,6 +38,7 @@
         self.indicator.layer.masksToBounds = YES;
         //将初始化好的indicator add到view中
         [self.view addSubview:self.indicator];
+        [self.indicator setHidesWhenStopped:YES];
         //开始显示Loading动画
         [self.indicator startAnimating];
     }
@@ -74,8 +73,8 @@
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
     self.remainingToRead = -2;
-    self.step = 1;
     self.mdata = [[NSMutableData alloc]init];
+    self.isRemoteInit = NO;
 }
 
 
@@ -91,22 +90,23 @@
     [self updateOnlinePlayer];
     if (!self.asServer&&[self.indicator isAnimating]) {
         [self.indicator stopAnimating];
+        [self.indicator removeFromSuperview];
+        NSLog(@"stop...........is...........called............");
     }
     if (self.asServer) {
         //向新注册用户写回当前在线用户数据
-        //发送操作类型标记
-        NSMutableArray *arr = self.subRoomView.allPlayer;
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
-        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:data OperType:SPYAllPlayerPush];
-        
-        //写房间数据
+        //房间数据
         NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
         NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
         NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
         NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
         NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
-        NSData *roomdata = [NSKeyedArchiver archivedDataWithRootObject:roomarr];
-        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:roomdata OperType:SPYGameRoomInfoPush];
+        //当前在线用户
+        NSMutableArray *arr = self.subRoomView.allPlayer;
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:roomarr, @"roomarr", arr, @"players", nil];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
+        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:data OperType:SPYGameRoomInfoPush];
     }
 }
 
@@ -240,7 +240,7 @@
                 
                 [[SPYConnection alloc]writeData:(NSOutputStream*)aStream WithData:data OperType:SPYNewPlayerPush];
                 self.isRemoteInit = YES;
-                [self dismissModalViewControllerAnimated:NO];
+                [self.navigationController popViewControllerAnimated:NO];
             }
             break;
         }
@@ -265,9 +265,11 @@
                     NSData *data = [self.mdata subdataWithRange:NSMakeRange(5, self.remainingToRead-5)];
                     [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
                     
-                    NSData *subs = [self.mdata subdataWithRange:NSMakeRange(self.remainingToRead, [self.mdata length])];
-                    if ([subs length]>0) {
-                        self.mdata = [NSMutableData dataWithData:subs];
+                    if (self.remainingToRead>[self.mdata length]) {
+                        NSData *subs = [self.mdata subdataWithRange:NSMakeRange(self.remainingToRead-1, [self.mdata length]-self.remainingToRead)];
+                        if ([subs length]>0) {
+                            self.mdata = [NSMutableData dataWithData:subs];
+                        }
                     }
                     self.remainingToRead = 0;
                 }
@@ -304,10 +306,10 @@
     self.spyNum = [spy integerValue];
     self.whiteBoardNum = [white integerValue];
     
-    self.gameRoomHeader.totalLabel.text = total;
-    self.gameRoomHeader.citizenLabel.text = citizen;
-    self.gameRoomHeader.spyLabel.text = spy;
-    self.gameRoomHeader.whiteboardLabel.text = white;
+    self.gameRoomHeader.totalLabel.text = [NSString stringWithFormat:@"总人数 %d 人", [total intValue]];
+    self.gameRoomHeader.citizenLabel.text = [NSString stringWithFormat:@"平民数 %d 人", [citizen intValue]];
+    self.gameRoomHeader.spyLabel.text = [NSString stringWithFormat:@"卧底数 %d 人", [spy intValue]];
+    self.gameRoomHeader.whiteboardLabel.text = [NSString stringWithFormat:@"白板数 %d 人", [white intValue]];
     
 }
 

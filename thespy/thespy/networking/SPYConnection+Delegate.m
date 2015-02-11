@@ -43,14 +43,12 @@
             [self.netDelegate reloadClientListTable:arr];
             break;
         }
-        case SPYAllPlayerPush:{
-            NSMutableArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            [self.netDelegate reloadClientListTable:arr];
-            break;
-        }
         case SPYGameRoomInfoPush:{
-            NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSArray *arr = [dict objectForKey:@"roomarr"];
             [self.netDelegate initGameRoomData:arr];
+            NSArray *players = [dict objectForKey:@"players"];
+            [self.netDelegate reloadClientListTable:players];
             break;
         }
         default:

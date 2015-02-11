@@ -43,7 +43,6 @@
         self.plvc.title = @"游戏列表";
         self.plvc.delegate = self;
         
-//        [self presentViewController:self.plvc animated:NO completion:nil];
         [self presentModalViewController:self.plvc animated:NO];
     }
     
@@ -52,7 +51,9 @@
     
     self.subRoomView = [[GameRoomSubview alloc] initWithNibName:@"GameRoomSubview" bundle:[NSBundle mainBundle]];
     self.subRoomView.view.frame = CGRectMake(0, currentY, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT-currentY);
-    [self.subRoomView setMainPlayer:self.mainPlayer];
+    if (self.asServer) {
+        [self.subRoomView setMainPlayer:self.mainPlayer];
+    }
     [self addChildViewController:self.subRoomView];
     [self.view addSubview:self.subRoomView.view];
     
@@ -91,18 +92,18 @@
     if (self.asServer) {
         //向新注册用户写回当前在线用户数据
         //发送操作类型标记
-        [SPYConnection writeOperationType:((SPYConnection*)[self.connections lastObject]).output OperType:SPYAllPlayerPush];
-        [[SPYConnection alloc]dataOperation:SPYAllPlayerPush WithStream:((SPYConnection*)[self.connections lastObject]).output Objects:self.subRoomView.allPlayer Delegate:self];
+        NSMutableArray *arr = self.subRoomView.allPlayer;
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
+        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:data OperType:SPYAllPlayerPush];
         
         //写房间数据
-        [SPYConnection writeOperationType:((SPYConnection*)[self.connections lastObject]).output OperType:SPYGameRoomInfoPush];
-        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
-        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
-        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
-        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
-        NSArray *arr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
-        [[SPYConnection alloc]dataOperation:SPYGameRoomInfoPush WithStream:((SPYConnection*)[self.connections lastObject]).output Objects:data Delegate:self];
+//        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
+//        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
+//        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
+//        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
+//        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
+//        NSData *roomdata = [NSKeyedArchiver archivedDataWithRootObject:roomarr];
+//        [[SPYConnection alloc]writeData:((SPYConnection*)[self.connections lastObject]).output WithData:roomdata OperType:SPYGameRoomInfoPush];
     }
 }
 
@@ -221,7 +222,6 @@
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
     switch (eventCode) {
         case NSStreamEventOpenCompleted:
             self.streamOpenCount++;
@@ -237,6 +237,7 @@
                 
                 [[SPYConnection alloc]writeData:(NSOutputStream*)aStream WithData:data OperType:SPYNewPlayerPush];
                 self.isRemoteInit = YES;
+                [self dismissModalViewControllerAnimated:NO];
             }
             break;
         }

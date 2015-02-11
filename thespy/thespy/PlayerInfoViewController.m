@@ -88,13 +88,9 @@
 }
 
 - (void) asClient{
-    NSInteger totalNum = self.mainGameView.totalNum;
-    NSInteger citizenNum = self.mainGameView.citizenNum;
-    NSInteger whiteBoardNum = self.mainGameView.whiteBoardNum;
-    NSInteger spyNum = totalNum - citizenNum - whiteBoardNum;
     
     GameRoomView *room = [[GameRoomView alloc] init];
-    [room setupValues:totalNum SpyNum:spyNum CitizenNum:citizenNum WhiteboardNum:whiteBoardNum MainPlayer:self.mainPlayer asServer:NO];
+    [room setupValues:0 SpyNum:0 CitizenNum:0 WhiteboardNum:0 MainPlayer:nil asServer:NO];
     room.title = @"等待开始";
     
     [self.navigationController pushViewController:room animated:YES];

@@ -28,18 +28,4 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
 - (void)writeData:(NSOutputStream*)out WithData:(NSData*)data OperType:(SPYDelegate)oper;
 - (void)operation:(SPYDelegate)oper WithData:(NSData*)data Delegate:(id<NetWorkingDelegate>)delegate;
 
-
-
-- (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj Delegate:(id<NetWorkingDelegate>)delegate;
-//读数据
-+ (NSData*)readGameDataWithInput:(NSInputStream*)input size:(int)size;
-+ (int)readGameDataDirectWithInput:(NSInputStream*)input;
-//读操作类型数据
-+ (int)readOperationType:(NSInputStream*)input;
-
-//发送数据
-+ (NSInteger) writeData:(NSData*)data withStream:(NSOutputStream*)aStream;
-//写操作类型数据
-+ (void)writeOperationType:(NSOutputStream*)out OperType:(int)oper;
-
 @end

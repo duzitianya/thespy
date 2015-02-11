@@ -52,6 +52,8 @@
 @property (nonatomic, assign) int operType;//操作类型
 @property (nonatomic, assign) int step;//状态，1：读取1字节作为操作类型；2：操作数据
 
+@property (nonatomic, strong) NSMutableData *mdata;
+
 @property (nonatomic, strong) UIActivityIndicatorView* indicator;//状态指示器
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;

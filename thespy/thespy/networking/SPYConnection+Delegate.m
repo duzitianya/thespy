@@ -12,6 +12,42 @@
 
 @implementation SPYConnection (Delegate)
 
+- (void)writeData:(NSOutputStream*)out WithData:(NSData*)data OperType:(SPYDelegate)oper{
+    //将数据长度写入传送数据前
+    NSInteger olength = [data length]+4+1;//+4:4字节的数据长度占位；+1:1字节操作类型占位
+    uint8_t databuf[4];
+    for(int i = 0;i<4;i++){
+        databuf[i] = (Byte)(olength>>8*(3-i)&0xff);
+    }
+    NSMutableData *mdata = [NSMutableData dataWithBytes:databuf length:sizeof(databuf)];
+    
+    //将操作类型加入到传送数据前
+    uint8_t buf[1];
+    buf[0] = (Byte)(oper&0xff);
+    [mdata appendBytes:buf length:sizeof(buf)];
+    
+    //合并生成新数据
+    [mdata appendData:data];
+    NSInteger length = [mdata length];
+    uint8_t total[length];
+    [mdata getBytes:total length:sizeof(total)];
+    [out write:total maxLength:sizeof(total)];//写出数据
+}
+
+- (void)operation:(SPYDelegate)oper WithData:(NSData*)data Delegate:(id<NetWorkingDelegate>)delegate{
+    self.netDelegate = delegate;
+    switch (oper) {
+        case SPYNewPlayerPush:{
+            PlayerBean *bean = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSArray *arr = [NSArray arrayWithObjects:bean, nil];
+            [self.netDelegate reloadClientListTable:arr];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 - (void)dataOperation:(int)oper WithStream:(NSStream*)stream Objects:(NSObject*)obj Delegate:(id<NetWorkingDelegate>)delegate{
     self.netDelegate = delegate;
     switch (oper) {
@@ -187,7 +223,6 @@
         NSInputStream *in = (NSInputStream*)aStream;
         if (step==2) {
             int remainingToRead = [SPYConnection readGameDataDirectWithInput:in];
-            [self.netDelegate setReadLength:remainingToRead];
         }else if(length>0&&step==3){
             data = [SPYConnection readGameDataWithInput:in size:length];
             if (data!=nil&&[data length]==length) {
@@ -221,7 +256,6 @@
         NSInputStream *in = (NSInputStream*)stream;
         if (step==2) {
             int length = [SPYConnection readGameDataDirectWithInput:in];
-            [self.netDelegate setReadLength:length];
         }else if(length>0&&step==3){
             data = [SPYConnection readGameDataWithInput:in size:length];
             if (data!=nil&&[data length]==length) {

@@ -72,6 +72,7 @@
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
     self.remainingToRead = -2;
     self.step = 1;
+    self.mdata = [[NSMutableData alloc]init];
 }
 
 
@@ -225,61 +226,63 @@
         case NSStreamEventOpenCompleted:
             self.streamOpenCount++;
             break;
-        case NSStreamEventHasSpaceAvailable:
-            NSLog(@"NSStreamEventHasSpaceAvailable--->%f", [date timeIntervalSince1970]);
+        case NSStreamEventHasSpaceAvailable:{
             if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
-                if (self.step==1) {
-                    //发送操作类型标记
-                    [SPYConnection writeOperationType:(NSOutputStream*)aStream OperType:SPYNewPlayerPush];
-                }else if(self.step==2){
-                    //发送本机数据到服务器
-                    UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
-                    NSString *nick = [[SPYFileUtil shareInstance]getUserName];
-                    NSString *device = [UIDevice currentDevice].name;
-                    PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
-                    [[SPYConnection alloc] dataOperation:SPYNewPlayerPush WithStream:aStream Objects:bean Delegate:self];
-                }
-                self.step++;
+                //发送本机数据到服务器
+                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+                NSString *nick = [[SPYFileUtil shareInstance]getUserName];
+                NSString *device = [UIDevice currentDevice].name;
+                PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:bean];
+                
+                [[SPYConnection alloc]writeData:(NSOutputStream*)aStream WithData:data OperType:SPYNewPlayerPush];
+                self.isRemoteInit = YES;
             }
             break;
-        case NSStreamEventHasBytesAvailable://读取数据
-            NSLog(@"NSStreamEventHasBytesAvailable--->%f", [date timeIntervalSince1970]);
-            if ([aStream isKindOfClass:[NSInputStream class]]&&self.step==1) {
+        }
+        case NSStreamEventHasBytesAvailable:{//读取数据
+            if ([aStream isKindOfClass:[NSInputStream class]]){
                 NSInputStream *in = (NSInputStream*)aStream;
-                self.operType = [SPYConnection readOperationType:in]+1;//push转get
-            }else{
-                NSString *step = [NSString stringWithFormat:@"%d", self.step];
-                NSString *length = [NSString stringWithFormat:@"%d", self.remainingToRead];
-                NSArray *arr = [[NSArray alloc]initWithObjects:step, length, nil];
-                [[SPYConnection alloc]dataOperation:self.operType WithStream:aStream Objects:arr Delegate:self];
-            }
-            self.step++;
-            if (self.step>3) {
-                self.step=1;
-                self.operType = 0;
+                uint8_t buf[32768];
+                NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
+                if (readLength>0) {
+                    NSData *tmp = [NSData dataWithBytes:buf length:readLength];
+                    [self.mdata appendData:tmp];
+                }
+                if ([self.mdata length]>4&&self.remainingToRead<=0) {//当读取的数据大于4字节后，读取数据包长度数据
+                    uint8_t buf[4];
+                    [self.mdata getBytes:buf range:NSMakeRange(0, 4)];
+                    self.remainingToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
+                }
+                if ([self.mdata length]==self.remainingToRead) {//相等，说明数据已经读取完毕
+                    uint8_t buf[1];
+                    [self.mdata getBytes:buf range:NSMakeRange(4, 1)];
+                    int oper = buf[0]&0xff;
+                    NSData *data = [self.mdata subdataWithRange:NSMakeRange(5, [self.mdata length]-5)];
+                    
+                    [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
+                    self.remainingToRead = 0;
+                }
             }
             break;
+        }
         case NSStreamEventErrorOccurred:{
             //出错的时候
-            NSError *error = [aStream streamError];
-            if (error != NULL){
-                UIAlertView *errorAlert = [[UIAlertView alloc]
-                                           initWithTitle: [error localizedDescription]
-                                           message: [error localizedFailureReason]
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-                [errorAlert show];
-            }
+//            NSError *error = [aStream streamError];
+//            if (error != NULL){
+//                UIAlertView *errorAlert = [[UIAlertView alloc]
+//                                           initWithTitle: [error localizedDescription]
+//                                           message: [error localizedFailureReason]
+//                                           delegate:nil
+//                                           cancelButtonTitle:@"OK"
+//                                           otherButtonTitles:nil];
+//                [errorAlert show];
+//            }
             break;
         }
         default:
             break;
     }
-}
-
--(void)setReadLength:(int)length{
-    self.remainingToRead = length;
 }
 
 -(void)initGameRoomData:(NSArray*)arr{

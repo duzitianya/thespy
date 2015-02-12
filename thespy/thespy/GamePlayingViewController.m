@@ -7,18 +7,33 @@
 //
 
 #import "GamePlayingViewController.h"
+#import "GameRoomCell.h"
 
 @interface GamePlayingViewController ()
 
 @end
 
 @implementation GamePlayingViewController
+@synthesize allPlayer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+}
+
+-(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others{
+    self.bean = bean;
     self.wordLabel.text = self.bean.word;
     self.show = YES;
+    
+    self.allPlayer = others;
+    if (self.allPlayer&&[self.allPlayer count]>0) {
+        for (int i=0; i<[self.allPlayer count]; i++) {
+            GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
+            [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:i]];
+            gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", i];
+            [self.allPlayersView addSubview:gameRoomCell];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

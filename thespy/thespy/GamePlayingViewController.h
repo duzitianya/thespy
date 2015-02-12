@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *wordLabel;
 @property (strong, nonatomic) IBOutlet UIButton *btn;
 
+@property (strong, nonatomic) NSMutableArray *allPlayer;
 @property (strong, nonatomic) PlayerBean *bean;
 @property (assign, nonatomic) BOOL show;
 

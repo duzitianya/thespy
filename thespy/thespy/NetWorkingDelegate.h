@@ -8,6 +8,7 @@
 
 #ifndef thespy_NetWorkingDelegate_h
 #define thespy_NetWorkingDelegate_h
+#import "PlayerBean.h"
 
 @protocol NetWorkingDelegate <NSObject>
 @optional
@@ -15,6 +16,7 @@
 -(void)reloadClientListTable:(NSArray*)list;//刷新用户列表
 -(void)initGameRoomData:(NSArray*)arr;
 -(void)serverIsOut;
+-(void)startRemoteGame:(NSString*)word WithWord:(PlayerRole)role;
 
 @end
 

@@ -361,36 +361,51 @@
     NSString *spyWord = @"地球";
     NSString *citizenWord = @"月亮";
     
-    NSMutableArray *allPlayers = [[NSMutableArray alloc]initWithArray:self.subRoomView.allPlayer];
+    NSMutableArray *allPlayers = self.subRoomView.allPlayer;
     [allPlayers addObject:self.mainPlayer];
-    NSMutableArray *spyArr = [[NSMutableArray alloc]initWithCapacity:self.spyNum];
-    //随机选取卧底
-    for (int i=0; i<self.spyNum; i++) {
-        int value = arc4random() % [allPlayers count];
-        PlayerBean *bean = allPlayers[value];
-        [bean setRole:SPY];
-        [bean setWord:spyWord];
-        [spyArr addObject:bean];
-        [allPlayers removeObjectAtIndex:value];
+    
+    if ([allPlayers count]==self.totalNum&&[self.connections count]-1==self.totalNum) {
+        //封装游戏数据对象
+        NSMutableArray *indexArr = [[NSMutableArray alloc]initWithCapacity:[self.subRoomView.allPlayer count]];
+        //封装卧底
+        for (int i=0; i<self.spyNum; i++) {
+            [indexArr addObject:[NSDictionary dictionaryWithObjectsAndKeys:spyWord, @"word", SPY, @"role", nil]];
+        }
+        //封装平民
+        for (int i=0; i<self.citizenNum; i++) {
+            [indexArr addObject:[NSDictionary dictionaryWithObjectsAndKeys:citizenWord, @"word", CITIZEN, @"role", nil]];
+        }
+        //封装白板
+        for (int i=0; i<self.whiteBoardNum; i++) {
+            [indexArr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"您是白板", @"word", WHITE, @"role", nil]];
+        }
+        
+        //为所有用户分配角色
+        for (int i=0; i<[allPlayers count]; i++) {
+            int value = arc4random() % [allPlayers count];
+            NSDictionary *dict = indexArr[value];
+            PlayerBean *bean = allPlayers[value];
+            [bean setRole:(PlayerRole)[dict objectForKey:@"role"]];
+            [bean setWord:(NSString*)[dict objectForKey:@"word"]];
+            [bean setConnection:[allPlayers objectAtIndex:value]];
+            [allPlayers removeObjectAtIndex:value];
+        }
+        indexArr = nil;
+        
+        //分配完毕后发送游戏开始数据
+        for(int i=0;i<[allPlayers count];i++){
+            PlayerBean *bean = allPlayers[i];
+            SPYConnection *con = bean.connection;
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:bean.word, @"word", bean.role, @"role", nil];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
+            [con writeData:con.output WithData:data OperType:SPYGameStartPush];
+        }
     }
-    NSMutableArray *whiteArr = [[NSMutableArray alloc]initWithCapacity:self.whiteBoardNum];
-    //随机白板
-    for (int i=0; i<self.whiteBoardNum; i++) {
-        int value = arc4random() % [allPlayers count];
-        PlayerBean *bean = allPlayers[value];
-        [bean setRole:WHITE];
-        [bean setWord:@"您是白板"];
-        [whiteArr addObject:bean];
-        [allPlayers removeObjectAtIndex:value];
-    }
-    NSMutableArray *citizenArr = [[NSMutableArray alloc]initWithCapacity:self.citizenNum];
-    for (int i=0; i<self.citizenNum; i++) {
-        PlayerBean *bean = allPlayers[i];
-        [bean setRole:CITIZEN];
-        [bean setWord:citizenWord];
-        [citizenArr addObject:bean];
-        [allPlayers removeObjectAtIndex:i];
-    }
+}
+
+-(void)startRemoteGame:(NSString*)word WithRole:(NSInteger)role{
+    self.mainPlayer.role = role;
+    self.mainPlayer.word = word;
 }
 
 @end

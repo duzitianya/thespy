@@ -60,6 +60,13 @@
             [self.netDelegate serverIsOut];
             break;
         }
+        case SPYGameStartPush:{
+            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSString *word = [dict objectForKey:@"word"];
+            PlayerRole role = (PlayerRole)[dict objectForKey:@"role"];
+            [self.netDelegate startRemoteGame:word WithWord:role];
+            break;
+        }
         default:
             break;
     }

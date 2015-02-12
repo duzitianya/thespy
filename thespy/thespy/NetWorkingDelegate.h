@@ -14,6 +14,7 @@
 -(void)dismissViewController;//取消连接列表
 -(void)reloadClientListTable:(NSArray*)list;//刷新用户列表
 -(void)initGameRoomData:(NSArray*)arr;
+-(void)serverIsOut;
 
 @end
 

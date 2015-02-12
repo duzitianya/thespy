@@ -134,7 +134,7 @@
     if (self.asServer) {
         if (!self.isServerOpen) {
             NSString *deviceName = [UIDevice currentDevice].name;
-            self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",deviceName]];
+            self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@ 的游戏",deviceName]];
             self.service.includesPeerToPeer = NO;
             [self.service setDelegate:self];
             [self.service scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -148,16 +148,26 @@
 }
 
 - (void)closeCurrentGame{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"终止", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"终止" otherButtonTitles:@"算了", nil];
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
+    if (buttonIndex==0) {
+        if (self.asServer) {
+            NSMutableArray *conns = self.connections;
+            if ([conns count]>0) {
+                for (int i=0; i<[conns count]; i++) {
+                    SPYConnection *con = conns[i];
+                    [con writeData:con.output WithData:nil OperType:SPYServerOutPush];
+                }
+            }
+        }
+        
         [self closeService];
         [self.connection closeConnection];
         self.connections = nil;
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 
@@ -273,7 +283,10 @@
                         uint8_t buf[1];
                         [self.mdata getBytes:buf range:NSMakeRange(4, 1)];
                         int oper = buf[0]&0xff;
-                        NSData *data = [self.mdata subdataWithRange:NSMakeRange(5, self.remainingToRead-5)];
+                        NSData *data;
+                        if ([self.mdata length]>5) {
+                            data = [self.mdata subdataWithRange:NSMakeRange(5, self.remainingToRead-5)];
+                        }
                         [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
                         
                         if (self.remainingToRead>[self.mdata length]) {
@@ -325,6 +338,11 @@
     self.gameRoomHeader.spyLabel.text = [NSString stringWithFormat:@"卧底数 %d 人", [spy intValue]];
     self.gameRoomHeader.whiteboardLabel.text = [NSString stringWithFormat:@"白板数 %d 人", [white intValue]];
     
+}
+
+-(void)serverIsOut{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"主机已经退出游戏" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

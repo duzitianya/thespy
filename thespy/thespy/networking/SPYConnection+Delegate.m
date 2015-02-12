@@ -14,7 +14,10 @@
 
 - (void)writeData:(NSOutputStream*)out WithData:(NSData*)data OperType:(SPYDelegate)oper{
     //将数据长度写入传送数据前
-    NSInteger olength = [data length]+4+1;//+4:4字节的数据长度占位；+1:1字节操作类型占位
+    NSInteger olength = 5;//+4:4字节的数据长度占位；+1:1字节操作类型占位
+    if(data&&[data length]>0){
+        olength += [data length];
+    }
     uint8_t databuf[4];
     for(int i = 0;i<4;i++){
         databuf[i] = (Byte)(olength>>8*(3-i)&0xff);
@@ -27,7 +30,9 @@
     [mdata appendBytes:buf length:sizeof(buf)];
     
     //合并生成新数据
-    [mdata appendData:data];
+    if(data&&[data length]>0){
+        [mdata appendData:data];
+    }
     NSInteger length = [mdata length];
     uint8_t total[length];
     [mdata getBytes:total length:sizeof(total)];
@@ -49,6 +54,10 @@
             [self.netDelegate initGameRoomData:arr];
             NSArray *players = [dict objectForKey:@"players"];
             [self.netDelegate reloadClientListTable:players];
+            break;
+        }
+        case SPYServerOutPush:{
+            [self.netDelegate serverIsOut];
             break;
         }
         default:

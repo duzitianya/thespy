@@ -406,6 +406,14 @@
 -(void)startRemoteGame:(NSString*)word WithRole:(NSInteger)role{
     self.mainPlayer.role = role;
     self.mainPlayer.word = word;
+    GamePlayingViewController *gpvc = [[GamePlayingViewController alloc] initWithNibName:@"GamePlayingViewController" bundle:[NSBundle mainBundle]];
+    gpvc.bean = self.mainPlayer;
+    
+    gpvc.totalLabel.text = [NSString stringWithFormat:@"总数 %d 人", [[[NSNumber alloc]initWithInteger:self.totalNum]intValue]];
+    gpvc.citizenLabel.text = [NSString stringWithFormat:@"平民 %d 人", [[[NSNumber alloc]initWithInteger:self.citizenNum]intValue]];
+    gpvc.spyLabel.text = [NSString stringWithFormat:@"卧底 %d 人", [[[NSNumber alloc]initWithInteger:self.spyNum]intValue]];
+    gpvc.whiteLabel.text = [NSString stringWithFormat:@"白板 %d 人", [[[NSNumber alloc]initWithInteger:self.whiteBoardNum]intValue]];
+    [self presentViewController:gpvc animated:YES completion:nil];
 }
 
 @end

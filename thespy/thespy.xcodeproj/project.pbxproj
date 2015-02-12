@@ -13,6 +13,8 @@
 		BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */; };
 		BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */; };
 		BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */ = {isa = PBXBuildFile; fileRef = BF341FD31A78C28A00E5C0FC /* UIImage+category.m */; };
+		BF3D54B81A8CA4C200B4B202 /* GamePlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3D54B61A8CA4C200B4B202 /* GamePlayingViewController.m */; };
+		BF3D54B91A8CA4C200B4B202 /* GamePlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3D54B71A8CA4C200B4B202 /* GamePlayingViewController.xib */; };
 		BF3DBBFD1A76243500A87FD2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBBFB1A76243500A87FD2 /* Main.storyboard */; };
 		BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC021A76277A00A87FD2 /* GameRoomView.m */; };
 		BF3DBC061A76350B00A87FD2 /* GameRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */; };
@@ -69,6 +71,9 @@
 		BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBoardView.m; sourceTree = "<group>"; };
 		BF341FD21A78C28A00E5C0FC /* UIImage+category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+category.h"; sourceTree = "<group>"; };
 		BF341FD31A78C28A00E5C0FC /* UIImage+category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+category.m"; sourceTree = "<group>"; };
+		BF3D54B51A8CA4C200B4B202 /* GamePlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayingViewController.h; sourceTree = "<group>"; };
+		BF3D54B61A8CA4C200B4B202 /* GamePlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GamePlayingViewController.m; sourceTree = "<group>"; };
+		BF3D54B71A8CA4C200B4B202 /* GamePlayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GamePlayingViewController.xib; sourceTree = "<group>"; };
 		BF3DBBFC1A76243500A87FD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF3DBC011A76277A00A87FD2 /* GameRoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomView.h; sourceTree = "<group>"; };
 		BF3DBC021A76277A00A87FD2 /* GameRoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomView.m; sourceTree = "<group>"; };
@@ -196,6 +201,9 @@
 				BF3DBC0E1A76449600A87FD2 /* GameRoomSubview.h */,
 				BF3DBC0F1A76449600A87FD2 /* GameRoomSubview.m */,
 				BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */,
+				BF3D54B51A8CA4C200B4B202 /* GamePlayingViewController.h */,
+				BF3D54B61A8CA4C200B4B202 /* GamePlayingViewController.m */,
+				BF3D54B71A8CA4C200B4B202 /* GamePlayingViewController.xib */,
 				BF77AD1D1A6E47FF008CCFB9 /* ActionView.h */,
 				BF77AD1E1A6E47FF008CCFB9 /* ActionView.m */,
 				BF77ACEC1A6E4725008CCFB9 /* AppDelegate.h */,
@@ -393,6 +401,7 @@
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
+				BF3D54B91A8CA4C200B4B202 /* GamePlayingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +429,7 @@
 				BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
+				BF3D54B81A8CA4C200B4B202 /* GamePlayingViewController.m in Sources */,
 				BF3DBC031A76277A00A87FD2 /* GameRoomView.m in Sources */,
 				BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */,
 				BF77AD3B1A6F808A008CCFB9 /* HistoryListViewController.m in Sources */,

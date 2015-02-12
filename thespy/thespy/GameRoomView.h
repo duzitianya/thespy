@@ -16,6 +16,7 @@
 #import "ServerListViewController.h"
 #import "NSStream+StreamsToHost.h"
 #import "SPYConnection+Delegate.h"
+#import "GamePlayingViewController.h"
 
 @interface GameRoomView : UIViewController<
         ServerListViewControllerDelegate,

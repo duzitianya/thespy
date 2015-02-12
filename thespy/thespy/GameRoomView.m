@@ -364,7 +364,7 @@
     NSMutableArray *allPlayers = self.subRoomView.allPlayer;
     [allPlayers addObject:self.mainPlayer];
     
-    if ([allPlayers count]==self.totalNum&&[self.connections count]-1==self.totalNum) {
+    if ([allPlayers count]==self.totalNum&&[self.connections count]+1==self.totalNum) {
         //封装游戏数据对象
         NSMutableArray *indexArr = [[NSMutableArray alloc]initWithCapacity:[self.subRoomView.allPlayer count]];
         //封装卧底

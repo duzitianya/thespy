@@ -90,7 +90,7 @@
 - (void) asClient{
     
     GameRoomView *room = [[GameRoomView alloc] init];
-    [room setupValues:0 SpyNum:0 CitizenNum:0 WhiteboardNum:0 MainPlayer:nil asServer:NO];
+    [room setupValues:0 SpyNum:0 CitizenNum:0 WhiteboardNum:0 MainPlayer:self.mainPlayer asServer:NO];
     room.title = @"等待开始";
     
     [self.navigationController pushViewController:room animated:YES];

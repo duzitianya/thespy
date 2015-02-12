@@ -11,8 +11,19 @@
 @implementation GameRoomCell
 
 - (void) setupWithData:(PlayerBean*)player{
-    self.playerHeader.image = player.img;
-    self.playerName.text = player.name;
+    UIImage *header = player.img;
+    if (header){
+        self.playerHeader.image = header;
+    }
+    NSString *name = player.name;
+    if (name) {
+        self.playerName.text = name;
+    }else{
+        name = player.deviceName;
+        if (name) {
+            self.playerName.text = name;
+        }
+    }
 }
 
 - (void)awakeFromNib {

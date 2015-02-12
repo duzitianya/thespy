@@ -52,7 +52,8 @@ static NSString * const reuseIdentifier = @"Cell";
     NSArray *subs = [cell.contentView subviews];
     if (subs==nil||[subs count]==0) {//说明第一次初始化
         GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-        [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:indexPath.row]];
+        PlayerBean *bean = [self.allPlayer objectAtIndex:indexPath.row];
+        [gameRoomCell setupWithData:bean];
         gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (int)(indexPath.row+1)];
         [cell.contentView addSubview:gameRoomCell];
     }else{

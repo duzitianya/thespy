@@ -120,12 +120,12 @@
         SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
         [conn writeData:conn.output WithData:data OperType:SPYGameRoomInfoPush];
         
-        //向其他已连接客服端写出新用户数据
+        //向其他已连接客户端写出新用户数据
         NSMutableArray *others = self.connections;
         if (others&&[others count]>1) {
             for (int i=0; i<[others count]-1; i++) {
                 SPYConnection *con = (SPYConnection*)others[i];
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[list firstObject]];
                 [con writeData:con.output WithData:data OperType:SPYNewPlayerPush];
             }
         }
@@ -264,11 +264,11 @@
         case NSStreamEventHasSpaceAvailable:{
             if (self.streamOpenCount==2&&self.asServer==NO&&[aStream isKindOfClass:[NSOutputStream class]]&&!self.isRemoteInit) {//说明输入输出流都已经开启完毕
                 //发送本机数据到服务器
-                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
-                NSString *nick = [[SPYFileUtil shareInstance]getUserName];
-                NSString *device = [UIDevice currentDevice].name;
-                PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:bean];
+//                UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+//                NSString *nick = [[SPYFileUtil shareInstance]getUserName];
+//                NSString *device = [UIDevice currentDevice].name;
+//                PlayerBean *bean = [PlayerBean initWithData:img Name:nick DeviceName:device];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.mainPlayer];
                 
                 [[SPYConnection alloc]writeData:(NSOutputStream*)aStream WithData:data OperType:SPYNewPlayerPush];
                 self.isRemoteInit = YES;
@@ -362,7 +362,7 @@
     NSString *citizenWord = @"月亮";
     
     NSMutableArray *allPlayers = self.subRoomView.allPlayer;
-    [allPlayers addObject:self.mainPlayer];
+//    [allPlayers addObject:self.mainPlayer];
     
     if ([allPlayers count]==self.totalNum&&[self.connections count]+1==self.totalNum) {
         //封装游戏数据对象
@@ -379,6 +379,7 @@
         for (int i=0; i<self.whiteBoardNum; i++) {
             [indexArr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"您是白板", @"word", WHITE, @"role", nil]];
         }
+        
         
         //为所有用户分配角色
         for (int i=0; i<[allPlayers count]; i++) {

@@ -42,6 +42,17 @@
         //开始显示Loading动画
         [self.indicator startAnimating];
     }
+    
+    //开始按钮
+    if (self.asServer&&self.start==nil) {
+        self.start = [[UIButton alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2-50, kMAIN_SCREEN_HEIGHT-80, 100, 50)];
+        [self.start setTitle:@"开始游戏" forState:UIControlStateNormal];
+        self.start.layer.cornerRadius = 4;
+        self.start.backgroundColor = UIColorFromRGB(0xFF7F00);//ff7f00
+        self.start.alpha = 0.4;
+        [self.start addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+        [self.view insertSubview:self.start aboveSubview:self.subRoomView.view];
+    }
 }
 
 - (void)viewDidLoad{
@@ -343,6 +354,43 @@
 -(void)serverIsOut{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"主机已经退出游戏" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+-(void)startGame{
+    //获得词条对
+    NSString *spyWord = @"地球";
+    NSString *citizenWord = @"月亮";
+    
+    NSMutableArray *allPlayers = [[NSMutableArray alloc]initWithArray:self.subRoomView.allPlayer];
+    [allPlayers addObject:self.mainPlayer];
+    NSMutableArray *spyArr = [[NSMutableArray alloc]initWithCapacity:self.spyNum];
+    //随机选取卧底
+    for (int i=0; i<self.spyNum; i++) {
+        int value = arc4random() % [allPlayers count];
+        PlayerBean *bean = allPlayers[value];
+        [bean setRole:SPY];
+        [bean setWord:spyWord];
+        [spyArr addObject:bean];
+        [allPlayers removeObjectAtIndex:value];
+    }
+    NSMutableArray *whiteArr = [[NSMutableArray alloc]initWithCapacity:self.whiteBoardNum];
+    //随机白板
+    for (int i=0; i<self.whiteBoardNum; i++) {
+        int value = arc4random() % [allPlayers count];
+        PlayerBean *bean = allPlayers[value];
+        [bean setRole:WHITE];
+        [bean setWord:@"您是白板"];
+        [whiteArr addObject:bean];
+        [allPlayers removeObjectAtIndex:value];
+    }
+    NSMutableArray *citizenArr = [[NSMutableArray alloc]initWithCapacity:self.citizenNum];
+    for (int i=0; i<self.citizenNum; i++) {
+        PlayerBean *bean = allPlayers[i];
+        [bean setRole:CITIZEN];
+        [bean setWord:citizenWord];
+        [citizenArr addObject:bean];
+        [allPlayers removeObjectAtIndex:i];
+    }
 }
 
 @end

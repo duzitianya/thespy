@@ -23,5 +23,6 @@
 @property (assign, nonatomic) BOOL show;
 
 - (IBAction)toggle:(UIButton *)sender;
+-(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others;
 
 @end

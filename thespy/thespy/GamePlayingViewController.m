@@ -20,12 +20,10 @@
     [super viewDidLoad];
 }
 
--(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others{
-    self.bean = bean;
+-(void)awakeFromNib{
     self.wordLabel.text = self.bean.word;
     self.show = YES;
     
-    self.allPlayer = others;
     if (self.allPlayer&&[self.allPlayer count]>0) {
         for (int i=0; i<[self.allPlayer count]; i++) {
             GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
@@ -34,6 +32,11 @@
             [self.allPlayersView addSubview:gameRoomCell];
         }
     }
+}
+
+-(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others{
+    self.bean = bean;
+    self.allPlayer = others;
 }
 
 - (void)didReceiveMemoryWarning {

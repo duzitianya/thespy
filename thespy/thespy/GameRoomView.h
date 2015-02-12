@@ -27,10 +27,10 @@
         NSNetServiceBrowserDelegate
 >
 
-@property (nonatomic) NSInteger totalNum;       //参与者总数
-@property (nonatomic) NSInteger spyNum;         //卧底数
-@property (nonatomic) NSInteger citizenNum;     //平民数
-@property (nonatomic) NSInteger whiteBoardNum;  //白板数
+@property (nonatomic, assign) NSInteger totalNum;       //参与者总数
+@property (nonatomic, assign) NSInteger spyNum;         //卧底数
+@property (nonatomic, assign) NSInteger citizenNum;     //平民数
+@property (nonatomic, assign) NSInteger whiteBoardNum;  //白板数
 @property (nonatomic, strong) PlayerBean *mainPlayer;//用户自己
 @property (nonatomic, strong) NSMutableArray *otherPlayer;//其他人
 
@@ -39,8 +39,8 @@
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) GameRoomHeader *gameRoomHeader;
 
-@property (nonatomic) BOOL isServerOpen;
-@property (nonatomic) BOOL asServer;//标记是否为主机
+@property (nonatomic, assign) BOOL isServerOpen;
+@property (nonatomic, assign) BOOL asServer;//标记是否为主机
 @property (nonatomic, strong) NSNetService *service;
 @property (nonatomic, strong) NSMutableArray *connections;//客户端SPYConnection
 

@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSMutableArray *servers;//NSNetService
 @property (nonatomic, strong) NSNetServiceBrowser *browser;
 
+@property (nonatomic, strong) UIViewController *backvc;
+
 @property (nonatomic, weak) id<ServerListViewControllerDelegate, NSNetServiceBrowserDelegate> delegate;
 
 @end

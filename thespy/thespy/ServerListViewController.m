@@ -14,6 +14,10 @@
     [super viewDidLoad];
     self.servers = [[NSMutableArray alloc] initWithCapacity:5];
     [self browseService];
+    
+    UIImage *image = [UIImage imageNamed:@"SpyResource.bundle/left_icon"];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeCurrentGame)];
+    self.navigationItem.leftBarButtonItem = leftButton;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,6 +59,10 @@
     self.browser.delegate = self.delegate;
     [self.browser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.browser searchForServicesOfType:@"_thespy._tcp." inDomain:@"local"];
+}
+
+- (void)closeCurrentGame{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

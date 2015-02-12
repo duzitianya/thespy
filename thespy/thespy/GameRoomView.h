@@ -52,7 +52,7 @@
 
 @property (nonatomic, strong) NSMutableData *mdata;
 
-@property (nonatomic, strong) UIActivityIndicatorView* indicator;//状态指示器
+@property (nonatomic, weak) UIActivityIndicatorView* indicator;//状态指示器
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 

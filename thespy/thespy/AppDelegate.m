@@ -25,10 +25,8 @@
     PlayerInfoViewController *vc = [[PlayerInfoViewController alloc] init];
     vc.title = @"我的游戏";
     
-    self.navController = [[UINavigationController alloc] init];
-    [self.navController pushViewController:vc animated:YES];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.window addSubview:self.navController.view];
-//    [self.window setRootViewController:vc];
     [self.window makeKeyAndVisible];
     
     return YES;

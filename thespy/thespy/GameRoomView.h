@@ -10,13 +10,14 @@
 #import <UIKit/UIKit.h>
 #import "GameRoomCell.h"
 #import "AppDelegate.h"
-#import "PlayerBean.h"
 #import "GameRoomSubview.h"
 #import "GameRoomHeader.h"
 #import "ServerListViewController.h"
 #import "NSStream+StreamsToHost.h"
 #import "SPYConnection+Delegate.h"
 #import "GamePlayingViewController.h"
+
+@class PlayerBean;
 
 @interface GameRoomView : UIViewController<
         ServerListViewControllerDelegate,

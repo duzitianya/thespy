@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PlayerBean.h"
 
-@interface GamePlayingViewController : UIViewController<UIGestureRecognizerDelegate>
+@interface GamePlayingViewController : UIViewController<UIGestureRecognizerDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *allPlayersView;
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;
 @property (strong, nonatomic) IBOutlet UILabel *citizenLabel;
@@ -24,6 +24,8 @@
 @property (strong, nonatomic) PlayerBean *bean;
 @property (assign, nonatomic) BOOL show;
 @property (assign, nonatomic) BOOL isServer;
+@property (assign, nonatomic) int killIndex;
+@property (strong, nonatomic) UITapGestureRecognizer *doubleTap;
 
 - (IBAction)toggle:(UIButton *)sender;
 -(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithArr:(NSArray*)arr AsServer:(BOOL)asServer;

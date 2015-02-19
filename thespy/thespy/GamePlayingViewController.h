@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerBean.h"
+#import "NetWorkingDelegate.h"
+
+@class GameRoomView;
 
 @interface GamePlayingViewController : UIViewController<UIGestureRecognizerDelegate, UIAlertViewDelegate>
+@property (strong, nonatomic) GameRoomView *superGameView;
+
 @property (strong, nonatomic) IBOutlet UIScrollView *allPlayersView;
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;
 @property (strong, nonatomic) IBOutlet UILabel *citizenLabel;
@@ -26,8 +31,9 @@
 @property (assign, nonatomic) BOOL isServer;
 @property (assign, nonatomic) int killIndex;
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTap;
+@property (strong, nonatomic) NSArray *remoteData;
 
 - (IBAction)toggle:(UIButton *)sender;
--(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithArr:(NSArray*)arr AsServer:(BOOL)asServer;
+-(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithGameInfo:(NSArray*)arr AsServer:(BOOL)asServer;
 
 @end

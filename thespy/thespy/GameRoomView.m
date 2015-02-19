@@ -419,17 +419,20 @@
     self.mainPlayer.role = role;
     self.mainPlayer.word = word;
     
-//    GamePlayingViewController *gpvc = (GamePlayingViewController*)[[NSBundle mainBundle] loadNibNamed:@"GamePlayingViewController" owner:self options:nil];
     GamePlayingViewController *gpvc = [[GamePlayingViewController alloc] initWithNibName:@"GamePlayingViewController" bundle:[NSBundle mainBundle]];
     NSString *totalTxt = [NSString stringWithFormat:@"总数 %d 人", [[[NSNumber alloc]initWithInteger:self.totalNum]intValue]];
     NSString *citizenTxt = [NSString stringWithFormat:@"平民 %d 人", [[[NSNumber alloc]initWithInteger:self.citizenNum]intValue]];
     NSString *spyTxt = [NSString stringWithFormat:@"卧底 %d 人", [[[NSNumber alloc]initWithInteger:self.spyNum]intValue]];
     NSString *whiteTxt = [NSString stringWithFormat:@"白板 %d 人", [[[NSNumber alloc]initWithInteger:self.whiteBoardNum]intValue]];
     NSArray *arr = [NSArray arrayWithObjects:totalTxt, citizenTxt, spyTxt, whiteTxt, nil];
-    [gpvc setUpFrame:self.mainPlayer WithOthers:self.subRoomView.allPlayer WithArr:arr AsServer:self.asServer];
+    [gpvc setUpFrame:self.mainPlayer WithOthers:self.subRoomView.allPlayer WithGameInfo:arr AsServer:self.asServer];
+    gpvc.superGameView = self;
     
-    NSLog(@"%@----%@----%@----%@", totalTxt, citizenTxt, spyTxt, whiteTxt);
     [self presentViewController:gpvc animated:YES completion:nil];
+}
+
+-(void)killPlayerWithArr:(NSArray*)arr{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"killPlayer" object:arr];
 }
 
 @end

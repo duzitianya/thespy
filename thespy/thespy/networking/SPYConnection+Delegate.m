@@ -62,11 +62,14 @@
             break;
         }
         case SPYGameStartPush:{
-//            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//            NSString *word = [dict objectForKey:@"word"];
-//            PlayerRole role = (PlayerRole)[dict objectForKey:@"role"];
             PlayerBean *bean = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             [self.netDelegate startRemoteGame:bean.word WithWord:bean.role];
+            break;
+        }
+        case SPYKillPlayerPush:{
+            id result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSArray *arr = (NSArray*)result;
+            [self.netDelegate killPlayerWithArr:arr];
             break;
         }
         default:

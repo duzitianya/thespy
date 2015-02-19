@@ -17,6 +17,7 @@
 -(void)initGameRoomData:(NSArray*)arr;
 -(void)serverIsOut;
 -(void)startRemoteGame:(NSString*)word WithWord:(PlayerRole)role;
+-(void)killPlayerWithArr:(NSArray*)arr;
 
 @end
 

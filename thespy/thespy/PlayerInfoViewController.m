@@ -63,9 +63,6 @@
     //读取初始化数据
     NSString *name = [util getUserName];
     UIImage *headerData = [util getUserHeader];
-    if (headerData==nil) {
-        headerData = [UIImage imageNamed:@"SpyResource.bundle/QQ20150107-1.png"];
-    }
     self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name];
     
     [header initWithPlayerBean:self.mainPlayer Delegate:self];

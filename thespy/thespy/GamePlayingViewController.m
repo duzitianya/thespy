@@ -135,8 +135,7 @@
     }else{
         self.killIndex = 0;
     }
-    //被杀死后不可再响应点击
-    [room removeGestureRecognizer:sender];
+    self.sender = sender;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -158,6 +157,13 @@
                     PlayerBean *temp = [self.allPlayer objectAtIndex:i];
                     SPYConnection *connection = temp.connection;
                     [connection writeData:connection.output WithData:data OperType:SPYKillPlayerPush];
+                }
+                
+                //被杀死后不可再响应点击
+                UIView *view = [self.allPlayersView viewWithTag:(2000+[indexSelected integerValue])];
+                if (view&&[view isKindOfClass:[GameRoomCell class]]) {
+                    GameRoomCell *cell = (GameRoomCell*)view;
+                    [cell removeGestureRecognizer:self.sender];
                 }
             }
         }

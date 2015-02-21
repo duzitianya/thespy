@@ -44,7 +44,11 @@
 - (UIImage*) getUserHeader{
     NSString *headerDirectory = [NSHomeDirectory() stringByAppendingString:APP_PLAYER_HEADER];
     NSData *headerData = [[NSFileManager defaultManager] contentsAtPath:headerDirectory];
-    return [[UIImage alloc]initWithData:headerData];
+    UIImage *header = [[UIImage alloc]initWithData:headerData];
+    if (header==nil) {
+        header = [UIImage imageNamed:@"SpyResource.bundle/QQ20150107-1.png"];
+    }
+    return header;
 }
 
 - (NSString*) getUserName{

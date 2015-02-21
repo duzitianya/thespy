@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTap;
 @property (strong, nonatomic) NSArray *remoteData;
 @property (assign, nonatomic) NSInteger index;//自己在服务列表中的位置
+@property (strong, nonatomic) UITapGestureRecognizer *sender;
 
 - (IBAction)toggle:(UIButton *)sender;
 -(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithGameInfo:(NSArray*)arr AsServer:(BOOL)asServer;

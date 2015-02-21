@@ -27,13 +27,28 @@
                     <color key="textColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="卧 底" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62p-UV-bFQ">
+                    <rect key="frame" x="6" y="43" width="67" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="TaJ-u6-OpE"/>
+                        <constraint firstAttribute="width" constant="67" id="WkZ-08-lLW"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="0.91879111842105265" blue="0.93562397203947367" alpha="0.87" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="62p-UV-bFQ" secondAttribute="centerY" id="Oi3-iA-VXq"/>
+                <constraint firstAttribute="centerX" secondItem="62p-UV-bFQ" secondAttribute="centerX" id="d9T-Wv-kEJ"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="countLabel" destination="uGb-Fl-hd7" id="hyF-Az-yvh"/>
                 <outlet property="playerHeader" destination="WkV-XJ-5bG" id="OUE-b3-2hB"/>
                 <outlet property="playerName" destination="WmI-Nb-2Cg" id="K48-Zx-04J"/>
+                <outlet property="roleLabel" destination="62p-UV-bFQ" id="zof-2n-ksc"/>
             </connections>
             <point key="canvasLocation" x="394" y="211"/>
         </view>

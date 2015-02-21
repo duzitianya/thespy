@@ -13,7 +13,7 @@
 @class GameRoomView;
 
 @interface GamePlayingViewController : UIViewController<UIGestureRecognizerDelegate, UIAlertViewDelegate>
-@property (strong, nonatomic) GameRoomView *superGameView;
+//@property (strong, nonatomic) GameRoomView *superGameView;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *allPlayersView;
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;
@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *wordLabel;
 @property (strong, nonatomic) IBOutlet UIButton *btn;
 @property (strong, nonatomic) IBOutlet UILabel *tipsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *roleLabel;
 
 @property (strong, nonatomic) NSArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *allPlayer;
@@ -32,6 +33,7 @@
 @property (assign, nonatomic) int killIndex;
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTap;
 @property (strong, nonatomic) NSArray *remoteData;
+@property (assign, nonatomic) NSInteger index;//自己在服务列表中的位置
 
 - (IBAction)toggle:(UIButton *)sender;
 -(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithGameInfo:(NSArray*)arr AsServer:(BOOL)asServer;

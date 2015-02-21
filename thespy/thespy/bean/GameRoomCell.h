@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *playerHeader;
 @property (strong, nonatomic) IBOutlet UILabel *playerName;
 @property (strong, nonatomic) IBOutlet UILabel *countLabel;
+@property (strong, nonatomic) IBOutlet UILabel *roleLabel;
 
 - (void) setupWithData:(PlayerBean*)player;
 

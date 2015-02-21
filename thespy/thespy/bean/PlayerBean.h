@@ -31,10 +31,12 @@ typedef NS_ENUM(NSInteger, PlayerRole){
 @property (nonatomic, strong) NSString *name;         //昵称
 @property (nonatomic, strong) NSString *deviceName;   //设备名称
 @property (nonatomic, strong) NSString *word;       //词条
+@property (nonatomic, strong) NSNumber *index;//游戏开始后本机所在成员列表位置
 @property (nonatomic, assign) PlayerOnlineStatus status;    //状态
 @property (nonatomic, assign) PlayerRole role;         //角色
 @property (nonatomic, strong) SPYConnection *connection;
 
 + (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName;
++ (NSString*)getRoleStringByPlayerRole:(PlayerRole)role;
 
 @end

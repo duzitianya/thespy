@@ -34,6 +34,11 @@
     
     self.countLabel.layer.cornerRadius = 10;
     self.countLabel.layer.masksToBounds = YES;
+    
+    self.roleLabel.layer.borderWidth = 2;
+    self.roleLabel.layer.borderColor = [[UIColor redColor]CGColor];
+    self.roleLabel.transform = CGAffineTransformMakeRotation(M_1_PI*-1);
+    [self.roleLabel setHidden:YES];
 }
 
 @end

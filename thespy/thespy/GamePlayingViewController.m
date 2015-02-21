@@ -20,6 +20,14 @@
 @implementation GamePlayingViewController
 @synthesize allPlayer;
 
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+//        [self.bean addObserver:<#(NSObject *)#> forKeyPath:<#(NSString *)#> options:<#(NSKeyValueObservingOptions)#> context:<#(void *)#>
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -30,13 +38,24 @@
     
     self.remoteData = [[NSArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killPlayerRemote:) name:@"killPlayer" object:nil];
+    
+    [self.roleLabel setHidden:YES];
 }
 
 -(void)killPlayerRemote:(NSNotification*) notification{
     NSArray *arr = (NSArray*)[notification object];
     NSInteger index = [(NSNumber*)arr[0] integerValue];
     PlayerRole role = [(NSNumber*)arr[1] intValue];
-    NSLog(@"index--->%d, role--->%ld", (int)index, role);
+    //判断是否是自己被杀死
+    NSLog(@"index--->%d, self.bean.index--->%d", (int)index, (int)self.index);
+    if (index==self.index) {//是自己被杀死
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您已经被选中出局" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        alert.delegate = self;
+        [alert setTag:1000];
+        [alert show];
+    }else{//不是自己被杀死
+        [self setRoleAppear:index WithRole:role];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -60,7 +79,7 @@
             if (self.isServer) {
                 [gameRoomCell addGestureRecognizer:self.doubleTap];
             }
-            
+            [gameRoomCell setTag:(2000+i)];
             [self.allPlayersView addSubview:gameRoomCell];
             height += gameRoomCell.frame.size.height + 10;
         }
@@ -77,6 +96,10 @@
     self.btn.layer.borderWidth = 1;
     self.btn.layer.cornerRadius = 4;
     self.btn.layer.borderColor = [self.btn.titleLabel.textColor CGColor];
+    
+    self.roleLabel.layer.borderWidth = 2;
+    self.roleLabel.layer.borderColor = [[UIColor redColor]CGColor];
+    self.roleLabel.transform = CGAffineTransformMakeRotation(M_1_PI*-1);
 }
 
 -(void)setUpFrame:(PlayerBean*)bean WithOthers:(NSMutableArray*)others WithGameInfo:(NSArray*)arr AsServer:(BOOL)asServer{
@@ -84,6 +107,7 @@
     self.allPlayer = others;
     self.dataArr = arr;
     self.isServer = asServer;
+    self.index = [bean.index integerValue];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,43 +128,65 @@
     NSString *title = [NSString stringWithFormat:@"确认投票给 %@ 吗？", name];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"再想想", nil];
     alert.delegate = self;
+    [alert setTag:1001];
     [alert show];
     if ([room.countLabel.text intValue]>=1) {
         self.killIndex = [room.countLabel.text intValue] - 1;
     }else{
         self.killIndex = 0;
     }
+    //被杀死后不可再响应点击
+    [room removeGestureRecognizer:sender];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSInteger tag = alertView.tag;
     if (buttonIndex==0) {
-        NSLog(@"kill index is--->%d", self.killIndex);
-        //给被杀掉客户端发送被杀数据
-        if ([self.allPlayer count]>0) {
-            int i=0;
-            if (self.killIndex==0) {//self.killIndex==0说明被杀的是主机，不需要给自己发送数据，只需要给其余客户端发送数据即可
-                i = 1;
-            }
-            
-            PlayerBean *bean = [self.allPlayer objectAtIndex:self.killIndex];
-            NSNumber *indexSelected = [[NSNumber alloc]initWithInt:self.killIndex];
-            NSNumber *roleNum = [[NSNumber alloc]initWithInt:bean.role];
-            NSArray *arr = [NSArray arrayWithObjects:indexSelected, roleNum, nil];
-            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
-            for (int i=0; i<[self.allPlayer count]; i++) {
-                if (self.killIndex==i) {//说明当前为被杀用户，角色为-1
-//                    roleNum = [[NSNumber alloc]initWithInt:-1];
+        if (tag==1001) {
+            //给被杀掉客户端发送被杀数据
+            if ([self.allPlayer count]>0) {
+                PlayerBean *bean = [self.allPlayer objectAtIndex:self.killIndex];
+                if (self.killIndex>0) {//self.killIndex>0说明被杀的不是主机,处理主机显示逻辑
+                    [self setRoleAppear:self.killIndex WithRole:bean.role];
                 }
-                PlayerBean *temp = [self.allPlayer objectAtIndex:i];
-                SPYConnection *connection = temp.connection;
-                [connection writeData:connection.output WithData:data OperType:SPYKillPlayerPush];
+                
+                NSNumber *indexSelected = [[NSNumber alloc]initWithInt:self.killIndex];
+                NSNumber *roleNum = [[NSNumber alloc]initWithInt:bean.role];
+                NSArray *arr = [NSArray arrayWithObjects:indexSelected, roleNum, nil];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
+                for (int i=0; i<[self.allPlayer count]; i++) {
+                    PlayerBean *temp = [self.allPlayer objectAtIndex:i];
+                    SPYConnection *connection = temp.connection;
+                    [connection writeData:connection.output WithData:data OperType:SPYKillPlayerPush];
+                }
             }
+        }
+        if (tag==1000) {
+//            [self dismissViewControllerAnimated:YES completion:nil];
+            NSString *role = [PlayerBean getRoleStringByPlayerRole:self.bean.role];
+            self.roleLabel.text = [NSString stringWithFormat:@"您 是 %@", role];
+            [self.roleLabel setHidden:NO];
+            [self setRoleAppear:self.index WithRole:self.bean.role];
         }
     }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
+}
+
+- (void)setRoleAppear:(NSInteger)index WithRole:(PlayerRole)role{
+    UIView *view = [self.allPlayersView viewWithTag:(2000+index)];
+    if (view&&[view isKindOfClass:[GameRoomCell class]]) {
+        NSString *roleStr = [PlayerBean getRoleStringByPlayerRole:role];
+        GameRoomCell *cell = (GameRoomCell*)view;
+        cell.roleLabel.text = roleStr;
+        [cell.roleLabel setHidden:NO];
+    }
+}
+
+- (void)isGameOver{
+    
 }
 
 @end

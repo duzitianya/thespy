@@ -14,6 +14,7 @@
 #define WORD @"word"
 #define ROLE @"role"
 #define STATUS @"status"
+#define INDEX @"index"
 
 @implementation PlayerBean
 @synthesize img;
@@ -23,6 +24,7 @@
 @synthesize role;
 @synthesize status;
 @synthesize connection;
+@synthesize index;
 
 + (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName {
     NSString *dname = [UIDevice currentDevice].name;
@@ -47,6 +49,7 @@
     [aCoder encodeObject:word forKey:WORD];
     [aCoder encodeInteger:role forKey:ROLE];
     [aCoder encodeInteger:status forKey:STATUS];
+    [aCoder encodeObject:index forKey:INDEX];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -58,8 +61,27 @@
         word = [[aDecoder decodeObjectForKey:WORD]copy];
         role = [aDecoder decodeIntegerForKey:ROLE];
         status = [aDecoder decodeIntegerForKey:STATUS];
+        index = [aDecoder decodeObjectForKey:INDEX];
     }
     return self;
+}
+
++(NSString*)getRoleStringByPlayerRole:(PlayerRole)role{
+    NSString *r = @"平 民";
+    switch (role) {
+        case SPY:
+            r = @"卧 底";
+            break;
+        case CITIZEN:
+            r = @"平 民";
+            break;
+        case WHITE:
+            r = @"白 板";
+        default:
+            r = @"平 民";
+            break;
+    }
+    return r;
 }
 
 @end

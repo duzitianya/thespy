@@ -63,7 +63,7 @@
         }
         case SPYGameStartPush:{
             PlayerBean *bean = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            [self.netDelegate startRemoteGame:bean.word WithWord:bean.role];
+            [self.netDelegate startRemoteGame:bean];
             break;
         }
         case SPYKillPlayerPush:{

@@ -11,6 +11,8 @@
 #import "SPYConnection.h"
 #import "SPYConnection+Delegate.h"
 #import "GameRoomView.h"
+#import "GameResult.h"
+#import "GameDB.h"
 
 
 @interface GamePlayingViewController ()
@@ -28,6 +30,10 @@
     return self;
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -38,16 +44,59 @@
     
     self.remoteData = [[NSArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killPlayerRemote:) name:@"killPlayer" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(victory:) name:@"victory" object:nil];
     
     [self.roleLabel setHidden:YES];
+    
 }
 
--(void)killPlayerRemote:(NSNotification*) notification{
+-(void)victoryWithType:(NSInteger)type{
+    NSString *tip;
+    switch (type) {
+        case 1:{//平民
+            tip = @"平民胜利！";
+            break;
+        }
+        case 0:{//卧底
+            tip = @"卧底胜利！";
+            break;
+        }
+        case 2:{//白板
+            tip = @"白板胜利！";
+            break;
+        }
+        default:
+            break;
+    }
+    BOOL selfWin = type==self.bean.role;
+    NSString *role = [PlayerBean getRoleStringByPlayerRole:self.bean.role];
+    //日期格式化
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *str = [dateFormatter stringFromDate:date];
+    GameResult *result = [[GameResult alloc]initWithPlayerID:self.bean.deviceName Name:self.bean.name Role:role Victory:selfWin?@"胜利":@"失败" Date:str];
+    [[GameDB alloc]addGameResult:result];
+    //    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:tip message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+    alert.delegate = self;
+    [alert setTag:1002];
+    [alert show];
+
+}
+
+-(void)victory:(NSNotification*)notification{
+    NSNumber *num = (NSNumber*)[notification object];
+    NSInteger type = [num integerValue];
+    [self victoryWithType:type];
+}
+
+-(void)killPlayerRemote:(NSNotification*)notification{
     NSArray *arr = (NSArray*)[notification object];
     NSInteger index = [(NSNumber*)arr[0] integerValue];
     PlayerRole role = [(NSNumber*)arr[1] intValue];
     //判断是否是自己被杀死
-    NSLog(@"index--->%d, self.bean.index--->%d", (int)index, (int)self.index);
     if (index==self.index) {//是自己被杀死
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您已经被选中出局" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
         alert.delegate = self;
@@ -63,13 +112,19 @@
     self.show = YES;
     
     if (self.dataArr) {
-        self.totalLabel.text = self.dataArr[0];
-        self.citizenLabel.text = self.dataArr[1];
-        self.spyLabel.text = self.dataArr[2];
-        self.whiteLabel.text = self.dataArr[3];
+        self.totalLabel.text = [NSString stringWithFormat:@"总数 %d 人", [self.dataArr[0] intValue]];
+        self.citizenLabel.text = [NSString stringWithFormat:@"平民 %d 人", [self.dataArr[1] intValue]];
+        self.spyLabel.text = [NSString stringWithFormat:@"卧底 %d 人", [self.dataArr[2] intValue]];
+        self.whiteLabel.text = [NSString stringWithFormat:@"白板 %d 人", [self.dataArr[3] intValue]];
+        
+        self.totalNum = [self.dataArr[0] integerValue];
+        self.citizenNum = [self.dataArr[1] integerValue];
+        self.spyNum = [self.dataArr[2] integerValue];
+        self.whiteNum = [self.dataArr[3] integerValue];
     }
     
     if (self.allPlayer&&[self.allPlayer count]>0) {
+        self.scrollView = [[UIScrollView alloc]initWithFrame:self.allPlayersView.frame];
         NSInteger height = 39;
         for (int i=0; i<[self.allPlayer count]; i++) {
             GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
@@ -80,9 +135,10 @@
                 [gameRoomCell addGestureRecognizer:self.doubleTap];
             }
             [gameRoomCell setTag:(2000+i)];
-            [self.allPlayersView addSubview:gameRoomCell];
+            [self.scrollView addSubview:gameRoomCell];
             height += gameRoomCell.frame.size.height + 10;
         }
+        [self.view insertSubview:self.scrollView aboveSubview:self.allPlayersView];
     }
     
     self.allPlayersView.layer.cornerRadius = 4;
@@ -153,22 +209,30 @@
                 NSNumber *roleNum = [[NSNumber alloc]initWithInt:bean.role];
                 NSArray *arr = [NSArray arrayWithObjects:indexSelected, roleNum, nil];
                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:arr];
-                for (int i=0; i<[self.allPlayer count]; i++) {
+                for (int i=1; i<[self.allPlayer count]; i++) {
                     PlayerBean *temp = [self.allPlayer objectAtIndex:i];
                     SPYConnection *connection = temp.connection;
                     [connection writeData:connection.output WithData:data OperType:SPYKillPlayerPush];
                 }
                 
                 //被杀死后不可再响应点击
-                UIView *view = [self.allPlayersView viewWithTag:(2000+[indexSelected integerValue])];
+                UIView *view = [self.scrollView viewWithTag:(2000+[indexSelected integerValue])];
                 if (view&&[view isKindOfClass:[GameRoomCell class]]) {
                     GameRoomCell *cell = (GameRoomCell*)view;
                     [cell removeGestureRecognizer:self.sender];
                 }
+                
+                if (bean.role==CITIZEN) {
+                    self.citizenNum--;
+                }else if(bean.role==SPY){
+                    self.spyNum--;
+                }else if(bean.role==WHITE){
+                    self.whiteNum--;
+                }
+                [self isGameOver];
             }
         }
         if (tag==1000) {
-//            [self dismissViewControllerAnimated:YES completion:nil];
             NSString *role = [PlayerBean getRoleStringByPlayerRole:self.bean.role];
             self.roleLabel.text = [NSString stringWithFormat:@"您 是 %@", role];
             [self.roleLabel setHidden:NO];
@@ -177,12 +241,8 @@
     }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return YES;
-}
-
 - (void)setRoleAppear:(NSInteger)index WithRole:(PlayerRole)role{
-    UIView *view = [self.allPlayersView viewWithTag:(2000+index)];
+    UIView *view = [self.scrollView viewWithTag:(2000+index)];
     if (view&&[view isKindOfClass:[GameRoomCell class]]) {
         NSString *roleStr = [PlayerBean getRoleStringByPlayerRole:role];
         GameRoomCell *cell = (GameRoomCell*)view;
@@ -192,7 +252,29 @@
 }
 
 - (void)isGameOver{
-    
+    BOOL isOver = NO;
+    NSNumber *victory;
+    if (self.spyNum==0&&self.whiteNum==0) {//平民胜利
+        victory = [[NSNumber alloc]initWithInteger:1];
+        isOver = YES;
+    }else if(self.citizenNum==0){//卧底胜利
+        victory = [[NSNumber alloc]initWithInteger:0];
+        isOver = YES;
+    }else if(self.citizenNum==0&&self.spyNum==0){//白板胜利
+        victory = [[NSNumber alloc]initWithInteger:2];
+        isOver = YES;
+    }
+    //给所有用户发送游戏结束数据
+    if (isOver) {
+        for (int i=1; i<[self.allPlayer count]; i++) {
+            PlayerBean *bean = [self.allPlayer objectAtIndex:i];
+            SPYConnection *con = bean.connection;
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:victory];
+            [con writeData:con.output WithData:data OperType:SPYVictoryPush];
+        }
+        //处理本机逻辑
+        [self victoryWithType:[victory integerValue]];
+    }
 }
 
 @end

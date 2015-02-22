@@ -13,6 +13,7 @@
                 <outlet property="roleLabel" destination="0dy-3M-rf3" id="tlQ-Sa-Fns"/>
                 <outlet property="spyLabel" destination="uWQ-aE-yvd" id="kxQ-9p-bDu"/>
                 <outlet property="tipsLabel" destination="Do6-4I-Yc7" id="z4o-pk-XJU"/>
+                <outlet property="titleLabel" destination="3fO-FG-O79" id="xnO-DC-agt"/>
                 <outlet property="totalLabel" destination="GFd-M9-XI5" id="u4t-Z9-uFc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="whiteLabel" destination="CBI-uF-6hw" id="eax-ki-RE8"/>
@@ -44,12 +45,12 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qaK-Jz-Vfs">
+                <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qaK-Jz-Vfs">
                     <rect key="frame" x="10" y="39" width="100" height="541"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="WZD-rC-j6j"/>
                     </constraints>
-                </scrollView>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的词语是" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWd-aR-Fve">
                     <rect key="frame" x="118" y="124" width="90" height="21"/>
                     <constraints>

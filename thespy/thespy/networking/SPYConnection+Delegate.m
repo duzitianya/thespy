@@ -72,6 +72,11 @@
             [self.netDelegate killPlayerWithArr:arr];
             break;
         }
+        case SPYVictoryPush:{
+            NSNumber *type = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.netDelegate victory:type];
+            break;
+        }
         default:
             break;
     }

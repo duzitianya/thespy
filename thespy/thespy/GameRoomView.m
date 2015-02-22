@@ -387,11 +387,11 @@
         
         //打乱角色数据
         NSMutableArray *newRoles = [[NSMutableArray alloc]initWithCapacity:[indexArr count]];
-        for (int i=0; i<[indexArr count]; i++) {
+        while([indexArr count]>0){
             int value = arc4random() % [indexArr count];
             [newRoles addObject:indexArr[value]];
-            [indexArr removeObject:indexArr[value]];
-            i--;
+//            [indexArr removeObject:indexArr[value]];
+            [indexArr removeObjectAtIndex:value];
         }
         
         //为所有用户分配角色,并发送游戏开始数据

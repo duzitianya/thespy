@@ -35,7 +35,6 @@
 @property (assign, nonatomic) BOOL show;
 @property (assign, nonatomic) BOOL isServer;
 @property (assign, nonatomic) int killIndex;
-@property (strong, nonatomic) UITapGestureRecognizer *doubleTap;
 @property (strong, nonatomic) NSArray *remoteData;
 @property (assign, nonatomic) NSInteger index;//自己在服务列表中的位置
 @property (strong, nonatomic) UITapGestureRecognizer *sender;

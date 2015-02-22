@@ -37,11 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(killPlayer:)];
-    self.doubleTap.numberOfTouchesRequired = 1;//双击
-    self.doubleTap.numberOfTapsRequired = 1;//一个手指点击
-    self.doubleTap.delegate = self;
-    
     self.remoteData = [[NSArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killPlayerRemote:) name:@"killPlayer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(victory:) name:@"victory" object:nil];
@@ -96,6 +91,16 @@
     NSArray *arr = (NSArray*)[notification object];
     NSInteger index = [(NSNumber*)arr[0] integerValue];
     PlayerRole role = [(NSNumber*)arr[1] intValue];
+    //判断该玩家是否已经被杀死
+    //被杀死后不可再响应点击
+    UIView *view = [self.scrollView viewWithTag:(2000+index)];
+    if (view&&[view isKindOfClass:[GameRoomCell class]]) {
+        GameRoomCell *cell = (GameRoomCell*)view;
+        if (cell&&[cell.roleLabel isHidden]==NO) {
+            return;
+        }
+    }
+    
     //判断是否是自己被杀死
     if (index==self.index) {//是自己被杀死
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您已经被选中出局" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
@@ -125,14 +130,21 @@
     
     if (self.allPlayer&&[self.allPlayer count]>0) {
         self.scrollView = [[UIScrollView alloc]initWithFrame:self.allPlayersView.frame];
+        self.scrollView.scrollEnabled = YES;
+        self.scrollView.contentSize = CGSizeMake(100, self.allPlayersView.frame.size.height);
         NSInteger height = 39;
         for (int i=0; i<[self.allPlayer count]; i++) {
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(killPlayer:)];
+            tap.numberOfTouchesRequired = 1;//双击
+            tap.numberOfTapsRequired = 1;//一个手指点击
+            tap.delegate = self;
+
             GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
             gameRoomCell.frame = CGRectMake(10, height, gameRoomCell.frame.size.width, gameRoomCell.frame.size.height);
             [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:i]];
             gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (i+1)];
             if (self.isServer) {
-                [gameRoomCell addGestureRecognizer:self.doubleTap];
+                [gameRoomCell addGestureRecognizer:tap];
             }
             [gameRoomCell setTag:(2000+i)];
             [self.scrollView addSubview:gameRoomCell];
@@ -198,6 +210,8 @@
     NSInteger tag = alertView.tag;
     if (buttonIndex==0) {
         if (tag==1001) {
+            //判断是否被杀死过
+            
             //给被杀掉客户端发送被杀数据
             if ([self.allPlayer count]>0) {
                 PlayerBean *bean = [self.allPlayer objectAtIndex:self.killIndex];
@@ -213,13 +227,6 @@
                     PlayerBean *temp = [self.allPlayer objectAtIndex:i];
                     SPYConnection *connection = temp.connection;
                     [connection writeData:connection.output WithData:data OperType:SPYKillPlayerPush];
-                }
-                
-                //被杀死后不可再响应点击
-                UIView *view = [self.scrollView viewWithTag:(2000+[indexSelected integerValue])];
-                if (view&&[view isKindOfClass:[GameRoomCell class]]) {
-                    GameRoomCell *cell = (GameRoomCell*)view;
-                    [cell removeGestureRecognizer:self.sender];
                 }
                 
                 if (bean.role==CITIZEN) {

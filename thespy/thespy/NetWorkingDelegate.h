@@ -19,6 +19,7 @@
 -(void)startRemoteGame:(PlayerBean*)bean;
 -(void)killPlayerWithArr:(NSArray*)arr;
 -(void)victory:(NSNumber*)type;
+-(void)gameAgain;
 
 @end
 

@@ -77,6 +77,10 @@
             [self.netDelegate victory:type];
             break;
         }
+        case SPYGameAgainPush:{
+            [self.netDelegate gameAgain];
+            break;
+        }
         default:
             break;
     }

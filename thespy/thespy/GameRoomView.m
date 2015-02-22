@@ -14,6 +14,10 @@
 @implementation GameRoomView
 @synthesize subRoomView;
 
+-(void)dealloc{
+    [self closeService];
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     
     if (!self.asServer&&!self.isRemoteInit) {//如果是客户端，则弹出连接列表
@@ -166,19 +170,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
-        if (self.asServer) {
-            NSMutableArray *conns = self.connections;
-            if ([conns count]>0) {
-                for (int i=0; i<[conns count]; i++) {
-                    SPYConnection *con = conns[i];
-                    [con writeData:con.output WithData:nil OperType:SPYServerOutPush];
-                }
-            }
-        }
-        
         [self closeService];
-        [self.connection closeConnection];
-        self.connections = nil;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -188,6 +180,18 @@
 }
 
 - (void) closeService{
+    if (self.asServer) {
+        NSMutableArray *conns = self.connections;
+        if ([conns count]>0) {
+            for (int i=0; i<[conns count]; i++) {
+                SPYConnection *con = conns[i];
+                [con writeData:con.output WithData:nil OperType:SPYServerOutPush];
+            }
+        }
+    }
+    
+    [self.connection closeConnection];
+    self.connections = nil;
     [self.service removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.service setDelegate:nil];
     [self.service stop];
@@ -440,6 +444,10 @@
 
 -(void)victory:(NSNumber*)type{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"victory" object:type];
+}
+
+-(void)gameAgain{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameagain" object:nil];
 }
 
 @end

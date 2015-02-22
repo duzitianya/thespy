@@ -40,9 +40,14 @@
     self.remoteData = [[NSArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killPlayerRemote:) name:@"killPlayer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(victory:) name:@"victory" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameAgain) name:@"gameagain" object:nil];
     
     [self.roleLabel setHidden:YES];
     
+}
+
+-(void)gameAgain{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)victoryWithType:(NSInteger)type{
@@ -72,7 +77,6 @@
     NSString *str = [dateFormatter stringFromDate:date];
     GameResult *result = [[GameResult alloc]initWithPlayerID:self.bean.deviceName Name:self.bean.name Role:role Victory:selfWin?@"胜利":@"失败" Date:str];
     [[GameDB alloc]addGameResult:result];
-    //    [self dismissViewControllerAnimated:YES completion:nil];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:tip message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
     alert.delegate = self;
@@ -210,8 +214,6 @@
     NSInteger tag = alertView.tag;
     if (buttonIndex==0) {
         if (tag==1001) {
-            //判断是否被杀死过
-            
             //给被杀掉客户端发送被杀数据
             if ([self.allPlayer count]>0) {
                 PlayerBean *bean = [self.allPlayer objectAtIndex:self.killIndex];
@@ -244,7 +246,27 @@
             self.roleLabel.text = [NSString stringWithFormat:@"您 是 %@", role];
             [self.roleLabel setHidden:NO];
             [self setRoleAppear:self.index WithRole:self.bean.role];
+            
         }
+        if (tag==1002&&self.isServer) {//如果是服务器，再弹出后续选项
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您要怎样继续？" message:@"" delegate:self cancelButtonTitle:@"再来一局" otherButtonTitles:@"不玩了", nil];
+            alert.delegate = self;
+            [alert setTag:1003];
+            [alert show];
+        }
+        if (tag==1003){//再来一局
+            [self dismissViewControllerAnimated:YES completion:nil];
+            if (self.allPlayer) {
+                for (int i=0; i<[self.allPlayer count]; i++) {
+                    PlayerBean *bean = self.allPlayer[i];
+                    SPYConnection *con = bean.connection;
+                    [con writeData:con.output WithData:nil OperType:SPYGameAgainPush];
+                }
+            }
+        }
+    }else if (buttonIndex==1){//主机不玩了
+        
+//        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

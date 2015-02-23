@@ -53,8 +53,8 @@
             NSArray *arr = [dict objectForKey:@"roomarr"];
             [self.netDelegate initGameRoomData:arr];
             NSMutableArray *players = (NSMutableArray*)[dict objectForKey:@"players"];
-            NSArray *data = [players subarrayWithRange:NSMakeRange(0, [players count])];
-            [self.netDelegate reloadClientListTable:data];
+//            NSArray *data = [players subarrayWithRange:NSMakeRange(0, [players count])];
+            [self.netDelegate reloadClientListTable:players];
             break;
         }
         case SPYServerOutPush:{

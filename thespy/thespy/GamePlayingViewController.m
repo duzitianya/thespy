@@ -76,7 +76,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *str = [dateFormatter stringFromDate:date];
     GameResult *result = [[GameResult alloc]initWithPlayerID:self.bean.deviceName Name:self.bean.name Role:role Victory:selfWin?@"胜利":@"失败" Date:str];
-    [[GameDB alloc]addGameResult:result];
+    [[GameDB shareInstance]addGameResult:result];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:tip message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
     alert.delegate = self;

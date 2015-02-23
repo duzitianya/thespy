@@ -43,9 +43,13 @@
     self.netDelegate = delegate;
     switch (oper) {
         case SPYNewPlayerPush:{
-            PlayerBean *bean = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            NSArray *arr = [NSArray arrayWithObjects:bean, nil];
-            [self.netDelegate reloadClientListTable:arr];
+            if (data==nil) {
+                [self.netDelegate reloadClientListTable:nil];
+            }else{
+                PlayerBean *bean = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                NSArray *arr = [NSArray arrayWithObjects:bean, nil];
+                [self.netDelegate reloadClientListTable:arr];
+            }
             break;
         }
         case SPYGameRoomInfoPush:{
@@ -53,7 +57,6 @@
             NSArray *arr = [dict objectForKey:@"roomarr"];
             [self.netDelegate initGameRoomData:arr];
             NSMutableArray *players = (NSMutableArray*)[dict objectForKey:@"players"];
-//            NSArray *data = [players subarrayWithRange:NSMakeRange(0, [players count])];
             [self.netDelegate reloadClientListTable:players];
             break;
         }
@@ -79,6 +82,11 @@
         }
         case SPYGameAgainPush:{
             [self.netDelegate gameAgain];
+            break;
+        }
+        case SYPClientLeavePush:{
+            NSNumber *num = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.netDelegate clientLeave:num];
             break;
         }
         default:

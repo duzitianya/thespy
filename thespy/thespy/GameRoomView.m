@@ -57,7 +57,11 @@
         self.start.alpha = 0.4;
         [self.start addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
         [self.view insertSubview:self.start aboveSubview:self.subRoomView.view];
+        [self.start setHidden:YES];
     }
+    
+    self.onGame = NO;
+//    [self.service startMonitoring];
 }
 
 - (void)viewDidLoad{
@@ -101,7 +105,29 @@
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
-    [self.subRoomView.allPlayer addObjectsFromArray:list];
+    if (self.asServer&&self.onGame) {//如果服务器端当前正在游戏中,向客户端写回nil
+        SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+        [conn writeData:conn.output WithData:nil OperType:SPYGameRoomInfoPush];
+        [self.connections removeLastObject];
+        return;
+    }
+    if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        alert.delegate = self;
+        [alert setTag:101];
+        [alert show];
+    }
+    if (list) {
+        for (int i=0; i<[list count]; i++) {
+            NSInteger index = [self.subRoomView.allPlayer count];
+            if ([list[i] isKindOfClass:[PlayerBean class]]) {
+                PlayerBean *bean = (PlayerBean*)list[i];
+                NSNumber *num = [[NSNumber alloc]initWithInteger:(index+i)];
+                [bean setIndex:num];
+                [self.subRoomView.allPlayer addObject:bean];
+            }
+        }
+    }
     [self.subRoomView.collectionView reloadData];
     [self updateOnlinePlayer];
     if (!self.asServer&&[self.indicator isAnimating]) {
@@ -116,7 +142,8 @@
         NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
         NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
         NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
-        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, nil];
+        NSNumber *currentIndex = [[NSNumber alloc]initWithInteger:[self.subRoomView.allPlayer count]-1];
+        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, currentIndex, nil];
         //当前在线用户
         NSMutableArray *arr = self.subRoomView.allPlayer;
         
@@ -135,6 +162,7 @@
             }
         }
     }
+
 }
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean *)mainPlayer asServer:(BOOL)asServer{
@@ -161,6 +189,10 @@
 
 - (void) updateOnlinePlayer{
     self.gameRoomHeader.currentLabel.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
+    if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum) {//判断是否满足开始条件
+        [self.start setHidden:NO];
+    }
+    
 }
 
 - (void)closeCurrentGame{
@@ -170,7 +202,24 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
-        [self closeService];
+        NSInteger tag = [alertView tag];
+        if (tag==101&&!self.asServer) {//被服务器拒接
+            self.plvc = [[ServerListViewController alloc] init];
+            self.plvc.title = @"选择要加入的游戏";
+            self.plvc.delegate = self;
+            [self.navigationController pushViewController:self.plvc animated:NO];
+        }
+        if (self.asServer) {
+            [self closeService];
+        }else{
+            //向服务器发送终止游戏数据
+            NSNumber *num = self.mainPlayer.index;
+            if (self.connection) {
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+                [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
+                [self.connection closeConnection];
+            }
+        }
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -219,6 +268,8 @@
     [self.service setDelegate:self];
     [self.service scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.service publishWithOptions:NSNetServiceListenForConnections];
+    
+//    [self.service ]
 }
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
@@ -339,6 +390,7 @@
     NSString *citizen = arr[1];
     NSString *spy = arr[2];
     NSString *white = arr[3];
+    NSNumber *index = arr[4];
     
     self.totalNum = [total integerValue];
     self.citizenNum = [citizen integerValue];
@@ -349,6 +401,8 @@
     self.gameRoomHeader.citizenLabel.text = [NSString stringWithFormat:@"平民数 %d 人", [citizen intValue]];
     self.gameRoomHeader.spyLabel.text = [NSString stringWithFormat:@"卧底数 %d 人", [spy intValue]];
     self.gameRoomHeader.whiteboardLabel.text = [NSString stringWithFormat:@"白板数 %d 人", [white intValue]];
+    
+    self.mainPlayer.index = index;
     
 }
 
@@ -401,8 +455,8 @@
         //为所有用户分配角色,并发送游戏开始数据
         for (int i=0; i<[allPlayers count]; i++) {
             PlayerBean *bean = allPlayers[i];
-            NSNumber *num= [[NSNumber alloc]initWithInt:i];
-            [bean setIndex:num];
+//            NSNumber *num= [[NSNumber alloc]initWithInt:i];
+//            [bean setIndex:num];
             SPYConnection *con = allCon[i];
             [bean setConnection:con];
             NSArray *arr = newRoles[i];
@@ -421,6 +475,9 @@
         indexArr = nil;
         allPlayers = nil;
         newRoles = nil;
+        
+        self.onGame = YES;
+//        [self.service stopMonitoring];]
     }
 }
 
@@ -448,6 +505,26 @@
 
 -(void)gameAgain{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"gameagain" object:nil];
+}
+
+-(void)clientLeave:(NSNumber*)index{
+    if (index&&self.asServer) {
+        [self.subRoomView.allPlayer removeObjectAtIndex:[index integerValue]];
+        [self.subRoomView.collectionView reloadData];
+        [self updateOnlinePlayer];
+        //向其余客户端发送消息
+        if([self.subRoomView.allPlayer count]>1){
+            for (int i=1; i<[self.subRoomView.allPlayer count]; i++) {
+                PlayerBean *bean = self.subRoomView.allPlayer[i];
+                SPYConnection *con = bean.connection;
+                if (con) {
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:index];
+                    [con writeData:con.output WithData:data OperType:SYPClientLeavePush];
+                }
+            }
+        }
+    }
+    
 }
 
 @end

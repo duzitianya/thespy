@@ -47,6 +47,7 @@
 }
 
 -(void)gameAgain{
+    [self.alert dismissWithClickedButtonIndex:0 animated:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -78,11 +79,7 @@
     GameResult *result = [[GameResult alloc]initWithPlayerID:self.bean.deviceName Name:self.bean.name Role:role Victory:selfWin?@"胜利":@"失败" Date:str];
     [[GameDB shareInstance]addGameResult:result];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:tip message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-    alert.delegate = self;
-    [alert setTag:1002];
-    [alert show];
-
+    [self createAlertView:tip CancelTxt:@"确认" OtherTxt:nil Tag:1002];
 }
 
 -(void)victory:(NSNotification*)notification{
@@ -107,10 +104,10 @@
     
     //判断是否是自己被杀死
     if (index==self.index) {//是自己被杀死
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您已经被选中出局" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-        alert.delegate = self;
-        [alert setTag:1000];
-        [alert show];
+        NSString *role = [PlayerBean getRoleStringByPlayerRole:self.bean.role];
+        self.roleLabel.text = [NSString stringWithFormat:@"您 是 %@", role];
+        [self.roleLabel setHidden:NO];
+        [self setRoleAppear:self.index WithRole:self.bean.role];
     }else{//不是自己被杀死
         [self setRoleAppear:index WithRole:role];
     }
@@ -198,10 +195,7 @@
     GameRoomCell *room = (GameRoomCell*)[sender view];
     NSString *name = room.playerName.text;
     NSString *title = [NSString stringWithFormat:@"确认投票给 %@ 吗？", name];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"再想想", nil];
-    alert.delegate = self;
-    [alert setTag:1001];
-    [alert show];
+    [self createAlertView:title CancelTxt:@"确认" OtherTxt:@"再想想" Tag:1001];
     if ([room.countLabel.text intValue]>=1) {
         self.killIndex = [room.countLabel.text intValue] - 1;
     }else{
@@ -246,13 +240,9 @@
             self.roleLabel.text = [NSString stringWithFormat:@"您 是 %@", role];
             [self.roleLabel setHidden:NO];
             [self setRoleAppear:self.index WithRole:self.bean.role];
-            
         }
         if (tag==1002&&self.isServer) {//如果是服务器，再弹出后续选项
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您要怎样继续？" message:@"" delegate:self cancelButtonTitle:@"再来一局" otherButtonTitles:@"不玩了", nil];
-            alert.delegate = self;
-            [alert setTag:1003];
-            [alert show];
+            [self createAlertView:@"您要怎样继续？" CancelTxt:@"再来一局" OtherTxt:@"不玩了" Tag:1003];
         }
         if (tag==1003){//再来一局
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -304,6 +294,16 @@
         //处理本机逻辑
         [self victoryWithType:[victory integerValue]];
     }
+}
+
+- (void)createAlertView:(NSString*)title CancelTxt:(NSString*)cancelTxt OtherTxt:(NSString*)otherTxt Tag:(NSInteger)tag{
+    if (self.alert) {
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+    self.alert = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt, nil];
+    self.alert.delegate = self;
+    [self.alert setTag:tag];
+    [self.alert show];
 }
 
 @end

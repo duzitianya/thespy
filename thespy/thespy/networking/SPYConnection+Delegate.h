@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYServerOutPush = 5,//服务器端退出游戏
     SPYGameStartPush = 6,//游戏开始
     SPYVictoryPush = 7,//游戏胜利
-    SPYGameAgainPush = 8//再来一局
+    SPYGameAgainPush = 8,//再来一局
+    SYPClientLeavePush = 9//客户端离线
 };
 
 @interface SPYConnection (Delegate)

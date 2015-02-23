@@ -20,6 +20,7 @@
 -(void)killPlayerWithArr:(NSArray*)arr;
 -(void)victory:(NSNumber*)type;
 -(void)gameAgain;
+-(void)clientLeave:(NSNumber*)index;
 
 @end
 

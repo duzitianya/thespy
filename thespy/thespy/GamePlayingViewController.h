@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIAlertView *alert;
 
 @property (strong, nonatomic) NSArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *allPlayer;

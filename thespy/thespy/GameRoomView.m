@@ -105,7 +105,7 @@
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
-    if (self.asServer&&self.onGame) {//如果服务器端当前正在游戏中,向客户端写回nil
+    if (self.asServer&&(self.onGame||[self.subRoomView.allPlayer count]==self.totalNum)) {//如果服务器端当前正在游戏中,向客户端写回nil
         SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
         [conn writeData:conn.output WithData:nil OperType:SPYGameRoomInfoPush];
         [self.connections removeLastObject];
@@ -208,6 +208,7 @@
             self.plvc.title = @"选择要加入的游戏";
             self.plvc.delegate = self;
             [self.navigationController pushViewController:self.plvc animated:NO];
+            return;
         }
         if (self.asServer) {
             [self closeService];

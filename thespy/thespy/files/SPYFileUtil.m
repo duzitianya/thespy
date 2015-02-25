@@ -77,9 +77,9 @@
         NSNumber *times = [dict objectForKey:@"times"];
         citizen = [dict objectForKey:@"citizen"];
         spy = [dict objectForKey:@"spy"];
-        NSDate *today = [NSDate date];
-        //如果使用次数大于平均值一次或者今日使用过，需要更换词语
-        if (([times doubleValue]-[average doubleValue])<=1&&[date isEqualToDate:today]==NO) {
+        //如果使用次数大于平均值一次或者6小时使用过，需要更换词语
+//        NSLog(@"=================%f===============", [date timeIntervalSinceNow]);
+        if (([times doubleValue]-[average doubleValue])<=1&&[date timeIntervalSinceNow]>3600*6*-1) {
             break;
         }
     }

@@ -46,9 +46,9 @@
 		BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD431A6F935E008CCFB9 /* GameResult.m */; };
 		BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */; };
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
-		BF7BDEEE1A9DB93B00085C08 /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7BDEED1A9DB93B00085C08 /* words.plist */; };
 		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
 		BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */; };
+		BFD050291A9DD5C10048355E /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFD050281A9DD5C10048355E /* words.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,10 +129,10 @@
 		BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListCell.xib; sourceTree = "<group>"; };
-		BF7BDEED1A9DB93B00085C08 /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 		BFC3B2B11A736FC0001FB912 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSubView.xib; sourceTree = "<group>"; };
+		BFD050281A9DD5C10048355E /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,9 +221,9 @@
 		BF77ACE81A6E4725008CCFB9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BFD050281A9DD5C10048355E /* words.plist */,
 				BF77ACE91A6E4725008CCFB9 /* Info.plist */,
 				BF77ACEA1A6E4725008CCFB9 /* main.m */,
-				BF7BDEED1A9DB93B00085C08 /* words.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -394,7 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF77ACF91A6E4725008CCFB9 /* LaunchScreen.xib in Resources */,
-				BF7BDEEE1A9DB93B00085C08 /* words.plist in Resources */,
+				BFD050291A9DD5C10048355E /* words.plist in Resources */,
 				BF3DBBFD1A76243500A87FD2 /* Main.storyboard in Resources */,
 				BF3DBC121A76449600A87FD2 /* GameRoomSubview.xib in Resources */,
 				BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */,

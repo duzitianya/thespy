@@ -29,7 +29,39 @@
     [self.window addSubview:self.navController.view];
     [self.window makeKeyAndVisible];
     
+//    [self set];
+    
     return YES;
+}
+
+-(void)set{
+    
+    NSMutableArray *allWords = [[NSMutableArray alloc]initWithCapacity:100];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"wordstxt" ofType:@"txt"];
+    NSString *all = [NSString stringWithContentsOfFile:path usedEncoding:NULL error:nil];
+    NSArray *arr = [all componentsSeparatedByString:@"\n"];
+    if (arr) {
+        for (int i=0; i<[arr count]; i++) {
+            NSString *str = arr[i];
+            NSArray *words = [str componentsSeparatedByString:@"——"];
+            NSString *citizen = [(NSString*)words[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *spy = [(NSString*)words[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:citizen, @"citizen", spy, @"spy", [[NSNumber alloc]initWithInteger:0], @"times", [NSDate date], @"date", nil];
+            [allWords addObject:dict];
+        }
+    }
+    
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    NSMutableArray *al = [data objectForKey:@"words"];
+    [al addObjectsFromArray:allWords];
+    [data setObject:[[NSNumber alloc]initWithInteger:[al count]] forKey:@"words_count"];
+    [data setObject:al forKey:@"words"];
+    [data writeToFile:plistPath atomically:YES];
+    
+    [data writeToFile:@"/Users/zhaoquan/words.txt" atomically:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

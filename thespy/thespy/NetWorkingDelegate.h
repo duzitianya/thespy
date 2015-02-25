@@ -21,6 +21,8 @@
 -(void)victory:(NSNumber*)type;
 -(void)gameAgain;
 -(void)clientLeave:(NSNumber*)index;
+-(void)confirmPlayerNumber:(NSNumber*)allCount;
+-(void)validatePlayerList:(NSMutableArray*)list Number:(NSNumber*)number;
 
 @end
 

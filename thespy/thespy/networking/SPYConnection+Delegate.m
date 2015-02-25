@@ -52,12 +52,19 @@
             }
             break;
         }
+        case SPYNewPlayerConfirmPush:{
+            NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSMutableArray *players = (NSMutableArray*)[dict objectForKey:@"players"];
+            NSNumber *count = (NSNumber*)[dict objectForKey:@"count"];
+            [self.netDelegate validatePlayerList:players Number:count];
+            break;
+        }
         case SPYGameRoomInfoPush:{
             NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            NSArray *arr = [dict objectForKey:@"roomarr"];
-            [self.netDelegate initGameRoomData:arr];
             NSMutableArray *players = (NSMutableArray*)[dict objectForKey:@"players"];
             [self.netDelegate reloadClientListTable:players];
+            NSArray *arr = [dict objectForKey:@"roomarr"];
+            [self.netDelegate initGameRoomData:arr];
             break;
         }
         case SPYServerOutPush:{
@@ -87,6 +94,11 @@
         case SYPClientLeavePush:{
             NSNumber *num = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             [self.netDelegate clientLeave:num];
+            break;
+        }
+        case SYPConfirmPlayerList:{
+            NSNumber *allCount = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.netDelegate confirmPlayerNumber:allCount];
             break;
         }
         default:

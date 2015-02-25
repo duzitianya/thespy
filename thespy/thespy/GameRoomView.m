@@ -405,6 +405,17 @@
     
     self.mainPlayer.index = index;
     
+    //新启动后台线程验证
+//    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
+    [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
+}
+
+//判断从服务器拉取的用户列表是否正确
+-(void)validateRemoteList{
+//    NSLog(@"Validate in background.....");
+    NSNumber *allCount = [[NSNumber alloc]initWithInteger:[self.subRoomView.allPlayer count]];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:allCount];
+    [self.connection writeData:self.connection.output WithData:data OperType:SYPConfirmPlayerList];
 }
 
 -(void)serverIsOut{
@@ -449,15 +460,12 @@
         while([indexArr count]>0){
             int value = arc4random() % [indexArr count];
             [newRoles addObject:indexArr[value]];
-//            [indexArr removeObject:indexArr[value]];
             [indexArr removeObjectAtIndex:value];
         }
         
         //为所有用户分配角色,并发送游戏开始数据
         for (int i=0; i<[allPlayers count]; i++) {
             PlayerBean *bean = allPlayers[i];
-//            NSNumber *num= [[NSNumber alloc]initWithInt:i];
-//            [bean setIndex:num];
             SPYConnection *con = allCon[i];
             [bean setConnection:con];
             NSArray *arr = newRoles[i];
@@ -525,7 +533,36 @@
             }
         }
     }
-    
+}
+
+-(void)confirmPlayerNumber:(NSNumber*)allCount{
+    NSInteger count = [allCount integerValue];
+    if (count!=[self.subRoomView.allPlayer count]) {//说明客户端获得数据不正确,需要从新发送所有数据
+        //当前在线用户
+        NSMutableArray *arr = self.subRoomView.allPlayer;
+        NSNumber *num = [[NSNumber alloc]initWithInteger:[self.subRoomView.allPlayer count]];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:num, @"count", arr, @"players", nil];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
+        SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+        [conn writeData:conn.output WithData:data OperType:SPYNewPlayerConfirmPush];
+    }
+}
+
+-(void)validatePlayerList:(NSMutableArray*)list Number:(NSNumber*)number{
+    if ([list count]==[number integerValue]) {//说明验证成功
+        self.subRoomView.allPlayer = list;
+        [self.subRoomView.collectionView reloadData];
+        [self updateOnlinePlayer];
+    }else{//验证不成功，客户端退出
+        NSNumber *num = self.mainPlayer.index;
+        if (self.connection) {
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+            [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
+            [self.connection closeConnection];
+        }
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 @end

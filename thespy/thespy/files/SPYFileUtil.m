@@ -61,4 +61,56 @@
     return @"";
 }
 
+- (NSArray*) getWords{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    
+    NSNumber *allCount = [data objectForKey:@"words_count"];
+    NSNumber *average = [data objectForKey:@"average_value"];
+    NSArray *words = [data objectForKey:@"words"];
+    NSString *citizen;
+    NSString *spy;
+    for (int i=0; i<[words count]; i++) {//忽略随机数出现的重复概率
+        NSInteger value = arc4random() % [allCount integerValue];
+        NSDictionary *dict = words[value];
+        NSDate *date = [dict objectForKey:@"date"];
+        NSNumber *times = [dict objectForKey:@"times"];
+        citizen = [dict objectForKey:@"citizen"];
+        spy = [dict objectForKey:@"spy"];
+        NSDate *today = [NSDate date];
+        //如果使用次数大于平均值一次或者今日使用过，需要更换词语
+        if (([times doubleValue]-[average doubleValue])<=1&&[date isEqualToDate:today]==NO) {
+            break;
+        }
+    }
+    
+    [self updateWordsPlayTimes:0 Words:words Dict:data];
+    
+    NSArray *arr = [[NSArray alloc]initWithObjects:citizen, spy, nil];
+    return arr;
+}
+
+
+
+- (void) updateWordsPlayTimes:(NSInteger)index Words:(NSArray*)words Dict:(NSMutableDictionary*)data{
+    double total = 0.;
+    if (words) {
+        for (int i=0; i<[words count]; i++) {
+            NSDictionary *dict = words[i];
+            NSNumber *times = [dict objectForKey:@"times"];
+            total += [times integerValue];
+            if (i==index) {
+                total++;
+                [dict setValue:[[NSNumber alloc]initWithInteger:[times integerValue]+1] forKey:@"times"];
+                [dict setValue:[NSDate date] forKey:@"date"];
+            }
+        }
+    }
+    NSNumber *avg = [[NSNumber alloc]initWithDouble:(total/[words count])];
+    [data setObject:avg forKey:@"average_value"];
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
+    [data writeToFile:plistPath atomically:YES];
+}
+
 @end

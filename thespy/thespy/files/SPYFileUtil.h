@@ -26,4 +26,8 @@
 
 - (NSString*) getUserName;
 
+- (NSArray*) getWords;
+
+//- (void) updateWordsPlayTimes:(NSInteger)index;
+
 @end

@@ -425,8 +425,9 @@
 
 -(void)startGame{
     //获得词条对
-    NSString *spyWord = @"地球";
-    NSString *citizenWord = @"月亮";
+    NSArray *words = [[SPYFileUtil shareInstance]getWords];
+    NSString *citizenWord = words[0];
+    NSString *spyWord = words[1];
     
     NSMutableArray *allPlayers = [[NSMutableArray alloc]initWithArray:self.subRoomView.allPlayer];
     NSMutableArray *allCon = [[NSMutableArray alloc]initWithArray:self.connections];

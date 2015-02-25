@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>words_count</key>
+	<integer>1</integer>
+	<key>words</key>
+	<array>
+		<dict>
+			<key>date</key>
+			<date>2015-02-25T08:08:30Z</date>
+			<key>times</key>
+			<integer>0</integer>
+			<key>citizen</key>
+			<string>月亮</string>
+			<key>spy</key>
+			<string>地球</string>
+		</dict>
+	</array>
+	<key>average_value</key>
+	<integer>0</integer>
+</dict>
+</plist>

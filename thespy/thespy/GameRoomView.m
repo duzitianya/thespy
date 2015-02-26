@@ -191,6 +191,8 @@
     self.gameRoomHeader.currentLabel.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
     if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum) {//判断是否满足开始条件
         [self.start setHidden:NO];
+    }else{
+        [self.start setHidden:YES];
     }
     
 }

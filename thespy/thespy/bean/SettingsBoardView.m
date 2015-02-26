@@ -86,4 +86,36 @@
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
 }
 
+- (void) didBeginEditing:(UITextField *)textField{
+    [self moveViews:-100];
+}
+
+- (void) didEndEditing:(UITextField *)textField{
+    [self moveViews:100];
+}
+
+- (void) moveViews:(int)offset{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+    NSArray *subs = self.settingsview.subviews;
+    if (subs) {
+        for (int i=0; i<[subs count]; i++) {
+            id v = subs[i];
+            if ([v isKindOfClass:[UIView class]]) {
+                UIView *view = (UIView*)v;
+                view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y+offset, view.frame.size.width, view.frame.size.height);
+            }
+        }
+    }
+    if (offset>0) {
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, 250);
+    }else{
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, -250);
+    }
+
+    [UIView commitAnimations];
+}
+
 @end

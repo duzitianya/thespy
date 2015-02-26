@@ -133,8 +133,10 @@
     if (self.allPlayer&&[self.allPlayer count]>0) {
         self.scrollView = [[UIScrollView alloc]initWithFrame:self.allPlayersView.frame];
         self.scrollView.scrollEnabled = YES;
+        self.scrollView.showsHorizontalScrollIndicator = NO;
+        self.scrollView.showsVerticalScrollIndicator = NO;
         self.scrollView.contentSize = CGSizeMake(100, self.allPlayersView.frame.size.height);
-        NSInteger height = 39;
+        NSInteger y = 39;
         for (int i=0; i<[self.allPlayer count]; i++) {
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(killPlayer:)];
             tap.numberOfTouchesRequired = 1;//双击
@@ -142,7 +144,7 @@
             tap.delegate = self;
 
             GameRoomCell *gameRoomCell = [[[NSBundle mainBundle] loadNibNamed:@"GameRoomCell" owner:self options:nil] lastObject];
-            gameRoomCell.frame = CGRectMake(10, height, gameRoomCell.frame.size.width, gameRoomCell.frame.size.height);
+            gameRoomCell.frame = CGRectMake(10, y, gameRoomCell.frame.size.width, gameRoomCell.frame.size.height);
             [gameRoomCell setupWithData:[self.allPlayer objectAtIndex:i]];
             gameRoomCell.countLabel.text = [NSString stringWithFormat:@"%d", (i+1)];
             if (self.isServer) {
@@ -150,8 +152,9 @@
             }
             [gameRoomCell setTag:(2000+i)];
             [self.scrollView addSubview:gameRoomCell];
-            height += gameRoomCell.frame.size.height + 10;
+            y += gameRoomCell.frame.size.height + 10;
         }
+        self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, y*-1, 0);
         [self.view insertSubview:self.scrollView aboveSubview:self.allPlayersView];
     }
     
@@ -161,6 +164,7 @@
     
     if (!self.isServer) {
         [self.tipsLabel setHidden:YES];
+        [self.view insertSubview:self.tipsLabel aboveSubview:self.allPlayersView];
     }
     
     self.btn.layer.borderWidth = 1;

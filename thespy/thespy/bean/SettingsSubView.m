@@ -23,6 +23,7 @@
     if (name!=nil&&[name length]>0) {
         _nickNameTextField.text = name;
     }
+    _nickNameTextField.delegate = self;
 }
 
 - (IBAction)saveData:(UIButton *)sender {
@@ -47,10 +48,21 @@
 
 //最多15个字
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if ([textField.text length] > 15){
-        textField.text = [textField.text substringToIndex:15-1];
+    if ([textField.text length] > 10){
+        textField.text = [textField.text substringToIndex:10-1];
         return NO;
     }
     return YES; 
 }
+
+//开始编辑输入框的时候，软键盘出现，执行此事件
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    [_delegate didBeginEditing:textField];
+}
+
+//输入框编辑完成以后，将视图恢复到原始状态
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    [_delegate didEndEditing:textField];
+}
+
 @end

@@ -13,10 +13,11 @@
 @optional
 - (void)savePhoto;
 - (void)cancelSave;
-
+- (void) didBeginEditing:(UITextField *)textField;
+- (void) didEndEditing:(UITextField *)textField;
 @end
 
-@interface SettingsSubView : UIView
+@interface SettingsSubView : UIView<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *deviceLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nickNameTextField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;

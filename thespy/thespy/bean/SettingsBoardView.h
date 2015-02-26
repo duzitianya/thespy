@@ -27,6 +27,8 @@
 @property (nonatomic, strong) UIImagePickerController *camera;
 @property (nonatomic, strong) SettingsView *settingsview;
 
+@property (nonatomic, assign) int offset;
+
 @property (nonatomic, weak) id<CameraOpenDelegate> delegate;
 
 - (void) setupWithDelegate:(id<CameraOpenDelegate>)delegate;

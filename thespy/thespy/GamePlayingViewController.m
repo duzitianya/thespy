@@ -216,9 +216,9 @@
             //给被杀掉客户端发送被杀数据
             if ([self.allPlayer count]>0) {
                 PlayerBean *bean = [self.allPlayer objectAtIndex:self.killIndex];
-                if (self.killIndex>0) {//self.killIndex>0说明被杀的不是主机,处理主机显示逻辑
+//                if (self.killIndex>0) {//self.killIndex>0说明被杀的不是主机,处理主机显示逻辑
                     [self setRoleAppear:self.killIndex WithRole:bean.role];
-                }
+//                }
                 
                 NSNumber *indexSelected = [[NSNumber alloc]initWithInt:self.killIndex];
                 NSNumber *roleNum = [[NSNumber alloc]initWithInt:bean.role];

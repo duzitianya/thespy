@@ -62,6 +62,16 @@
     
     self.onGame = NO;
 //    [self.service startMonitoring];
+    
+    //异步获得词条
+    [self performSelectorInBackground:@selector(initGameWord) withObject:nil];
+}
+
+- (void)initGameWord{
+    //获得词条对
+    NSArray *words = [[SPYFileUtil shareInstance]getWords];
+    self.citizenWord = words[0];
+    self.spyWord = words[1];
 }
 
 - (void)viewDidLoad{
@@ -426,10 +436,9 @@
 }
 
 -(void)startGame{
-    //获得词条对
-    NSArray *words = [[SPYFileUtil shareInstance]getWords];
-    NSString *citizenWord = words[0];
-    NSString *spyWord = words[1];
+    if (self.citizenWord==nil||[self.citizenWord length]==0) {
+        [self initGameWord];
+    }
     
     NSMutableArray *allPlayers = [[NSMutableArray alloc]initWithArray:self.subRoomView.allPlayer];
     NSMutableArray *allCon = [[NSMutableArray alloc]initWithArray:self.connections];
@@ -443,13 +452,12 @@
         int white = [[[NSNumber alloc]initWithInteger:WHITE]intValue];
         //封装平民
         for (int i=0; i<self.citizenNum; i++) {
-            
-            NSArray *a = [NSArray arrayWithObjects:citizenWord, [NSString stringWithFormat:@"%d", citizen], nil];
+            NSArray *a = [NSArray arrayWithObjects:self.citizenWord, [NSString stringWithFormat:@"%d", citizen], nil];
             [indexArr addObject:a];
         }
         //封装卧底
         for (int i=0; i<self.spyNum; i++) {
-            NSArray *b = [NSArray arrayWithObjects:spyWord, [NSString stringWithFormat:@"%d", spy], nil];
+            NSArray *b = [NSArray arrayWithObjects:self.spyWord, [NSString stringWithFormat:@"%d", spy], nil];
             [indexArr addObject:b];
         }
         //封装白板

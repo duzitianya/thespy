@@ -34,6 +34,8 @@
 @property (nonatomic, assign) NSInteger whiteBoardNum;  //白板数
 @property (nonatomic, strong) PlayerBean *mainPlayer;//用户自己
 @property (nonatomic, strong) NSMutableArray *otherPlayer;//其他人
+@property (nonatomic, strong) NSString *citizenWord;//平民词语
+@property (nonatomic, strong) NSString *spyWord;//卧底词语
 
 @property (nonatomic, strong) UILabel *nowPlayerNum;
 @property (nonatomic, strong) GameRoomSubview *subRoomView;

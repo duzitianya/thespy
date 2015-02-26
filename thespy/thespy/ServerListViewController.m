@@ -7,6 +7,7 @@
 //
 
 #import "ServerListViewController.h"
+#import "UIWindow+YzdHUD.h"
 
 @implementation ServerListViewController
 
@@ -18,6 +19,8 @@
     UIImage *image = [UIImage imageNamed:@"SpyResource.bundle/left_icon"];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(closeCurrentGame)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    
+    self.index = -1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,6 +49,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSNetService *service = [self.servers objectAtIndex:[indexPath row]];
     [self.delegate connectToServer:service];
+    [self.view.window showHUDWithText:@"正在获得房间数据..." Type:ShowLoading Enabled:YES];
+    self.index = indexPath.row;
 }
 
 - (void) browseService{
@@ -63,6 +68,12 @@
 
 - (void)closeCurrentGame{
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)serverDidRemove:(NSInteger)index{
+    if (index==self.index) {
+        [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+    }
 }
 
 @end

@@ -18,9 +18,11 @@
 @interface ServerListViewController : UITableViewController
 @property (nonatomic, strong) NSMutableArray *servers;//NSNetService
 @property (nonatomic, strong) NSNetServiceBrowser *browser;
+@property (nonatomic, strong) NSInteger index;
 
 @property (nonatomic, strong) UIViewController *backvc;
 
 @property (nonatomic, weak) id<ServerListViewControllerDelegate, NSNetServiceBrowserDelegate> delegate;
+- (void)serverDidRemove:(NSInteger)index;
 
 @end

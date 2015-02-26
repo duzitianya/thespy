@@ -49,6 +49,11 @@
 		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
 		BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */; };
 		BFD050291A9DD5C10048355E /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFD050281A9DD5C10048355E /* words.plist */; };
+		BFD050351A9F12350048355E /* UIWindow+YzdHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */; };
+		BFD050361A9F12350048355E /* YzdHUDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502E1A9F12350048355E /* YzdHUDBackgroundView.m */; };
+		BFD050371A9F12350048355E /* YzdHUDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050301A9F12350048355E /* YzdHUDImageView.m */; };
+		BFD050381A9F12350048355E /* YzdHUDIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050321A9F12350048355E /* YzdHUDIndicator.m */; };
+		BFD050391A9F12350048355E /* YzdHUDLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050341A9F12350048355E /* YzdHUDLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +138,16 @@
 		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSubView.xib; sourceTree = "<group>"; };
 		BFD050281A9DD5C10048355E /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
+		BFD0502B1A9F12350048355E /* UIWindow+YzdHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+YzdHUD.h"; sourceTree = "<group>"; };
+		BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+YzdHUD.m"; sourceTree = "<group>"; };
+		BFD0502D1A9F12350048355E /* YzdHUDBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YzdHUDBackgroundView.h; sourceTree = "<group>"; };
+		BFD0502E1A9F12350048355E /* YzdHUDBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDBackgroundView.m; sourceTree = "<group>"; };
+		BFD0502F1A9F12350048355E /* YzdHUDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YzdHUDImageView.h; sourceTree = "<group>"; };
+		BFD050301A9F12350048355E /* YzdHUDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDImageView.m; sourceTree = "<group>"; };
+		BFD050311A9F12350048355E /* YzdHUDIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YzdHUDIndicator.h; sourceTree = "<group>"; };
+		BFD050321A9F12350048355E /* YzdHUDIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDIndicator.m; sourceTree = "<group>"; };
+		BFD050331A9F12350048355E /* YzdHUDLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YzdHUDLabel.h; sourceTree = "<group>"; };
+		BFD050341A9F12350048355E /* YzdHUDLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +203,7 @@
 		BF77ACE71A6E4725008CCFB9 /* thespy */ = {
 			isa = PBXGroup;
 			children = (
+				BFD0502A1A9F12170048355E /* thirdIndicator */,
 				BF3DBC191A77762F00A87FD2 /* files */,
 				BF77AD4A1A70D48A008CCFB9 /* networking */,
 				BF77AD3E1A6F8A2E008CCFB9 /* db_sqlite3 */,
@@ -313,6 +329,23 @@
 			name = networking;
 			sourceTree = "<group>";
 		};
+		BFD0502A1A9F12170048355E /* thirdIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				BFD0502B1A9F12350048355E /* UIWindow+YzdHUD.h */,
+				BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */,
+				BFD0502D1A9F12350048355E /* YzdHUDBackgroundView.h */,
+				BFD0502E1A9F12350048355E /* YzdHUDBackgroundView.m */,
+				BFD0502F1A9F12350048355E /* YzdHUDImageView.h */,
+				BFD050301A9F12350048355E /* YzdHUDImageView.m */,
+				BFD050311A9F12350048355E /* YzdHUDIndicator.h */,
+				BFD050321A9F12350048355E /* YzdHUDIndicator.m */,
+				BFD050331A9F12350048355E /* YzdHUDLabel.h */,
+				BFD050341A9F12350048355E /* YzdHUDLabel.m */,
+			);
+			name = thirdIndicator;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -423,8 +456,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFD050381A9F12350048355E /* YzdHUDIndicator.m in Sources */,
 				BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */,
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
+				BFD050371A9F12350048355E /* YzdHUDImageView.m in Sources */,
 				BF74DEAD1A88A91D00E8744B /* SPYConnection+Delegate.m in Sources */,
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
@@ -440,7 +475,10 @@
 				84018D2F1A7A6AEE00DDF07E /* NSStream+StreamsToHost.m in Sources */,
 				BF77AD2C1A6E47FF008CCFB9 /* ActionView.m in Sources */,
 				BF77ACEB1A6E4725008CCFB9 /* main.m in Sources */,
+				BFD050351A9F12350048355E /* UIWindow+YzdHUD.m in Sources */,
+				BFD050361A9F12350048355E /* YzdHUDBackgroundView.m in Sources */,
 				BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */,
+				BFD050391A9F12350048355E /* YzdHUDLabel.m in Sources */,
 				BF77AD2E1A6E47FF008CCFB9 /* PlayerBean.m in Sources */,
 				BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */,
 				BF77AD331A6E47FF008CCFB9 /* ServerListViewController.m in Sources */,

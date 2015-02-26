@@ -56,7 +56,7 @@
 
 @property (nonatomic, strong) NSMutableData *mdata;
 
-@property (nonatomic, weak) UIActivityIndicatorView* indicator;//状态指示器
+@property (nonatomic, strong) UIActivityIndicatorView* indicator;//状态指示器
 @property (nonatomic, assign) BOOL onGame;//判断游戏是否进行中
 @property (nonatomic, strong) UIButton *start;//开始游戏按钮
 

@@ -10,6 +10,7 @@
 #import "SPYFileUtil.h"
 #import "SPYConnection+Delegate.h"
 #import "PlayerBean.h"
+#import "UIWindow+YzdHUD.h"
 
 @implementation GameRoomView
 @synthesize subRoomView;
@@ -27,27 +28,6 @@
         [self.navigationController pushViewController:self.plvc animated:NO];
     }
     
-    if ([self.subRoomView.allPlayer count]<=1&&!self.asServer) {//注册过的才可以拉取房间信息
-        //初始化:
-        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        //设置显示样式,见UIActivityIndicatorViewStyle的定义
-        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        //设置显示位置
-        [self.indicator setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
-        //设置背景色
-        self.indicator.backgroundColor = [UIColor blackColor];
-        //设置背景透明
-        self.indicator.alpha = 0.5f;
-        //设置背景为圆角矩形
-        self.indicator.layer.cornerRadius = 6;
-        self.indicator.layer.masksToBounds = YES;
-        //将初始化好的indicator add到view中
-        [self.view addSubview:self.indicator];
-        [self.indicator setHidesWhenStopped:YES];
-        //开始显示Loading动画
-        [self.indicator startAnimating];
-    }
-    
     //开始按钮
     if (self.asServer&&self.start==nil) {
         self.start = [[UIButton alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2-50, kMAIN_SCREEN_HEIGHT-80, 100, 50)];
@@ -61,7 +41,6 @@
     }
     
     self.onGame = NO;
-//    [self.service startMonitoring];
     
     //异步获得词条
     [self performSelectorInBackground:@selector(initGameWord) withObject:nil];
@@ -107,10 +86,12 @@
     self.isRemoteInit = NO;
 }
 
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+}
 
 #pragma NetWorkingDelegate
 -(void)dismissViewController{//取消连接列表
-//    [self dismissModalViewControllerAnimated:NO];
     [self.navigationController popViewControllerAnimated:NO];
 }
 
@@ -140,10 +121,9 @@
     }
     [self.subRoomView.collectionView reloadData];
     [self updateOnlinePlayer];
-    if (!self.asServer&&[self.indicator isAnimating]) {
-        [self.indicator stopAnimating];
-        [self.indicator removeFromSuperview];
-        NSLog(@"stop...........is...........called............");
+    if (!self.asServer) {
+//        NSLog(@"stop...........is...........called............");
+        [self.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES];
     }
     if (self.asServer) {
         //向新注册用户写回当前在线用户数据
@@ -319,6 +299,9 @@
          didRemoveService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing{
     [self.plvc.servers removeObject:netService];
+    //如果取消的是选中的服务，则需要将客户端的状态指示器关闭
+    NSUInteger index = [self.plvc.servers indexOfObject:netService];
+    [self.plvc serverDidRemove:index];
     if ( moreServicesComing ) {
         return;
     }

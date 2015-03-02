@@ -86,13 +86,14 @@
     self.isRemoteInit = NO;
 }
 
-- (void) viewDidDisappear:(BOOL)animated{
+- (void) viewWillDisappear:(BOOL)animated{
     [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
 }
 
 #pragma NetWorkingDelegate
 -(void)dismissViewController{//取消连接列表
     [self.navigationController popViewControllerAnimated:NO];
+    [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
@@ -213,6 +214,7 @@
                 [self.connection closeConnection];
             }
         }
+        [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -339,6 +341,7 @@
                         self.remainingToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
                     }
                     if ([self.mdata length]>=self.remainingToRead) {//说明数据已经读取完毕
+                        NSLog(@"total read--->%d", self.remainingToRead);
                         uint8_t buf[1];
                         [self.mdata getBytes:buf range:NSMakeRange(4, 1)];
                         int oper = buf[0]&0xff;
@@ -511,15 +514,16 @@
 }
 
 -(void)clientLeave:(NSNumber*)index{
-    if (index&&self.asServer) {
+    if (index) {
         [self.subRoomView.allPlayer removeObjectAtIndex:[index integerValue]];
         [self.subRoomView.collectionView reloadData];
         [self updateOnlinePlayer];
         //向其余客户端发送消息
-        if([self.subRoomView.allPlayer count]>1){
-            for (int i=1; i<[self.subRoomView.allPlayer count]; i++) {
-                PlayerBean *bean = self.subRoomView.allPlayer[i];
-                SPYConnection *con = bean.connection;
+        if([self.subRoomView.allPlayer count]>1&&self.asServer){
+            [self.connections removeObjectAtIndex:[index integerValue]-1];//因为connections比allplayer少一个（不包含第一个自己的链接）
+            for (int i=0; i<[self.connections count]; i++) {
+                NSLog(@"%d-----------%d", (int)[self.subRoomView.allPlayer count], (int)[self.connections count]);
+                SPYConnection *con = self.connections[i];
                 if (con) {
                     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:index];
                     [con writeData:con.output WithData:data OperType:SYPClientLeavePush];

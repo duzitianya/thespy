@@ -50,12 +50,12 @@
 //点击相册中的图片或照相机照完后点击use后触发的方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
-    if (_settingsview.subview.nickName==nil||[_settingsview.subview.nickName length]==0) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
-        [alert show];
-        return ;
-    }
+//    if (_settingsview.subview.nickName==nil||[_settingsview.subview.userNickName length]==0) {
+//        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+//        [alert show];
+//        return ;
+//    }
     
     UIImage *img;
     if ([info objectForKey:UIImagePickerControllerEditedImage]) {
@@ -64,8 +64,8 @@
         img = [info objectForKey:UIImagePickerControllerOriginalImage];
     }
     
-    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
-//    img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
+//    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
+    img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     [[SPYFileUtil shareInstance] saveUserName:_settingsview.subview.nickName];
     

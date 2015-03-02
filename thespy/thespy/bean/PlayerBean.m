@@ -8,6 +8,7 @@
 
 #import "PlayerBean.h"
 
+#define UUID @"uuid"
 #define HEADER @"header"
 #define NAME @"name"
 #define DEVICE @"deviceName"
@@ -17,6 +18,7 @@
 #define INDEX @"index"
 
 @implementation PlayerBean
+@synthesize uuid;
 @synthesize img;
 @synthesize name;
 @synthesize deviceName;
@@ -26,9 +28,10 @@
 @synthesize connection;
 @synthesize index;
 
-+ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName {
++ (PlayerBean*) initWithData:(UIImage *)img Name:(NSString *)name DeviceName:(NSString*)deviceName BeanID:(NSString*)uuid{
     NSString *dname = [UIDevice currentDevice].name;
     PlayerBean *bean = [[PlayerBean alloc] init];
+    bean.uuid = uuid;
     bean.img = img;
     if (name==nil||[name length]==0) {
         name = dname;
@@ -43,6 +46,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:uuid forKey:UUID];
     [aCoder encodeObject:img forKey:HEADER];
     [aCoder encodeObject:name forKey:NAME];
     [aCoder encodeObject:deviceName forKey:DEVICE];
@@ -55,6 +59,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self=[super init];
     if (self!=nil) {
+        uuid = [[aDecoder decodeObjectForKey:UUID]copy];
         img = [[aDecoder decodeObjectForKey:HEADER]copy];
         name = [[aDecoder decodeObjectForKey:NAME]copy];
         deviceName = [[aDecoder decodeObjectForKey:DEVICE]copy];

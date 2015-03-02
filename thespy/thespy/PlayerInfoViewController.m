@@ -63,7 +63,8 @@
     //读取初始化数据
     NSString *name = [util getUserName];
     UIImage *headerData = [util getUserHeader];
-    self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name];
+    NSString *uuid = [[UIDevice currentDevice].identifierForVendor UUIDString];
+    self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name BeanID:uuid];
     
     [header initWithPlayerBean:self.mainPlayer Delegate:self];
     

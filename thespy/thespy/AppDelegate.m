@@ -33,6 +33,9 @@
     
 //    [NSThread sleepForTimeInterval:1];
     
+    
+//    NSLog(@"-=-=-=-=-=-=-=-= %@ =-=-=-=-=-=-=-=-", [[UIDevice currentDevice].identifierForVendor UUIDString]);
+    
     return YES;
 }
 
@@ -80,5 +83,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
+
 
 @end

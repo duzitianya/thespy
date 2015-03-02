@@ -33,7 +33,7 @@
                     <rect key="frame" x="238" y="122" width="51" height="31"/>
                 </switch>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlt-NT-EG4">
-                    <rect key="frame" x="118" y="174" width="84" height="30"/>
+                    <rect key="frame" x="130" y="174" width="60" height="30"/>
                     <state key="normal" title="设置完成">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -56,8 +56,8 @@
                     <color key="textColor" red="0.78780324835526316" green="0.54553865131578949" blue="0.54864823190789469" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BW8-dj-hZC">
-                    <rect key="frame" x="241" y="175" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BW8-dj-hZC">
+                    <rect key="frame" x="229" y="176" width="30" height="26"/>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <state key="normal" title="取消">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -71,13 +71,17 @@
             <constraints>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qvd-u8-dB0" secondAttribute="trailing" constant="33" id="4Ff-zZ-zZg"/>
                 <constraint firstItem="TSA-54-qTc" firstAttribute="top" secondItem="qvd-u8-dB0" secondAttribute="bottom" constant="22" id="9ib-pr-fjm"/>
+                <constraint firstAttribute="centerX" secondItem="hlt-NT-EG4" secondAttribute="centerX" id="Is1-aw-kWN"/>
                 <constraint firstItem="hlt-NT-EG4" firstAttribute="top" secondItem="Uv4-tp-e64" secondAttribute="bottom" constant="30" id="KKm-dO-SVQ"/>
                 <constraint firstAttribute="trailing" secondItem="hlt-NT-EG4" secondAttribute="trailing" constant="118" id="KSl-gS-4TZ"/>
                 <constraint firstItem="CbH-5V-fRi" firstAttribute="top" secondItem="Tl8-ae-Dur" secondAttribute="bottom" constant="30" id="Mxx-fu-sDz"/>
                 <constraint firstAttribute="trailing" secondItem="TSA-54-qTc" secondAttribute="trailing" constant="33" id="QE8-X6-eXv"/>
                 <constraint firstItem="hlt-NT-EG4" firstAttribute="leading" secondItem="fep-5Q-Lso" secondAttribute="leading" constant="118" id="UGs-hF-q2n"/>
                 <constraint firstItem="Uv4-tp-e64" firstAttribute="top" secondItem="TSA-54-qTc" secondAttribute="bottom" constant="25" id="icz-pY-0Xp"/>
+                <constraint firstItem="BW8-dj-hZC" firstAttribute="trailing" secondItem="hlt-NT-EG4" secondAttribute="trailing" id="mGk-cR-Siy"/>
                 <constraint firstItem="Tl8-ae-Dur" firstAttribute="leading" secondItem="fep-5Q-Lso" secondAttribute="leading" constant="29" id="mbZ-Fi-xtT"/>
+                <constraint firstItem="BW8-dj-hZC" firstAttribute="leading" secondItem="hlt-NT-EG4" secondAttribute="trailing" constant="39" id="nQi-lv-T2c"/>
+                <constraint firstItem="BW8-dj-hZC" firstAttribute="centerY" secondItem="hlt-NT-EG4" secondAttribute="centerY" id="oo7-bz-JwC"/>
                 <constraint firstItem="qvd-u8-dB0" firstAttribute="leading" secondItem="Tl8-ae-Dur" secondAttribute="trailing" constant="22" id="otv-hi-cyZ"/>
                 <constraint firstItem="CbH-5V-fRi" firstAttribute="leading" secondItem="fep-5Q-Lso" secondAttribute="leading" constant="61" id="qe9-Ot-xJr"/>
                 <constraint firstAttribute="trailing" secondItem="gdy-l8-sRw" secondAttribute="trailing" constant="33" id="rNU-QZ-tAZ"/>
@@ -88,6 +92,13 @@
                 <constraint firstItem="Uv4-tp-e64" firstAttribute="leading" secondItem="fep-5Q-Lso" secondAttribute="leading" constant="29" id="yVv-of-1t0"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="KSl-gS-4TZ"/>
+                    <exclude reference="UGs-hF-q2n"/>
+                    <exclude reference="mGk-cR-Siy"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="confirmButton" destination="hlt-NT-EG4" id="Dvj-Dd-mWP"/>
                 <outlet property="deviceLabel" destination="qvd-u8-dB0" id="NUh-fK-I9Y"/>

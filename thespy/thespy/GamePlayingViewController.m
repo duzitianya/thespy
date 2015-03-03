@@ -43,13 +43,23 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:@"gameover" object:nil];
     
     [self.roleLabel setHidden:YES];
-    
+
+    if (self.allPlayer) {
+        for (int i=0; i<[self.allPlayer count]; i++) {
+            PlayerBean *bean = self.allPlayer[i];
+            bean.status = BLE_HIDDEN;
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     if(self.alert){
         [self.alert dismissWithClickedButtonIndex:0 animated:NO];
     }
+    //通知服务器，游戏界面已经退出，就绪
+    NSNumber *num = [[NSNumber alloc]initWithInteger:self.index];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+    [self.bean.connection writeData:self.bean.connection.output WithData:data OperType:SPYStatusReady];
 }
 
 -(void)gameOver{

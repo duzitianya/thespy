@@ -15,6 +15,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *playerName;
 @property (strong, nonatomic) IBOutlet UILabel *countLabel;
 @property (strong, nonatomic) IBOutlet UILabel *roleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *statusLable;
+
+@property (assign, nonatomic) PlayerOnlineStatus status;
 
 - (void) setupWithData:(PlayerBean*)player;
 

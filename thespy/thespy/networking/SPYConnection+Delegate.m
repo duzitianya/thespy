@@ -88,7 +88,7 @@
             break;
         }
         case SPYGameAgainPush:{
-            [self.netDelegate gameAgain];
+            [self.netDelegate gameOver];
             break;
         }
         case SYPClientLeavePush:{
@@ -99,6 +99,11 @@
         case SYPConfirmPlayerList:{
             NSNumber *allCount = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             [self.netDelegate confirmPlayerNumber:allCount];
+            break;
+        }
+        case SPYStatusReady:{
+            NSNumber *num = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.netDelegate statusReady:num];
             break;
         }
         default:

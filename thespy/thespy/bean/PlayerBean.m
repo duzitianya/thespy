@@ -41,7 +41,7 @@
         deviceName = dname;
     }
     bean.deviceName = deviceName;
-    bean.status = BLE_OFFLINE;
+    bean.status = BLE_CONNECTTING;
     return bean;
 }
 

@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSInteger, PlayerOnlineStatus){
     BLE_ONLINE = 0,//在线
     BLE_OFFLINE = 1,//离线
-    BLE_CONNECTTING = 2//正在链接
+    BLE_CONNECTTING = 2,//正在链接
+    BLE_HIDDEN = 3//隐藏状态
 };
 
 //游戏角色定义

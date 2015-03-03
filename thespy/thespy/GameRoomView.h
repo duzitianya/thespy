@@ -58,7 +58,9 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView* indicator;//状态指示器
 @property (nonatomic, assign) BOOL onGame;//判断游戏是否进行中
+@property (nonatomic, assign) BOOL clientAlive;//
 @property (nonatomic, strong) UIButton *start;//开始游戏按钮
+@property (nonatomic, assign) NSInteger readyCount;//就绪状态客户端数
 
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 

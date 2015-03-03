@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, SPYDelegate) {
     SPYVictoryPush = 7,//游戏胜利
     SPYGameAgainPush = 8,//再来一局
     SYPClientLeavePush = 9,//客户端离线
-    SYPConfirmPlayerList = 10//验证拉取用户是否正确
+    SYPConfirmPlayerList = 10,//验证拉取用户是否正确
+    SPYStatusReady = 11//状态变为就绪
 };
 
 @interface SPYConnection (Delegate)

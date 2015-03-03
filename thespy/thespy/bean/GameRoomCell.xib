@@ -37,6 +37,13 @@
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="就绪" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVA-gC-GX2">
+                    <rect key="frame" x="57" y="-10" width="30" height="17"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="0.91879111842105265" blue="0.93562397203947367" alpha="0.87" colorSpace="calibratedRGB"/>
             <constraints>
@@ -49,8 +56,9 @@
                 <outlet property="playerHeader" destination="WkV-XJ-5bG" id="OUE-b3-2hB"/>
                 <outlet property="playerName" destination="WmI-Nb-2Cg" id="K48-Zx-04J"/>
                 <outlet property="roleLabel" destination="62p-UV-bFQ" id="zof-2n-ksc"/>
+                <outlet property="statusLable" destination="oVA-gC-GX2" id="Aek-k1-z98"/>
             </connections>
-            <point key="canvasLocation" x="394" y="211"/>
+            <point key="canvasLocation" x="442" y="222"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

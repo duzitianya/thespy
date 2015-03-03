@@ -22,6 +22,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     
     if (!self.asServer&&!self.isRemoteInit) {//如果是客户端，则弹出连接列表
+        self.clientAlive = NO;
         self.plvc = [[ServerListViewController alloc] init];
         self.plvc.title = @"选择要加入的游戏";
         self.plvc.delegate = self;
@@ -41,9 +42,18 @@
     }
     
     self.onGame = NO;
+    self.readyCount = 1;
     
     //异步获得词条
     [self performSelectorInBackground:@selector(initGameWord) withObject:nil];
+    
+    //将用户置为连接中状态
+    if (self.subRoomView.allPlayer) {
+        for (int i=1; i<[self.subRoomView.allPlayer count]; i++) {
+            PlayerBean *bean = self.subRoomView.allPlayer[i];
+            bean.status = BLE_CONNECTTING;
+        }
+    }
 }
 
 - (void)initGameWord{
@@ -93,6 +103,7 @@
 #pragma NetWorkingDelegate
 -(void)dismissViewController{//取消连接列表
     [self.navigationController popViewControllerAnimated:NO];
+    self.clientAlive = NO;
     [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
 }
 
@@ -114,6 +125,11 @@
             NSInteger index = [self.subRoomView.allPlayer count];
             if ([list[i] isKindOfClass:[PlayerBean class]]) {
                 PlayerBean *bean = (PlayerBean*)list[i];
+                if (self.asServer) {
+                    bean.status = BLE_CONNECTTING;
+                }else{
+                    bean.status = BLE_HIDDEN;
+                }
                 NSNumber *num = [[NSNumber alloc]initWithInteger:(index+i)];
                 [bean setIndex:num];
                 [self.subRoomView.allPlayer addObject:bean];
@@ -123,8 +139,11 @@
     [self.subRoomView.collectionView reloadData];
     [self updateOnlinePlayer];
     if (!self.asServer) {
-//        NSLog(@"stop...........is...........called............");
         [self.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES];
+        
+        //新启动后台线程验证
+        //    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
+        [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
     }
     if (self.asServer) {
         //向新注册用户写回当前在线用户数据
@@ -180,7 +199,7 @@
 
 - (void) updateOnlinePlayer{
     self.gameRoomHeader.currentLabel.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
-    if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum) {//判断是否满足开始条件
+    if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum&&self.readyCount==[self.subRoomView.allPlayer count]) {//判断是否满足开始条件
         [self.start setHidden:NO];
     }else{
         [self.start setHidden:YES];
@@ -215,6 +234,9 @@
             }
         }
         [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
+        if(self.clientAlive){
+            [self gameOver];
+        }
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -403,9 +425,12 @@
     
     self.mainPlayer.index = index;
     
-    //新启动后台线程验证
-//    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
-    [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
+    //向服务器发送更新状态请求
+    if (self.asServer==NO) {
+        NSNumber *num = self.mainPlayer.index;
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+        [self.connection writeData:self.connection.output WithData:data OperType:SPYStatusReady];
+    }
 }
 
 //判断从服务器拉取的用户列表是否正确
@@ -483,12 +508,10 @@
         newRoles = nil;
         
         self.onGame = YES;
-//        [self.service stopMonitoring];]
     }
 }
 
 -(void)startRemoteGame:(PlayerBean*)bean{
-    
     GamePlayingViewController *gpvc = [[GamePlayingViewController alloc] initWithNibName:@"GamePlayingViewController" bundle:[NSBundle mainBundle]];
     NSNumber *totalNum = [[NSNumber alloc]initWithInteger:self.totalNum];
     NSNumber *citizenNum = [[NSNumber alloc]initWithInteger:self.citizenNum];
@@ -496,8 +519,7 @@
     NSNumber *whiteNum = [[NSNumber alloc]initWithInteger:self.whiteBoardNum];
     NSArray *arr = [NSArray arrayWithObjects:totalNum, citizenNum, spyNum, whiteNum, nil];
     [gpvc setUpFrame:bean WithOthers:self.subRoomView.allPlayer WithGameInfo:arr AsServer:self.asServer];
-//    gpvc.superGameView = self;
-    
+    self.clientAlive = YES;
     [self presentViewController:gpvc animated:YES completion:nil];
 }
 
@@ -509,8 +531,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"victory" object:type];
 }
 
--(void)gameAgain{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameagain" object:nil];
+-(void)gameOver{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameover" object:nil];
 }
 
 -(void)clientLeave:(NSNumber*)index{
@@ -530,6 +552,16 @@
                 }
             }
         }
+    }
+}
+
+- (void)statusReady:(NSNumber *)index{
+    if (index) {
+        PlayerBean *bean = [self.subRoomView.allPlayer objectAtIndex:[index integerValue]];
+        bean.status = BLE_ONLINE;
+        [self.subRoomView.collectionView reloadData];
+        self.readyCount++;
+        [self updateOnlinePlayer];
     }
 }
 

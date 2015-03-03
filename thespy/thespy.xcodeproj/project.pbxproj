@@ -275,6 +275,7 @@
 				BF77AD421A6F935E008CCFB9 /* GameResult.h */,
 				BF77AD431A6F935E008CCFB9 /* GameResult.m */,
 				BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */,
+				BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */,
 				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
 				BF341FCF1A7890AA00E5C0FC /* SettingsBoardView.h */,
 				BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */,
@@ -289,7 +290,6 @@
 				BF341FD21A78C28A00E5C0FC /* UIImage+category.h */,
 				BF341FD31A78C28A00E5C0FC /* UIImage+category.m */,
 				BF6D25281A7B760C001F698A /* GameRoomHeader.h */,
-				BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */,
 				BF6D25291A7B760C001F698A /* GameRoomHeader.m */,
 				BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */,
 			);

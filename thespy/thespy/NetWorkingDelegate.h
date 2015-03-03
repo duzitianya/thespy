@@ -19,10 +19,11 @@
 -(void)startRemoteGame:(PlayerBean*)bean;
 -(void)killPlayerWithArr:(NSArray*)arr;
 -(void)victory:(NSNumber*)type;
--(void)gameAgain;
+-(void)gameOver;
 -(void)clientLeave:(NSNumber*)index;
 -(void)confirmPlayerNumber:(NSNumber*)allCount;
 -(void)validatePlayerList:(NSMutableArray*)list Number:(NSNumber*)number;
+-(void)statusReady:(NSNumber*)index;
 
 @end
 

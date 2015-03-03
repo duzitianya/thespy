@@ -40,13 +40,19 @@
     self.remoteData = [[NSArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killPlayerRemote:) name:@"killPlayer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(victory:) name:@"victory" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameAgain) name:@"gameagain" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:@"gameover" object:nil];
     
     [self.roleLabel setHidden:YES];
     
 }
 
--(void)gameAgain{
+- (void)viewWillDisappear:(BOOL)animated{
+    if(self.alert){
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+}
+
+-(void)gameOver{
     [self.alert dismissWithClickedButtonIndex:0 animated:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -246,10 +252,7 @@
             [self.roleLabel setHidden:NO];
             [self setRoleAppear:self.index WithRole:self.bean.role];
         }
-        if (tag==1002&&self.isServer) {//如果是服务器，再弹出后续选项
-            [self createAlertView:@"您要怎样继续？" CancelTxt:@"再来一局" OtherTxt:@"不玩了" Tag:1003];
-        }
-        if (tag==1003){//再来一局
+        if (tag==1002&&self.isServer) {//如果是服务器，点击确定后从新开始游戏
             [self dismissViewControllerAnimated:YES completion:nil];
             if (self.allPlayer) {
                 for (int i=0; i<[self.allPlayer count]; i++) {
@@ -259,9 +262,6 @@
                 }
             }
         }
-    }else if (buttonIndex==1){//主机不玩了
-        
-//        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

@@ -24,6 +24,32 @@
             self.playerName.text = name;
         }
     }
+    
+    self.status = player.status;
+    switch (self.status) {
+        case BLE_ONLINE:{//在线
+            self.statusLable.backgroundColor = [UIColor greenColor];
+            self.statusLable.text = @"就绪";
+            break;
+        }
+        case BLE_OFFLINE:{//离线
+            self.statusLable.backgroundColor = [UIColor grayColor];
+            self.statusLable.text = @"离线";
+            break;
+        }
+        case BLE_CONNECTTING:{//正在链接
+            self.statusLable.backgroundColor = [UIColor yellowColor];
+            self.statusLable.text = @"等待";
+            break;
+        }
+        case BLE_HIDDEN:{//隐藏
+            self.statusLable.hidden = YES;
+            break;
+        }
+        default:
+            
+            break;
+    }
 }
 
 - (void)awakeFromNib {
@@ -39,6 +65,9 @@
     self.roleLabel.layer.borderColor = [[UIColor redColor]CGColor];
     self.roleLabel.transform = CGAffineTransformMakeRotation(M_1_PI*-1);
     [self.roleLabel setHidden:YES];
+    
+    self.statusLable.layer.cornerRadius = 4;
+    self.statusLable.layer.masksToBounds = YES;
 }
 
 @end

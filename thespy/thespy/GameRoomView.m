@@ -351,6 +351,9 @@
         case NSStreamEventHasBytesAvailable:{//读取数据
             if ([aStream isKindOfClass:[NSInputStream class]]){
                 NSInputStream *in = (NSInputStream*)aStream;
+                
+                NSLog(@"#################%@##################", [in description]);
+                
                 uint8_t buf[32768];
                 NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
                 if (readLength>0) {

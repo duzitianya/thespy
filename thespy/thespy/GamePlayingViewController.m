@@ -170,7 +170,7 @@
             [self.scrollView addSubview:gameRoomCell];
             y += gameRoomCell.frame.size.height + 10;
         }
-        self.scrollView.contentInset = UIEdgeInsetsMake(10, 0, -10, 0);
+        self.scrollView.contentInset = UIEdgeInsetsMake(10, 0, self.scrollView.frame.size.height+self.scrollView.frame.origin.y-y, 0);
         [self.view insertSubview:self.scrollView aboveSubview:self.allPlayersView];
     }
     

@@ -68,6 +68,7 @@
     
     self.statusLable.layer.cornerRadius = 4;
     self.statusLable.layer.masksToBounds = YES;
+    [self.statusLable setHidden:YES];
 }
 
 @end

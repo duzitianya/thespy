@@ -48,12 +48,12 @@
     [self performSelectorInBackground:@selector(initGameWord) withObject:nil];
     
     //将用户置为连接中状态
-    if (self.subRoomView.allPlayer) {
-        for (int i=1; i<[self.subRoomView.allPlayer count]; i++) {
-            PlayerBean *bean = self.subRoomView.allPlayer[i];
-            bean.status = BLE_CONNECTTING;
-        }
-    }
+//    if (self.subRoomView.allPlayer) {
+//        for (int i=1; i<[self.subRoomView.allPlayer count]; i++) {
+//            PlayerBean *bean = self.subRoomView.allPlayer[i];
+//            bean.status = BLE_CONNECTTING;
+//        }
+//    }
 }
 
 - (void)initGameWord{
@@ -91,8 +91,6 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
-//    self.remainingToRead = -2;
-//    self.mdata = [[NSMutableData alloc]init];
     self.isRemoteInit = NO;
     self.readMap = [[NSMutableDictionary alloc]initWithCapacity:5];
 }
@@ -126,11 +124,11 @@
             NSInteger index = [self.subRoomView.allPlayer count];
             if ([list[i] isKindOfClass:[PlayerBean class]]) {
                 PlayerBean *bean = (PlayerBean*)list[i];
-                if (self.asServer) {
-                    bean.status = BLE_CONNECTTING;
-                }else{
-                    bean.status = BLE_HIDDEN;
-                }
+//                if (self.asServer) {
+//                    bean.status = BLE_CONNECTTING;
+//                }else{
+//                    bean.status = BLE_HIDDEN;
+//                }
                 NSNumber *num = [[NSNumber alloc]initWithInteger:(index+i)];
                 [bean setIndex:num];
                 [self.subRoomView.allPlayer addObject:bean];
@@ -144,7 +142,7 @@
         
         //新启动后台线程验证
         //    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
-        [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
+//        [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
     }
     if (self.asServer) {
         //向新注册用户写回当前在线用户数据
@@ -200,7 +198,7 @@
 
 - (void) updateOnlinePlayer{
     self.gameRoomHeader.currentLabel.text = [NSString stringWithFormat:@"%d", (int)[self.subRoomView.allPlayer count]];
-    if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum&&self.readyCount==[self.subRoomView.allPlayer count]) {//判断是否满足开始条件
+    if (self.asServer&&[self.subRoomView.allPlayer count]==self.totalNum/*&&self.readyCount==[self.subRoomView.allPlayer count]*/) {//判断是否满足开始条件
         [self.start setHidden:NO];
     }else{
         [self.start setHidden:YES];
@@ -286,8 +284,6 @@
     [self.service setDelegate:self];
     [self.service scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.service publishWithOptions:NSNetServiceListenForConnections];
-    
-//    [self.service ]
 }
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
@@ -352,63 +348,66 @@
         case NSStreamEventHasBytesAvailable:{//读取数据
             if ([aStream isKindOfClass:[NSInputStream class]]){
                 NSInputStream *in = (NSInputStream*)aStream;
-                NSString *key = [in description];
-                NSMutableArray *mreadarr = [self.readMap objectForKey:key];
-                if (mreadarr==nil){//说明第一次连接
-                    NSNumber *num = [[NSNumber alloc]initWithInteger:-1];
-                    mreadarr = [[NSMutableArray alloc]initWithObjects:num, [[NSMutableData alloc]init], nil];
-                    [self.readMap setObject:mreadarr forKey:key];
-                }
-                
-                uint8_t buf[32768];
-                NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
-                if (readLength>0) {
-                    NSInteger remainToRead = [mreadarr[0] integerValue];
-                    NSMutableData *mdata = mreadarr[1];
-                    NSData *tmp = [NSData dataWithBytes:buf length:readLength];
-                    [mdata appendData:tmp];
-                    
-                    if ([mdata length]>4&&remainToRead<=0) {//当读取的数据大于4字节后，读取数据包长度数据
-                        uint8_t buf[4];
-                        [mdata getBytes:buf range:NSMakeRange(0, 4)];
-                        remainToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
-                        
-                        NSNumber *num = [[NSNumber alloc]initWithInteger:remainToRead];
-                        [mreadarr replaceObjectAtIndex:0 withObject:num];
-                    }
-                    if ([mdata length]>=remainToRead) {//说明数据已经读取完毕
-                        NSLog(@"total read--->%d", (int)remainToRead);
-                        uint8_t buf[1];
-                        [mdata getBytes:buf range:NSMakeRange(4, 1)];
-                        int oper = buf[0]&0xff;
-                        NSData *data;
-                        if ([mdata length]>5) {
-                            data = [mdata subdataWithRange:NSMakeRange(5, remainToRead-5)];
-                        }
-                        [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
-                        
-                        [self.readMap removeObjectForKey:key];
-                    }
-                }
+                [self performSelectorInBackground:@selector(readRemoteDataWithStream:) withObject:in];
             }
             break;
         }
         case NSStreamEventErrorOccurred:{
             //出错的时候
-//            NSError *error = [aStream streamError];
-//            if (error != NULL){
-//                UIAlertView *errorAlert = [[UIAlertView alloc]
-//                                           initWithTitle: [error localizedDescription]
-//                                           message: [error localizedFailureReason]
-//                                           delegate:nil
-//                                           cancelButtonTitle:@"OK"
-//                                           otherButtonTitles:nil];
-//                [errorAlert show];
-//            }
+            NSError *error = [aStream streamError];
+            if (error != NULL){
+                NSLog(@"##==%@", [error localizedDescription]);
+                NSLog(@"##==%@", [error localizedFailureReason]);
+                NSLog(@"##==%@", [error localizedRecoveryOptions]);
+                NSLog(@"##==%@", [error localizedRecoverySuggestion]);
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+            [alert show];
             break;
         }
         default:
             break;
+    }
+}
+
+-(void)readRemoteDataWithStream:(NSInputStream *)in{
+    NSString *key = [in description];
+    NSMutableArray *mreadarr = [self.readMap objectForKey:key];
+    if (mreadarr==nil){//说明第一次连接
+        NSNumber *num = [[NSNumber alloc]initWithInteger:-1];
+        mreadarr = [[NSMutableArray alloc]initWithObjects:num, [[NSMutableData alloc]init], nil];
+        [self.readMap setObject:mreadarr forKey:key];
+    }
+    
+    uint8_t buf[32768];
+    NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
+    if (readLength>0) {
+        NSInteger remainToRead = [mreadarr[0] integerValue];
+        NSMutableData *mdata = mreadarr[1];
+        NSData *tmp = [NSData dataWithBytes:buf length:readLength];
+        [mdata appendData:tmp];
+        
+        if ([mdata length]>4&&remainToRead<=0) {//当读取的数据大于4字节后，读取数据包长度数据
+            uint8_t buf[4];
+            [mdata getBytes:buf range:NSMakeRange(0, 4)];
+            remainToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
+            
+            NSNumber *num = [[NSNumber alloc]initWithInteger:remainToRead];
+            [mreadarr replaceObjectAtIndex:0 withObject:num];
+        }
+        if ([mdata length]>=remainToRead) {//说明数据已经读取完毕
+            NSLog(@"total read--->%d", (int)remainToRead);
+            uint8_t buf[1];
+            [mdata getBytes:buf range:NSMakeRange(4, 1)];
+            int oper = buf[0]&0xff;
+            NSData *data;
+            if ([mdata length]>5) {
+                data = [mdata subdataWithRange:NSMakeRange(5, remainToRead-5)];
+            }
+            [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
+            
+            [self.readMap removeObjectForKey:[in description]];
+        }
     }
 }
 

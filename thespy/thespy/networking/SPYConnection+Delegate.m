@@ -101,11 +101,11 @@
             [self.netDelegate confirmPlayerNumber:allCount];
             break;
         }
-        case SPYStatusReady:{
+        /*case SPYStatusReady:{
             NSNumber *num = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             [self.netDelegate statusReady:num];
             break;
-        }
+        }*/
         default:
             break;
     }

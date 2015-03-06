@@ -91,9 +91,10 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
-    self.remainingToRead = -2;
-    self.mdata = [[NSMutableData alloc]init];
+//    self.remainingToRead = -2;
+//    self.mdata = [[NSMutableData alloc]init];
     self.isRemoteInit = NO;
+    self.readMap = [[NSMutableDictionary alloc]initWithCapacity:5];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -351,40 +352,42 @@
         case NSStreamEventHasBytesAvailable:{//读取数据
             if ([aStream isKindOfClass:[NSInputStream class]]){
                 NSInputStream *in = (NSInputStream*)aStream;
-                
-                NSLog(@"#################%@##################", [in description]);
+                NSString *key = [in description];
+                NSMutableArray *mreadarr = [self.readMap objectForKey:key];
+                if (mreadarr==nil){//说明第一次连接
+                    NSNumber *num = [[NSNumber alloc]initWithInteger:-1];
+                    mreadarr = [[NSMutableArray alloc]initWithObjects:num, [[NSMutableData alloc]init], nil];
+                    [self.readMap setObject:mreadarr forKey:key];
+                }
                 
                 uint8_t buf[32768];
                 NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
                 if (readLength>0) {
+                    NSInteger remainToRead = [mreadarr[0] integerValue];
+                    NSMutableData *mdata = mreadarr[1];
                     NSData *tmp = [NSData dataWithBytes:buf length:readLength];
-                    [self.mdata appendData:tmp];
+                    [mdata appendData:tmp];
                     
-                    if ([self.mdata length]>4&&self.remainingToRead<=0) {//当读取的数据大于4字节后，读取数据包长度数据
+                    if ([mdata length]>4&&remainToRead<=0) {//当读取的数据大于4字节后，读取数据包长度数据
                         uint8_t buf[4];
-                        [self.mdata getBytes:buf range:NSMakeRange(0, 4)];
-                        self.remainingToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
+                        [mdata getBytes:buf range:NSMakeRange(0, 4)];
+                        remainToRead = ((buf[0]<<24)&0xff000000)+((buf[1]<<16)&0xff0000)+((buf[2]<<8)&0xff00)+(buf[3] & 0xff);
+                        
+                        NSNumber *num = [[NSNumber alloc]initWithInteger:remainToRead];
+                        [mreadarr replaceObjectAtIndex:0 withObject:num];
                     }
-                    if ([self.mdata length]>=self.remainingToRead) {//说明数据已经读取完毕
-                        NSLog(@"total read--->%d", self.remainingToRead);
+                    if ([mdata length]>=remainToRead) {//说明数据已经读取完毕
+                        NSLog(@"total read--->%d", (int)remainToRead);
                         uint8_t buf[1];
-                        [self.mdata getBytes:buf range:NSMakeRange(4, 1)];
+                        [mdata getBytes:buf range:NSMakeRange(4, 1)];
                         int oper = buf[0]&0xff;
                         NSData *data;
-                        if ([self.mdata length]>5) {
-                            data = [self.mdata subdataWithRange:NSMakeRange(5, self.remainingToRead-5)];
+                        if ([mdata length]>5) {
+                            data = [mdata subdataWithRange:NSMakeRange(5, remainToRead-5)];
                         }
                         [[SPYConnection alloc]operation:oper WithData:data Delegate:self];
                         
-                        if (self.remainingToRead>[self.mdata length]) {
-                            NSData *subs = [self.mdata subdataWithRange:NSMakeRange(self.remainingToRead-1, [self.mdata length]-self.remainingToRead)];
-                            if ([subs length]>0) {
-                                self.mdata = [NSMutableData dataWithData:subs];
-                            }
-                        }else{
-                            self.mdata = [[NSMutableData alloc]init];
-                        }
-                        self.remainingToRead = 0;
+                        [self.readMap removeObjectForKey:key];
                     }
                 }
             }

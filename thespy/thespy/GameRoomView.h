@@ -52,9 +52,10 @@
 @property (nonatomic, assign) int streamOpenCount;
 @property (nonatomic, assign) BOOL isRemoteInit;//是否进行过服务器注册
 
-@property (nonatomic, assign) int remainingToRead;//网络传输的流大小
+//@property (nonatomic, assign) int remainingToRead;//网络传输的流大小
+@property (nonatomic, strong) NSMutableDictionary *readMap;//存储多线程下，每个客户端的已读数据
 
-@property (nonatomic, strong) NSMutableData *mdata;
+//@property (nonatomic, strong) NSMutableData *mdata;
 
 @property (nonatomic, strong) UIActivityIndicatorView* indicator;//状态指示器
 @property (nonatomic, assign) BOOL onGame;//判断游戏是否进行中

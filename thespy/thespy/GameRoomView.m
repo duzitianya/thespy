@@ -107,67 +107,69 @@
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
-    if (self.asServer&&(self.onGame||[self.subRoomView.allPlayer count]==self.totalNum)) {//如果服务器端当前正在游戏中,向客户端写回nil
-        SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
-        [conn writeData:conn.output WithData:nil OperType:SPYGameRoomInfoPush];
-        [self.connections removeLastObject];
-        return;
-    }
-    if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-        alert.delegate = self;
-        [alert setTag:101];
-        [alert show];
-    }
-    if (list) {
-        for (int i=0; i<[list count]; i++) {
-            NSInteger index = [self.subRoomView.allPlayer count];
-            if ([list[i] isKindOfClass:[PlayerBean class]]) {
-                PlayerBean *bean = (PlayerBean*)list[i];
-//                if (self.asServer) {
-//                    bean.status = BLE_CONNECTTING;
-//                }else{
-//                    bean.status = BLE_HIDDEN;
-//                }
-                NSNumber *num = [[NSNumber alloc]initWithInteger:(index+i)];
-                [bean setIndex:num];
-                [self.subRoomView.allPlayer addObject:bean];
+    @synchronized(self){
+        if (self.asServer&&(self.onGame||[self.subRoomView.allPlayer count]==self.totalNum)) {//如果服务器端当前正在游戏中,向客户端写回nil
+            SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+            [conn writeData:conn.output WithData:nil OperType:SPYGameRoomInfoPush];
+            [self.connections removeLastObject];
+            return;
+        }
+        if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+            alert.delegate = self;
+            [alert setTag:101];
+            [alert show];
+        }
+        if (list) {
+            for (int i=0; i<[list count]; i++) {
+                NSInteger index = [self.subRoomView.allPlayer count];
+                if ([list[i] isKindOfClass:[PlayerBean class]]) {
+                    PlayerBean *bean = (PlayerBean*)list[i];
+    //                if (self.asServer) {
+    //                    bean.status = BLE_CONNECTTING;
+    //                }else{
+    //                    bean.status = BLE_HIDDEN;
+    //                }
+                    NSNumber *num = [[NSNumber alloc]initWithInteger:(index+i)];
+                    [bean setIndex:num];
+                    [self.subRoomView.allPlayer addObject:bean];
+                }
             }
         }
-    }
-    [self.subRoomView.collectionView reloadData];
-    [self updateOnlinePlayer];
-    if (!self.asServer) {
-        [self.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES];
-        
-        //新启动后台线程验证
-        //    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
-//        [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
-    }
-    if (self.asServer) {
-        //向新注册用户写回当前在线用户数据
-        //房间数据
-        NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
-        NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
-        NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
-        NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
-        NSNumber *currentIndex = [[NSNumber alloc]initWithInteger:[self.subRoomView.allPlayer count]-1];
-        NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, currentIndex, nil];
-        //当前在线用户
-        NSMutableArray *arr = self.subRoomView.allPlayer;
-        
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:roomarr, @"roomarr", arr, @"players", nil];
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
-        SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
-        [conn writeData:conn.output WithData:data OperType:SPYGameRoomInfoPush];
-        
-        //向其他已连接客户端写出新用户数据
-        NSMutableArray *others = self.connections;
-        if (others&&[others count]>1) {
-            for (int i=0; i<[others count]-1; i++) {
-                SPYConnection *con = (SPYConnection*)others[i];
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[list firstObject]];
-                [con writeData:con.output WithData:data OperType:SPYNewPlayerPush];
+        [self.subRoomView.collectionView reloadData];
+        [self updateOnlinePlayer];
+        if (!self.asServer) {
+            [self.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES];
+            
+            //新启动后台线程验证
+            //    NSThread *backValidate = [[NSThread alloc]initWithTarget:self selector:@selector(validateRemoteList) object:nil];
+    //        [self performSelectorInBackground:@selector(validateRemoteList) withObject:nil];
+        }
+        if (self.asServer) {
+            //向新注册用户写回当前在线用户数据
+            //房间数据
+            NSString *total = [NSString stringWithFormat:@"%d", (int)self.totalNum];
+            NSString *citizen = [NSString stringWithFormat:@"%d", (int)self.citizenNum];
+            NSString *spy = [NSString stringWithFormat:@"%d", (int)self.spyNum];
+            NSString *white = [NSString stringWithFormat:@"%d", (int)self.whiteBoardNum];
+            NSNumber *currentIndex = [[NSNumber alloc]initWithInteger:[self.subRoomView.allPlayer count]-1];
+            NSArray *roomarr = [NSArray arrayWithObjects:total, citizen, spy, white, currentIndex, nil];
+            //当前在线用户
+            NSMutableArray *arr = self.subRoomView.allPlayer;
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:roomarr, @"roomarr", arr, @"players", nil];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
+            SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+            [conn writeData:conn.output WithData:data OperType:SPYGameRoomInfoPush];
+            
+            //向其他已连接客户端写出新用户数据
+            NSMutableArray *others = self.connections;
+            if (others&&[others count]>1) {
+                for (int i=0; i<[others count]-1; i++) {
+                    SPYConnection *con = (SPYConnection*)others[i];
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[list firstObject]];
+                    [con writeData:con.output WithData:data OperType:SPYNewPlayerPush];
+                }
             }
         }
     }
@@ -349,6 +351,7 @@
             if ([aStream isKindOfClass:[NSInputStream class]]){
                 NSInputStream *in = (NSInputStream*)aStream;
                 [self performSelectorInBackground:@selector(readRemoteDataWithStream:) withObject:in];
+//                [self readRemoteDataWithStream:in];
             }
             break;
         }
@@ -361,8 +364,11 @@
                 NSLog(@"##==%@", [error localizedRecoveryOptions]);
                 NSLog(@"##==%@", [error localizedRecoverySuggestion]);
             }
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-            [alert show];
+            if(self.asServer==NO&&self.isRemoteInit){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                [alert show];
+                self.isRemoteInit = NO;
+            }
             break;
         }
         default:

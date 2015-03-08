@@ -17,6 +17,13 @@
 
 -(void)dealloc{
     [self closeService];
+    if (!self.asServer) {
+        [self.connection closeConnection];
+        self.connection = nil;
+        self.clientAlive = NO;
+        self.streamOpenCount = 0;
+        self.isRemoteInit = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -91,6 +98,7 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
+    self.tempconns = [[NSMutableArray alloc]initWithCapacity:5];
     self.isRemoteInit = NO;
     self.readMap = [[NSMutableDictionary alloc]initWithCapacity:5];
 }
@@ -107,11 +115,11 @@
 }
 
 - (void) reloadClientListTable:(NSArray*)list{//刷新用户列表
-    @synchronized(self){
+//    @synchronized(self){
         if (self.asServer&&(self.onGame||[self.subRoomView.allPlayer count]==self.totalNum)) {//如果服务器端当前正在游戏中,向客户端写回nil
-            SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+            SPYConnection *conn = [self.connections lastObject];
             [conn writeData:conn.output WithData:nil OperType:SPYGameRoomInfoPush];
-            [self.connections removeLastObject];
+            [self.connections removeObject:conn];
             return;
         }
         if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
@@ -121,6 +129,7 @@
             [alert show];
         }
         if (list) {
+            NSLog(@"recive--->%d<----Object", (int)[list count]);
             for (int i=0; i<[list count]; i++) {
                 NSInteger index = [self.subRoomView.allPlayer count];
                 if ([list[i] isKindOfClass:[PlayerBean class]]) {
@@ -157,22 +166,28 @@
             //当前在线用户
             NSMutableArray *arr = self.subRoomView.allPlayer;
             
+            NSLog(@"From server--->%d<----Object", (int)[arr count]);
+            
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:roomarr, @"roomarr", arr, @"players", nil];
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
-            SPYConnection *conn = ((SPYConnection*)[self.connections lastObject]);
+            SPYConnection *conn = [self.connections lastObject];
             [conn writeData:conn.output WithData:data OperType:SPYGameRoomInfoPush];
             
             //向其他已连接客户端写出新用户数据
             NSMutableArray *others = self.connections;
-            if (others&&[others count]>1) {
+            if (others&&[others count]>1&&NO) {
+                NSLog(@"others count--->%d", (int)[others count]);
                 for (int i=0; i<[others count]-1; i++) {
                     SPYConnection *con = (SPYConnection*)others[i];
+                    if (con==conn) {
+                        continue;
+                    }
                     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[list firstObject]];
                     [con writeData:con.output WithData:data OperType:SPYNewPlayerPush];
                 }
             }
         }
-    }
+//    }
 
 }
 
@@ -242,10 +257,6 @@
     }
 }
 
--(void)addSPYConnection:(SPYConnection *)conn{
-    [self.connections addObject:conn];
-}
-
 - (void) closeService{
     if (self.asServer) {
         NSMutableArray *conns = self.connections;
@@ -275,7 +286,11 @@
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
-        [self.connections addObject:connection];
+        NSLog(@"Accept connections--->%d, %d", (int)[inputStream hasBytesAvailable], (int)[outputStream hasSpaceAvailable]);
+        if ([self.tempconns count]<=1) {
+            [self.tempconns addObject:connection];
+        }
+//        [self.tempconns addObject:connection];
     }];
 }
 
@@ -301,7 +316,20 @@
     self.service = service;
     self.service.delegate = self;
     success = [self.service getInputStream:&inputs outputStream:&outputs];
+//    [self.service resolveWithTimeout:100];
     if (success) {
+        self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
+    }
+}
+
+- (void) netServiceDidResolveAddress:(NSNetService *)sender{
+    NSInputStream *     inputs;
+    NSOutputStream *    outputs;
+    
+    NSString *host = [sender hostName];
+    NSInteger port = [sender port];
+    [NSStream getStreamsToHostNamed:host port:port inputStream:&inputs outputStream:&outputs];
+    if (inputs!=nil&&outputs!=nil) {
         self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
     }
 }
@@ -364,6 +392,12 @@
                 NSLog(@"##==%@", [error localizedRecoveryOptions]);
                 NSLog(@"##==%@", [error localizedRecoverySuggestion]);
             }
+            for (int i=0; i<[self.connections count]; i++) {
+                SPYConnection *con = self.connections[i];
+                if (con&&(con.output==aStream||con.input==aStream)) {
+                    [self.connections removeObject:con];
+                }
+            }
             if(self.asServer==NO&&self.isRemoteInit){
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
                 [alert show];
@@ -383,6 +417,24 @@
         NSNumber *num = [[NSNumber alloc]initWithInteger:-1];
         mreadarr = [[NSMutableArray alloc]initWithObjects:num, [[NSMutableData alloc]init], nil];
         [self.readMap setObject:mreadarr forKey:key];
+        
+        SPYConnection *con;
+        //根据输入流获得临时连接列表中对应的连接
+        if([self.tempconns count]>0){
+            con = self.tempconns[0];
+        }
+//        for(int i=0;i<[self.tempconns count];i++){
+////            con = [self.tempconns[i]copy];
+//            con = self.tempconns[i];
+//            if(con.input==in){
+//                break;
+//            }
+//        }
+        [self.tempconns removeAllObjects];
+        //判断self.connections中是否已经包含该连接，如果不包含，则放入该连接
+        if(con!=nil&&[self.connections containsObject:con]==NO){
+            [self.connections addObject:con];
+        }
     }
     
     uint8_t buf[32768];
@@ -402,7 +454,7 @@
             [mreadarr replaceObjectAtIndex:0 withObject:num];
         }
         if ([mdata length]>=remainToRead) {//说明数据已经读取完毕
-            NSLog(@"total read--->%d", (int)remainToRead);
+            NSLog(@"total read--->%d, need to read--->%d", (int)[mdata length], (int)remainToRead);
             uint8_t buf[1];
             [mdata getBytes:buf range:NSMakeRange(4, 1)];
             int oper = buf[0]&0xff;
@@ -437,11 +489,11 @@
     self.mainPlayer.index = index;
     
     //向服务器发送更新状态请求
-    if (self.asServer==NO) {
-        NSNumber *num = self.mainPlayer.index;
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
-        [self.connection writeData:self.connection.output WithData:data OperType:SPYStatusReady];
-    }
+//    if (self.asServer==NO) {
+//        NSNumber *num = self.mainPlayer.index;
+//        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+//        [self.connection writeData:self.connection.output WithData:data OperType:SPYStatusReady];
+//    }
 }
 
 //判断从服务器拉取的用户列表是否正确
@@ -531,7 +583,8 @@
     NSArray *arr = [NSArray arrayWithObjects:totalNum, citizenNum, spyNum, whiteNum, nil];
     [gpvc setUpFrame:bean WithOthers:self.subRoomView.allPlayer WithGameInfo:arr AsServer:self.asServer];
     self.clientAlive = YES;
-    [self presentViewController:gpvc animated:YES completion:nil];
+//    [self presentViewController:gpvc animated:YES completion:nil];
+    [self.view.window.rootViewController presentViewController:gpvc animated:YES completion:nil];
 }
 
 -(void)killPlayerWithArr:(NSArray*)arr{
@@ -551,9 +604,11 @@
         [self.subRoomView.allPlayer removeObjectAtIndex:[index integerValue]];
         [self.subRoomView.collectionView reloadData];
         [self updateOnlinePlayer];
+        if ([index integerValue]>0&&[index integerValue]<=[self.connections count]) {
+            [self.connections removeObjectAtIndex:[index integerValue]-1];//因为connections比allplayer少一个（不包含第一个自己的链接）
+        }
         //向其余客户端发送消息
         if([self.subRoomView.allPlayer count]>1&&self.asServer){
-            [self.connections removeObjectAtIndex:[index integerValue]-1];//因为connections比allplayer少一个（不包含第一个自己的链接）
             for (int i=0; i<[self.connections count]; i++) {
                 NSLog(@"%d-----------%d", (int)[self.subRoomView.allPlayer count], (int)[self.connections count]);
                 SPYConnection *con = self.connections[i];

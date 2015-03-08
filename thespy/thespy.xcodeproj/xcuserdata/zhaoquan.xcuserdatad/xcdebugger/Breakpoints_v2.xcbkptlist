@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "thespy/GameRoomView.m"
-            timestampString = "447354292.707042"
+            timestampString = "447517664.445266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
-            landmarkName = "-stream:handleEvent:"
+            startingLineNumber = "603"
+            endingLineNumber = "603"
+            landmarkName = "-clientLeave:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "thespy/GameRoomView.m"
+            timestampString = "447517664.445266"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "607"
+            endingLineNumber = "607"
+            landmarkName = "-clientLeave:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

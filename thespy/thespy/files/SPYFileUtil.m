@@ -46,7 +46,7 @@
     NSData *headerData = [[NSFileManager defaultManager] contentsAtPath:headerDirectory];
     UIImage *header = [[UIImage alloc]initWithData:headerData];
     if (header==nil) {
-        header = [UIImage imageNamed:@"SpyResource.bundle/QQ20150107-1.png"];
+        header = [UIImage imageNamed:@"SpyResource.bundle/headdefault.png"];
     }
     return header;
 }

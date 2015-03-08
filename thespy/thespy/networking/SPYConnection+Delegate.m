@@ -37,6 +37,8 @@
     uint8_t total[length];
     [mdata getBytes:total length:sizeof(total)];
     [out write:total maxLength:sizeof(total)];//写出数据
+    
+    NSLog(@"Wirte data length--->%d", (int)[mdata length]);
 }
 
 - (void)operation:(SPYDelegate)oper WithData:(NSData*)data Delegate:(id<NetWorkingDelegate>)delegate{

@@ -7,6 +7,7 @@
 //
 
 #import "PlayerInfoViewController.h"
+#import "UIWindow+YzdHUD.h"
 
 @interface PlayerInfoViewController ()
 
@@ -19,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
     
     CGFloat width = kMAIN_SCREEN_WIDTH;
     CGFloat height = kMAIN_SCREEN_HEIGHT;

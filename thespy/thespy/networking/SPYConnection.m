@@ -27,7 +27,7 @@
 }
 
 - (void) dealloc{
-    [self closeConnection];
+//    [self closeConnection];
 //    NSLog(@"SPYConnection's dealloc has called....%@", [UIDevice currentDevice].name);
 }
 

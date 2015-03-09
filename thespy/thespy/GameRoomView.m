@@ -560,11 +560,14 @@
             NSString *rolestr = (NSString*)arr[1];
             [bean setRole:[rolestr intValue]];
             
+            NSArray *dataarr = [[NSArray alloc]initWithObjects:arr[0], rolestr, nil];
             //发送数据
             if(i==0){//本机数据
-                [self startRemoteGame:bean];
+//                [self startRemoteGame:bean];
+                [self startRemoteGame:dataarr];
             }else{//客户端数据
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:bean];
+//                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:bean];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dataarr];
                 [con writeData:con.output WithData:data OperType:SPYGameStartPush];
             }
         }
@@ -576,16 +579,23 @@
     }
 }
 
--(void)startRemoteGame:(PlayerBean*)bean{
+-(void)startRemoteGame:(NSArray*)bean{
     GamePlayingViewController *gpvc = [[GamePlayingViewController alloc] initWithNibName:@"GamePlayingViewController" bundle:[NSBundle mainBundle]];
     NSNumber *totalNum = [[NSNumber alloc]initWithInteger:self.totalNum];
     NSNumber *citizenNum = [[NSNumber alloc]initWithInteger:self.citizenNum];
     NSNumber *spyNum = [[NSNumber alloc]initWithInteger:self.spyNum];
     NSNumber *whiteNum = [[NSNumber alloc]initWithInteger:self.whiteBoardNum];
     NSArray *arr = [NSArray arrayWithObjects:totalNum, citizenNum, spyNum, whiteNum, nil];
-    [gpvc setUpFrame:bean WithOthers:self.subRoomView.allPlayer WithGameInfo:arr AsServer:self.asServer];
+    [self.mainPlayer setConnection:self.connection];
+    [self.mainPlayer setWord:bean[0]];
+    [self.mainPlayer setRole:[bean[1] intValue]];
+    [gpvc setUpFrame:self.mainPlayer WithOthers:self.subRoomView.allPlayer WithGameInfo:arr AsServer:self.asServer];
     self.clientAlive = YES;
+    
     [self presentViewController:gpvc animated:YES completion:nil];
+
+//    [self.view.window.rootViewController presentViewController:gpvc animated:YES completion:nil];
+
 }
 
 -(void)killPlayerWithArr:(NSArray*)arr{

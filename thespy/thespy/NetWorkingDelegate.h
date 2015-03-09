@@ -16,7 +16,7 @@
 -(void)reloadClientListTable:(NSArray*)list;//刷新用户列表
 -(void)initGameRoomData:(NSArray*)arr;
 -(void)serverIsOut;
--(void)startRemoteGame:(PlayerBean*)bean;
+-(void)startRemoteGame:(NSArray*)bean;
 -(void)killPlayerWithArr:(NSArray*)arr;
 -(void)victory:(NSNumber*)type;
 -(void)gameOver;

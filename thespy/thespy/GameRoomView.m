@@ -98,9 +98,9 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
-    self.tempconns = [[NSMutableArray alloc]initWithCapacity:5];
+//    self.tempconns = [[NSMutableArray alloc]initWithCapacity:5];
     self.isRemoteInit = NO;
-    self.readMap = [[NSMutableDictionary alloc]initWithCapacity:5];
+    self.readMap = [[NSMutableDictionary alloc]initWithCapacity:2];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -282,12 +282,15 @@
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
-        [self.connections addObject:connection];
+//        [self.connections addObject:connection];
         NSLog(@"Accept connections--->%d, %d", (int)[inputStream hasBytesAvailable], (int)[outputStream hasSpaceAvailable]);
 //        if ([self.tempconns count]<=1) {
 //            [self.tempconns addObject:connection];
 //        }
 //        [self.tempconns addObject:connection];
+        if (self.tempconn==nil) {
+            self.tempconn = connection;
+        }
     }];
 }
 
@@ -389,12 +392,6 @@
                 NSLog(@"##==%@", [error localizedDescription]);
                 NSLog(@"##==%d", (int)[aStream streamStatus]);
             }
-            for (int i=0; i<[self.connections count]; i++) {
-                SPYConnection *con = self.connections[i];
-                if (con&&(con.output==aStream||con.input==aStream)) {
-                    [self.connections removeObject:con];
-                }
-            }
             if(self.asServer==NO&&self.isRemoteInit){
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
                 [alert show];
@@ -416,7 +413,10 @@
 -(void)readRemoteDataWithStream:(NSInputStream *)in{
     NSString *key = [in description];
     NSMutableArray *mreadarr = [self.readMap objectForKey:key];
+    
+    BOOL isFirst = NO;
     if (mreadarr==nil){//说明第一次连接
+        isFirst = YES;
         NSNumber *num = [[NSNumber alloc]initWithInteger:-1];
         mreadarr = [[NSMutableArray alloc]initWithObjects:num, [[NSMutableData alloc]init], nil];
         [self.readMap setObject:mreadarr forKey:key];
@@ -425,17 +425,23 @@
 //        //根据输入流获得临时连接列表中对应的连接
 //        if([self.tempconns count]>0){
 //            con = self.tempconns[0];
+//            [self.connections addObject:con];
 //        }
-//        [self.tempconns removeAllObjects];
-//        //判断self.connections中是否已经包含该连接，如果不包含，则放入该连接
+        //判断self.connections中是否已经包含该连接，如果不包含，则放入该连接
 //        if(con!=nil&&[self.connections containsObject:con]==NO){
 //            [self.connections addObject:con];
 //        }
+//        [self.tempconns removeAllObjects];
     }
     
     uint8_t buf[32768];
     NSInteger readLength = [in read:buf maxLength:sizeof(buf)];
     if (readLength>0) {
+        if(isFirst&&self.asServer&&self.tempconn!=nil){
+            [self.connections addObject:self.tempconn];
+            self.tempconn = nil;
+        }
+        
         NSInteger remainToRead = [mreadarr[0] integerValue];
         NSMutableData *mdata = mreadarr[1];
         NSData *tmp = [NSData dataWithBytes:buf length:readLength];

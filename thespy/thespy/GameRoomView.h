@@ -46,7 +46,7 @@
 @property (nonatomic, assign) BOOL asServer;//标记是否为主机
 @property (nonatomic, strong) NSNetService *service;
 @property (nonatomic, strong) NSMutableArray *connections;//客户端SPYConnection
-@property (nonatomic, strong) NSMutableArray *tempconns;//服务器接受到客户端连接后的临时存储
+@property (nonatomic, strong) SPYConnection *tempconn;//服务器接受到客户端连接后的临时存储
 
 @property (nonatomic, strong) SPYConnection *connection;//与主机的链接，作为客户端时不为空
 @property (nonatomic, strong) ServerListViewController *plvc;

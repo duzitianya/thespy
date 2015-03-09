@@ -38,7 +38,7 @@
 
 - (void) saveUserName:(NSString*)userName{
     NSString *dataDirectory = [NSHomeDirectory() stringByAppendingString:APP_PLAYER_DATA_HOME];
-    BOOL success = [[NSFileManager defaultManager] createFileAtPath:dataDirectory contents:[userName dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    [[NSFileManager defaultManager] createFileAtPath:dataDirectory contents:[userName dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
 }
 
 - (UIImage*) getUserHeader{

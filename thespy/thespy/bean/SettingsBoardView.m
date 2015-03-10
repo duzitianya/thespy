@@ -32,7 +32,9 @@
         CGFloat cameraTransformY = scale;
         _camera.cameraViewTransform = CGAffineTransformScale(_camera.cameraViewTransform, cameraTransformX, cameraTransformY);
     
-        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, 0);
+        //计算偏移量
+        CGFloat s = (kMAIN_SCREEN_HEIGHT - kMAIN_SCREEN_HEIGHT*scale) / 2;
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, -100);
         _camera.showsCameraControls = NO;
         
         //此处设置只能使用相机，禁止使用视频功能
@@ -66,7 +68,7 @@
         img = [info objectForKey:UIImagePickerControllerOriginalImage];
     }
     
-    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
+//    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];

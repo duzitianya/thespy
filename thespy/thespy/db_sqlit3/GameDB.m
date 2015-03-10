@@ -45,6 +45,16 @@
     return YES;
 }
 
+- (BOOL) clearAllResult{
+    char *err;
+    NSString *delSQL = @"DELETE FROM T_SPY_GAME_HISTORY";
+    if (sqlite3_exec(db, [delSQL UTF8String], NULL, NULL, &err)!=SQLITE_OK) {
+        NSLog(@"addGameResult error... %s", err);
+        return NO;
+    }
+    return YES;
+}
+
 - (BOOL) addGameResult:(GameResult*)result {
     char *err;
     NSString *insertSQL = @"INSERT INTO T_SPY_GAME_HISTORY(ID, NAME, ROLE, VICTORY, DATE) VALUES('%@','%@','%@','%@','%@')";

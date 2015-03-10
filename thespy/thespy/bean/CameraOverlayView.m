@@ -29,6 +29,14 @@
     if (uname!=nil&&[uname length]>0) {
         _nickName = uname;
     }
+    
+    //如果禁止相机，则显示默认图片
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO||[UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]==NO) {
+        self.photoView.alpha = 1;
+        UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+        UIImageView *imgView = [[UIImageView alloc]initWithImage:img];
+        [self.photoView addSubview:imgView];
+    }
 }
 
 - (IBAction)cancel:(id)sender {

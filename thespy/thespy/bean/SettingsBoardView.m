@@ -34,7 +34,7 @@
     
         //计算偏移量
         CGFloat s = (kMAIN_SCREEN_HEIGHT - kMAIN_SCREEN_HEIGHT*scale) / 2;
-        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, -100);
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, s*-1);
         _camera.showsCameraControls = NO;
         
         //此处设置只能使用相机，禁止使用视频功能
@@ -46,21 +46,14 @@
         
     } else {
         NSLog(@"相机功能不可用");
-        return;
+        self.cameraOverlayView = [[[NSBundle mainBundle]loadNibNamed:@"CameraOverlayView" owner:self options:nil]lastObject];
+        self.cameraOverlayView.delegate = self;
+        [self addSubview:self.cameraOverlayView];
     }
 }
 
 //点击相册中的图片或照相机照完后点击use后触发的方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    
-    
-    if (self.cameraOverlayView.nickName==nil||[[self.cameraOverlayView.nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
-        [alert show];
-        return ;
-    }
-    
     UIImage *img;
     if ([info objectForKey:UIImagePickerControllerEditedImage]) {
         img = [info objectForKey:UIImagePickerControllerEditedImage];
@@ -71,15 +64,25 @@
 //    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
+}
+
+- (void) savePhoto{
+    if (self.cameraOverlayView.nickName==nil||[[self.cameraOverlayView.nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+        [alert show];
+        return ;
+    }
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        [_camera takePicture];
+    }
+    
     [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
     
     [self.delegate dismissViewController];
-}
-
-- (void) savePhoto{
-    [_camera takePicture];
 }
 
 - (void) cancelSave{

@@ -7,6 +7,7 @@
 //
 
 #import "HistoryListViewController.h"
+#import "UIWindow+YzdHUD.h"
 
 @interface HistoryListViewController ()
 
@@ -17,6 +18,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.data = [[GameDB shareInstance] historyList];
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(clearGameHistory)];
+    self.navigationItem.rightBarButtonItem = rightButton;
     
 }
 
@@ -56,5 +60,19 @@
     return 70;
 }
 
+- (void)clearGameHistory{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"清空记录" message:@"确认要清空游戏记录吗？" delegate:self cancelButtonTitle:@"不清空" otherButtonTitles:@"清空", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        BOOL isSuccess = [[GameDB shareInstance]clearAllResult];
+        if (isSuccess) {
+            [self.tableView reloadData];
+            [self.view.window showHUDWithText:@"清除成功" Type:ShowPhotoYes Enabled:YES];
+        }
+    }
+}
 
 @end

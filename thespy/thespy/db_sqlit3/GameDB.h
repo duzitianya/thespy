@@ -16,6 +16,7 @@
 
 +(GameDB *)shareInstance;
 
+- (BOOL) clearAllResult;
 - (BOOL) addGameResult:(GameResult*)result;
 - (NSArray*) historyList;
 

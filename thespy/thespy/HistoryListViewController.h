@@ -10,7 +10,7 @@
 #import "GameDB.h"
 #import "HistoryListCell.h"
 
-@interface HistoryListViewController : UITableViewController
+@interface HistoryListViewController : UITableViewController<UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSArray *data;
 

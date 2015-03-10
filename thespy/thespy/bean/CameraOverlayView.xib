@@ -57,15 +57,6 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppZ-xs-nFO">
-                            <rect key="frame" x="128" y="147" width="65" height="30"/>
-                            <state key="normal" title=" 设置完成 ">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="confirm:" destination="iN0-l3-epB" eventType="touchUpInside" id="mb0-cf-3SR"/>
-                            </connections>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="昵称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VY1-Kw-FpT">
                             <rect key="frame" x="58" y="91" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -94,6 +85,15 @@
                             </state>
                             <connections>
                                 <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="IqH-hS-SIP"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppZ-xs-nFO">
+                            <rect key="frame" x="121" y="147" width="79" height="30"/>
+                            <state key="normal" title=" 设置完成 ">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="confirm:" destination="iN0-l3-epB" eventType="touchUpInside" id="mb0-cf-3SR"/>
                             </connections>
                         </button>
                     </subviews>
@@ -125,6 +125,7 @@
                 <outlet property="confirmButton" destination="ppZ-xs-nFO" id="gdq-7M-wlm"/>
                 <outlet property="deviceLable" destination="mEd-Lw-PA0" id="STl-Jd-zfW"/>
                 <outlet property="nicknameField" destination="9ef-1r-MJk" id="Cva-zS-5sB"/>
+                <outlet property="photoView" destination="mpW-Ea-G9F" id="YvS-ws-Nz5"/>
             </connections>
         </view>
     </objects>

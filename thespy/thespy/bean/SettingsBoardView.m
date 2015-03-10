@@ -31,7 +31,10 @@
         CGFloat cameraTransformX = scale;
         CGFloat cameraTransformY = scale;
         _camera.cameraViewTransform = CGAffineTransformScale(_camera.cameraViewTransform, cameraTransformX, cameraTransformY);
-        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, -150);
+        
+        NSLog(@"%f---%f---%f---%f", _camera.view.frame.origin.x, _camera.view.frame.origin.y, _camera.view.frame.size.width, _camera.view.frame.size.height);
+
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, 0);
         _camera.showsCameraControls = NO;
         
         //此处设置只能使用相机，禁止使用视频功能
@@ -39,7 +42,10 @@
         
         _settingsview = [[SettingsView alloc] initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
         [_settingsview addSavePhotoDelegate:self];
-        _camera.cameraOverlayView = _settingsview;
+//        _camera.cameraOverlayView = _settingsview;
+        self.v = [[[NSBundle mainBundle]loadNibNamed:@"CameraOverlayView" owner:self options:nil]lastObject];
+        self.v.delegate = self;
+        _camera.cameraOverlayView = self.v;
         
     } else {
         NSLog(@"相机功能不可用");
@@ -50,12 +56,13 @@
 //点击相册中的图片或照相机照完后点击use后触发的方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
-//    if (_settingsview.subview.nickName==nil||[_settingsview.subview.userNickName length]==0) {
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
-//        [alert show];
-//        return ;
-//    }
+    
+    if (_settingsview.subview.nickName==nil||[[_settingsview.subview.nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+        [alert show];
+        return ;
+    }
     
     UIImage *img;
     if ([info objectForKey:UIImagePickerControllerEditedImage]) {
@@ -64,7 +71,7 @@
         img = [info objectForKey:UIImagePickerControllerOriginalImage];
     }
     
-//    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
+    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     [[SPYFileUtil shareInstance] saveUserName:_settingsview.subview.nickName];
@@ -99,16 +106,17 @@
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
     //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-    NSArray *subs = self.settingsview.subviews;
-    if (subs) {
-        for (int i=0; i<[subs count]; i++) {
-            id v = subs[i];
-            if ([v isKindOfClass:[UIView class]]) {
-                UIView *view = (UIView*)v;
-                view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y+offset, view.frame.size.width, view.frame.size.height);
-            }
-        }
-    }
+//    NSArray *subs = self.settingsview.subviews;
+//    if (subs) {
+//        for (int i=0; i<[subs count]; i++) {
+//            id v = subs[i];
+//            if ([v isKindOfClass:[UIView class]]) {
+//                UIView *view = (UIView*)v;
+//                view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y+offset, view.frame.size.width, view.frame.size.height);
+//            }
+//        }
+//    }
+    self.v.frame = CGRectMake(self.v.frame.origin.x, self.v.frame.origin.y+offset, self.v.frame.size.width, self.v.frame.size.height);
     if (offset>0) {
         _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, 250);
     }else{

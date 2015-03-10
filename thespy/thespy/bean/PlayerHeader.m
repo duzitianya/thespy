@@ -50,11 +50,21 @@
 
 - (void)changeHeadImg:(UIButton *)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO) {
-        return;
+        UIViewController *vc = [[UIViewController alloc]init];
+        UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
+        [backgroundView setBackgroundColor:[UIColor blackColor]];
+        backgroundView.alpha = .6;
+        SettingsSubView *subview = [[[NSBundle mainBundle]loadNibNamed:@"SettingsSubView" owner:self options:nil]lastObject];
+        subview.frame = CGRectMake((kMAIN_SCREEN_WIDTH-subview.frame.size.width)/2, (kMAIN_SCREEN_HEIGHT-subview.frame.size.height)/2, subview.frame.size.width, subview.frame.size.height);
+        subview.layer.cornerRadius = 6;
+        [backgroundView addSubview:subview];
+        [vc setView:backgroundView];
+        [_delegate presentViewController:vc];
+    }else{
+        SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
+        [sv setupWithDelegate:_delegate];
+        [_delegate presentViewController:sv.camera];
     }
-    SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
-    [sv setupWithDelegate:_delegate];
-    [_delegate presentViewController:sv.camera];
 }
 
 - (void) historyButtonClick:(id)sender{

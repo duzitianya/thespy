@@ -23,6 +23,10 @@
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(kMAIN_SCREEN_WIDTH/2+75, topView.frame.size.height, kMAIN_SCREEN_WIDTH/2-75, 150)];
     
+    topView.alpha = 0.7;
+    leftView.alpha = 0.7;
+    rightView.alpha = 0.7;
+    
     UIColor *col = UIColorFromRGB(0x64FFFF);
     topView.backgroundColor = col;
     leftView.backgroundColor = col;

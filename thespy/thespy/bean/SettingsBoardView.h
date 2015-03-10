@@ -10,7 +10,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "PlayerBean.h"
 #import "AppDelegate.h"
-#import "SettingsView.h"
 #import "SPYFileUtil.h"
 #import "UIImage+category.h"
 #import "CameraOverlayView.h"
@@ -26,8 +25,8 @@
 @interface SettingsBoardView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, SavePhotoDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *camera;
-@property (nonatomic, strong) SettingsView *settingsview;
-@property (nonatomic, strong) CameraOverlayView *v;
+//@property (nonatomic, strong) SettingsView *settingsview;
+@property (nonatomic, strong) CameraOverlayView *cameraOverlayView;
 
 @property (nonatomic, assign) int offset;
 

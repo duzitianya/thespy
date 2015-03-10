@@ -24,6 +24,11 @@
         _nicknameField.text = name;
     }
     _nicknameField.delegate = self;
+    
+    NSString *uname = [[SPYFileUtil shareInstance]getUserName];
+    if (uname!=nil&&[uname length]>0) {
+        _nickName = uname;
+    }
 }
 
 - (IBAction)cancel:(id)sender {

@@ -22,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *nicknameField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 
-@property (weak, nonatomic) id<SavePhotoDelegate> delegate;
+@property (strong, nonatomic) id<SavePhotoDelegate> delegate;
 
 @property (strong, nonatomic) NSString *nickName;
 

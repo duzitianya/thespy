@@ -22,7 +22,6 @@
 		BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC0F1A76449600A87FD2 /* GameRoomSubview.m */; };
 		BF3DBC121A76449600A87FD2 /* GameRoomSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */; };
 		BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */; };
-		BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */; };
 		BF6D252A1A7B760C001F698A /* GameRoomHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D25291A7B760C001F698A /* GameRoomHeader.m */; };
 		BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */; };
 		BF74DEAD1A88A91D00E8744B /* SPYConnection+Delegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF74DEAC1A88A91D00E8744B /* SPYConnection+Delegate.m */; };
@@ -48,8 +47,6 @@
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
 		BFBA0DB51AAEC6070030D9D4 /* CameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */; };
 		BFBA0DB71AAEC61E0030D9D4 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */; };
-		BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3B2B21A736FC0001FB912 /* SettingsView.m */; };
-		BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */; };
 		BFD050291A9DD5C10048355E /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFD050281A9DD5C10048355E /* words.plist */; };
 		BFD050351A9F12350048355E /* UIWindow+YzdHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */; };
 		BFD050361A9F12350048355E /* YzdHUDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502E1A9F12350048355E /* YzdHUDBackgroundView.m */; };
@@ -93,8 +90,6 @@
 		BF3DBC101A76449600A87FD2 /* GameRoomSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomSubview.xib; sourceTree = "<group>"; };
 		BF3DBC1A1A77765300A87FD2 /* SPYFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPYFileUtil.h; path = files/SPYFileUtil.h; sourceTree = "<group>"; };
 		BF3DBC1B1A77765300A87FD2 /* SPYFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPYFileUtil.m; path = files/SPYFileUtil.m; sourceTree = "<group>"; };
-		BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSubView.h; sourceTree = "<group>"; };
-		BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSubView.m; sourceTree = "<group>"; };
 		BF6D25281A7B760C001F698A /* GameRoomHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRoomHeader.h; sourceTree = "<group>"; };
 		BF6D25291A7B760C001F698A /* GameRoomHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRoomHeader.m; sourceTree = "<group>"; };
 		BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRoomHeader.xib; sourceTree = "<group>"; };
@@ -139,9 +134,6 @@
 		BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraOverlayView.h; sourceTree = "<group>"; };
 		BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraOverlayView.m; sourceTree = "<group>"; };
 		BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
-		BFC3B2B11A736FC0001FB912 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
-		BFC3B2B21A736FC0001FB912 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
-		BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSubView.xib; sourceTree = "<group>"; };
 		BFD050281A9DD5C10048355E /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 		BFD0502B1A9F12350048355E /* UIWindow+YzdHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+YzdHUD.h"; sourceTree = "<group>"; };
 		BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+YzdHUD.m"; sourceTree = "<group>"; };
@@ -284,11 +276,9 @@
 				BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */,
 				BF341FCF1A7890AA00E5C0FC /* SettingsBoardView.h */,
 				BF341FD01A7890AA00E5C0FC /* SettingsBoardView.m */,
-				BFC3B2B11A736FC0001FB912 /* SettingsView.h */,
-				BFC3B2B21A736FC0001FB912 /* SettingsView.m */,
-				BF3DBC1D1A77927000A87FD2 /* SettingsSubView.h */,
-				BF3DBC1E1A77927000A87FD2 /* SettingsSubView.m */,
-				BFC3B2BB1A738C49001FB912 /* SettingsSubView.xib */,
+				BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */,
+				BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */,
+				BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */,
 				BF3DBC041A76350B00A87FD2 /* GameRoomCell.h */,
 				BF3DBC051A76350B00A87FD2 /* GameRoomCell.m */,
 				BF3DBC071A76351700A87FD2 /* GameRoomCell.xib */,
@@ -297,9 +287,6 @@
 				BF6D25281A7B760C001F698A /* GameRoomHeader.h */,
 				BF6D25291A7B760C001F698A /* GameRoomHeader.m */,
 				BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */,
-				BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */,
-				BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */,
-				BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -442,7 +429,6 @@
 				BF77ACF61A6E4725008CCFB9 /* Images.xcassets in Resources */,
 				BF77AD301A6E47FF008CCFB9 /* GameInitionView.xib in Resources */,
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
-				BFC3B2BC1A738C49001FB912 /* SettingsSubView.xib in Resources */,
 				BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */,
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
@@ -471,10 +457,8 @@
 				BFD050371A9F12350048355E /* YzdHUDImageView.m in Sources */,
 				BF74DEAD1A88A91D00E8744B /* SPYConnection+Delegate.m in Sources */,
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
-				BFC3B2B31A736FC0001FB912 /* SettingsView.m in Sources */,
 				BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */,
 				BF6D252A1A7B760C001F698A /* GameRoomHeader.m in Sources */,
-				BF3DBC1F1A77927000A87FD2 /* SettingsSubView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF3D54B81A8CA4C200B4B202 /* GamePlayingViewController.m in Sources */,

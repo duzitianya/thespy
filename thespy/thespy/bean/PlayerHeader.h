@@ -10,7 +10,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "PlayerBean.h"
 #import "AppDelegate.h"
-#import "SettingsView.h"
 #import "SettingsBoardView.h"
 
 @protocol TopViewDelegate <NSObject>

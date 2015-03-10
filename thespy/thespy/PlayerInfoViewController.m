@@ -61,17 +61,6 @@
             SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
             [sv setupWithDelegate:self];
             [self presentViewController:sv.camera];
-        }else{
-            UIViewController *vc = [[UIViewController alloc]init];
-            UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
-            [backgroundView setBackgroundColor:[UIColor blackColor]];
-            backgroundView.alpha = .6;
-            SettingsSubView *subview = [[[NSBundle mainBundle]loadNibNamed:@"SettingsSubView" owner:self options:nil]lastObject];
-            subview.frame = CGRectMake((kMAIN_SCREEN_WIDTH-subview.frame.size.width)/2, (kMAIN_SCREEN_HEIGHT-subview.frame.size.height)/2, subview.frame.size.width, subview.frame.size.height);
-            subview.layer.cornerRadius = 6;
-            [backgroundView addSubview:subview];
-            [vc setView:backgroundView];
-            [self presentViewController:vc animated:YES completion:nil];
         }
     }
     

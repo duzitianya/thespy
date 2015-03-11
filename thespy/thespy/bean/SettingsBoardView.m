@@ -64,6 +64,12 @@
 //    img = [img scaleFromImage:img toSize:CGSizeMake(150, 150)];
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
+    
+    [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
+    
+    [self.delegate dismissViewController];
 }
 
 - (void) savePhoto{
@@ -77,12 +83,6 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         [_camera takePicture];
     }
-    
-    [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
-    
-    [self.delegate dismissViewController];
 }
 
 - (void) cancelSave{
@@ -94,11 +94,11 @@
 }
 
 - (void) didBeginEditing:(UITextField *)textField{
-    [self moveViews:-100];
+    [self moveViews:-150];
 }
 
 - (void) didEndEditing:(UITextField *)textField{
-    [self moveViews:100];
+    [self moveViews:150];
 }
 
 - (void) moveViews:(int)offset{

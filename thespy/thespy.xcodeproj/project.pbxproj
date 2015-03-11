@@ -47,6 +47,8 @@
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
 		BFBA0DB51AAEC6070030D9D4 /* CameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */; };
 		BFBA0DB71AAEC61E0030D9D4 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */; };
+		BFBA0DC21AB01A990030D9D4 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DC11AB01A990030D9D4 /* InfoView.m */; };
+		BFBA0DC41AB01AB60030D9D4 /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0DC31AB01AB60030D9D4 /* InfoView.xib */; };
 		BFD050291A9DD5C10048355E /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFD050281A9DD5C10048355E /* words.plist */; };
 		BFD050351A9F12350048355E /* UIWindow+YzdHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */; };
 		BFD050361A9F12350048355E /* YzdHUDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD0502E1A9F12350048355E /* YzdHUDBackgroundView.m */; };
@@ -134,6 +136,9 @@
 		BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraOverlayView.h; sourceTree = "<group>"; };
 		BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraOverlayView.m; sourceTree = "<group>"; };
 		BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
+		BFBA0DC01AB01A990030D9D4 /* InfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
+		BFBA0DC11AB01A990030D9D4 /* InfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoView.m; sourceTree = "<group>"; };
+		BFBA0DC31AB01AB60030D9D4 /* InfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
 		BFD050281A9DD5C10048355E /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 		BFD0502B1A9F12350048355E /* UIWindow+YzdHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+YzdHUD.h"; sourceTree = "<group>"; };
 		BFD0502C1A9F12350048355E /* UIWindow+YzdHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+YzdHUD.m"; sourceTree = "<group>"; };
@@ -207,6 +212,9 @@
 				BF77AD1F1A6E47FF008CCFB9 /* bean */,
 				BF77AD281A6E47FF008CCFB9 /* PlayerInfoViewController.h */,
 				BF77AD291A6E47FF008CCFB9 /* PlayerInfoViewController.m */,
+				BFBA0DC01AB01A990030D9D4 /* InfoView.h */,
+				BFBA0DC11AB01A990030D9D4 /* InfoView.m */,
+				BFBA0DC31AB01AB60030D9D4 /* InfoView.xib */,
 				BF77AD391A6F808A008CCFB9 /* HistoryListViewController.h */,
 				BF77AD3A1A6F808A008CCFB9 /* HistoryListViewController.m */,
 				BF77AD2A1A6E47FF008CCFB9 /* ServerListViewController.h */,
@@ -431,6 +439,7 @@
 				BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */,
 				BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */,
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
+				BFBA0DC41AB01AB60030D9D4 /* InfoView.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
 				BF3D54B91A8CA4C200B4B202 /* GamePlayingViewController.xib in Resources */,
@@ -459,6 +468,7 @@
 				BF3DBC1C1A77765300A87FD2 /* SPYFileUtil.m in Sources */,
 				BF341FD11A7890AA00E5C0FC /* SettingsBoardView.m in Sources */,
 				BF6D252A1A7B760C001F698A /* GameRoomHeader.m in Sources */,
+				BFBA0DC21AB01A990030D9D4 /* InfoView.m in Sources */,
 				BF77AD2F1A6E47FF008CCFB9 /* PlayerHeader.m in Sources */,
 				BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */,
 				BF3D54B81A8CA4C200B4B202 /* GamePlayingViewController.m in Sources */,

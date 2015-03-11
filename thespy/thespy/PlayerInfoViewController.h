@@ -16,11 +16,12 @@
 #import "GameRoomView.h"
 #import "SPYFileUtil.h"
 #import "SettingsBoardView.h"
+#import "InfoView.h"
 
 @interface PlayerInfoViewController : UIViewController<ActionViewDelegate, CameraOpenDelegate, TopViewDelegate>
 
 @property (nonatomic, strong) PlayerBean *mainPlayer;
-
+@property (nonatomic, strong) InfoView *infoView;
 @property (nonatomic, strong) GameInitionView *mainGameView;
 
 @property (nonatomic) NSInteger totalNum;       //参与者总数

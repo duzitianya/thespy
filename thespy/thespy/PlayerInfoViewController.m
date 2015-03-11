@@ -64,6 +64,10 @@
         }
     }
     
+    UIImage *buttonImg = [UIImage imageNamed:@"SpyResource.bundle/info"];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithImage:buttonImg style:UIBarButtonItemStyleDone target:self action:@selector(showAppInfo)];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    
     //读取初始化数据
     NSString *name = [util getUserName];
     UIImage *headerData = [util getUserHeader];
@@ -74,6 +78,8 @@
     [header initWithPlayerBean:self.mainPlayer Delegate:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadHeaderData) name:@"reloadHeaderData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeAppInfo) name:@"closeappinfo" object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,8 +133,25 @@
 }
 
 - (void) dealloc{
-    [[NSNotificationCenter defaultCenter]  removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) showAppInfo{
+    if (self.infoView==nil) {
+        self.infoView = [[[NSBundle mainBundle]loadNibNamed:@"InfoView" owner:self options:nil]lastObject];
+        self.infoView.frame = CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT);
+        NSArray *arr = self.view.subviews;
+        if (arr) {
+            [self.view insertSubview:self.infoView atIndex:[arr count]];
+        }
+    }
+    [self.infoView setHidden:NO];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void) closeAppInfo{
+    [self.infoView setHidden:YES];
+    [self.navigationController setNavigationBarHidden:NO];
+}
 
 @end

@@ -69,8 +69,9 @@
     if (buttonIndex==1) {
         BOOL isSuccess = [[GameDB shareInstance]clearAllResult];
         if (isSuccess) {
-            [self.tableView reloadData];
             [self.view.window showHUDWithText:@"清除成功" Type:ShowPhotoYes Enabled:YES];
+            self.data = [[GameDB shareInstance] historyList];
+            [self.tableView reloadData];
         }
     }
 }

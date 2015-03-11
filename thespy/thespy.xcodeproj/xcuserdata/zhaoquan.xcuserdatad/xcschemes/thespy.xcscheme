@@ -84,12 +84,12 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "NSZombieEnabled"
-            value = "NO"
+            value = "YES"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "MallocStackLogging"
-            value = "NO"
+            value = "YES"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

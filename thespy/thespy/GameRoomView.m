@@ -24,6 +24,10 @@
         self.streamOpenCount = 0;
         self.isRemoteInit = NO;
     }
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    if (self.alert) {
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -123,10 +127,13 @@
             return;
         }
         if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-            alert.delegate = self;
-            [alert setTag:101];
-            [alert show];
+            if (self.alert) {
+                [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+            }
+            self.alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+            self.alert.delegate = self;
+            [self.alert setTag:101];
+            [self.alert show];
         }
         if (list) {
             for (int i=0; i<[list count]; i++) {
@@ -220,8 +227,11 @@
 }
 
 - (void)closeCurrentGame{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"终止" otherButtonTitles:@"算了", nil];
-    [alert show];
+    if (self.alert) {
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+    self.alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"终止" otherButtonTitles:@"算了", nil];
+    [self.alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -237,12 +247,14 @@
         if (self.asServer) {
             [self closeService];
         }else{
-            //向服务器发送终止游戏数据
-            NSNumber *num = self.mainPlayer.index;
-            if (self.connection) {
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
-                [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
-                [self.connection closeConnection];
+            if (tag!=20140620) {
+                //向服务器发送终止游戏数据
+                NSNumber *num = self.mainPlayer.index;
+                if (self.connection) {
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+                    [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
+                    [self.connection closeConnection];
+                }
             }
         }
         [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
@@ -393,8 +405,11 @@
                 NSLog(@"##==%d", (int)[aStream streamStatus]);
             }
             if(self.asServer==NO&&self.isRemoteInit){
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-                [alert show];
+                if (self.alert!=nil) {
+                    [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+                }
+                self.alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                [self.alert show];
                 self.isRemoteInit = NO;
             }
             break;
@@ -507,8 +522,12 @@
 }
 
 -(void)serverIsOut{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"主机已经退出游戏" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-    [alert show];
+    if (self.alert) {
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+    self.alert = [[UIAlertView alloc] initWithTitle:@"主机已经退出游戏" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    [self.alert setTag:20140620];
+    [self.alert show];
 }
 
 -(void)startGame{
@@ -671,5 +690,12 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
+
+//#ifdef _FOR_DEBUG_
+-(BOOL) respondsToSelector:(SEL)aSelector {
+    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
+    return [super respondsToSelector:aSelector];
+}
+//#endif
 
 @end

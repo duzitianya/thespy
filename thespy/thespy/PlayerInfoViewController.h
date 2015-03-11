@@ -24,8 +24,8 @@
 @property (nonatomic, strong) InfoView *infoView;
 @property (nonatomic, strong) GameInitionView *mainGameView;
 
-@property (nonatomic) NSInteger totalNum;       //参与者总数
-@property (nonatomic) NSInteger citizenNum;     //平民数
-@property (nonatomic) NSInteger whiteBoardNum;  //白板数
+@property (nonatomic, assign) NSInteger totalNum;       //参与者总数
+@property (nonatomic, assign) NSInteger citizenNum;     //平民数
+@property (nonatomic, assign) NSInteger whiteBoardNum;  //白板数
 
 @end

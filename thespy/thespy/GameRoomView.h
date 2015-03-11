@@ -61,6 +61,8 @@
 @property (nonatomic, strong) UIButton *start;//开始游戏按钮
 @property (nonatomic, assign) NSInteger readyCount;//就绪状态客户端数
 
+@property (nonatomic, strong) UIAlertView *alert;
+
 - (void)setupValues:(NSInteger)totalNum SpyNum:(NSInteger)spyNum CitizenNum:(NSInteger)citizenNum WhiteboardNum:(NSInteger)whiteBoardNum MainPlayer:(PlayerBean*)mainPlayer asServer:(BOOL)asServer;
 
 - (void) reloadClientListTable:(PlayerBean*)player;

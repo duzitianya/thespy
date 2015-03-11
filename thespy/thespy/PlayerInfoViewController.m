@@ -154,4 +154,9 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
+-(BOOL) respondsToSelector:(SEL)aSelector {
+    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
+    return [super respondsToSelector:aSelector];
+}
+
 @end

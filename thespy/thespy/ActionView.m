@@ -18,8 +18,9 @@
     return self;
 }
 
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central{
-    
+-(BOOL) respondsToSelector:(SEL)aSelector {
+    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
+    return [super respondsToSelector:aSelector];
 }
 
 - (void)setUpFrame:(CGRect)frame{

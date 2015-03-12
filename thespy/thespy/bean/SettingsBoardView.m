@@ -7,6 +7,7 @@
 //
 
 #import "SettingsBoardView.h"
+#import "UIWindow+YzdHUD.h"
 
 @implementation SettingsBoardView
 
@@ -76,8 +77,10 @@
 - (void) savePhoto{
     if (self.cameraOverlayView.nickName==nil||[[self.cameraOverlayView.nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请填写昵称" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"昵称不能为空！" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
         [alert show];
+//        [self.window showHUDWithText:@"昵称不能为空" Type:ShowPhotoNo Enabled:YES];
+        
         return ;
     }
     
@@ -95,7 +98,7 @@
 }
 
 - (void) didBeginEditing:(UITextField *)textField{
-    CGFloat textBottom = kMAIN_SCREEN_HEIGHT - textField.frame.origin.y + textField.frame.size.height;
+    CGFloat textBottom = kMAIN_SCREEN_HEIGHT - (textField.frame.origin.y + textField.frame.size.height + 95 + 150);
     if (textBottom<=150) {
         [self moveViews:-150];
         self.needMove = YES;

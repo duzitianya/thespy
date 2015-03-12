@@ -79,7 +79,6 @@
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"昵称不能为空！" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
         [alert show];
-//        [self.window showHUDWithText:@"昵称不能为空" Type:ShowPhotoNo Enabled:YES];
         
         return ;
     }

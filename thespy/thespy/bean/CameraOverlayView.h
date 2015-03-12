@@ -23,7 +23,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UIView *photoView;
 
-@property (strong, nonatomic) id<SavePhotoDelegate> delegate;
+@property (weak, nonatomic) id<SavePhotoDelegate> delegate;
 
 @property (strong, nonatomic) NSString *nickName;
 

@@ -13,7 +13,7 @@
 #import "GameRoomView.h"
 #import "GameResult.h"
 #import "GameDB.h"
-
+#import "SPYAlertView.h"
 
 @interface GamePlayingViewController ()
 
@@ -53,9 +53,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    if(self.alert){
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-    }
     //通知服务器，游戏界面已经退出，就绪
     NSNumber *num = [[NSNumber alloc]initWithInteger:self.index];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
@@ -63,7 +60,8 @@
 }
 
 -(void)gameOver{
-    [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+//    [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+    [[SPYAlertView shareInstance]dismissAlertView];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -96,7 +94,8 @@
     GameResult *result = [[GameResult alloc]initWithPlayerID:gameResultID Name:self.bean.name Role:role Victory:selfWin?@"胜利":@"失败" Date:str];
     [[GameDB shareInstance]addGameResult:result];
     
-    [self createAlertView:tip CancelTxt:@"确认" OtherTxt:nil Tag:1002];
+//    [self createAlertView:tip CancelTxt:@"确认" OtherTxt:nil Tag:1002];
+    [[SPYAlertView shareInstance]createAlertView:tip Message:@"" CancelTxt:@"确认" OtherTxt:nil Tag:1002 Delegate:self];
 }
 
 -(void)victory:(NSNotification*)notification{
@@ -216,7 +215,8 @@
     GameRoomCell *room = (GameRoomCell*)[sender view];
     NSString *name = room.playerName.text;
     NSString *title = [NSString stringWithFormat:@"确认投票给 %@ 吗？", name];
-    [self createAlertView:title CancelTxt:@"确认" OtherTxt:@"再想想" Tag:1001];
+//    [self createAlertView:title CancelTxt:@"确认" OtherTxt:@"再想想" Tag:1001];
+    [[SPYAlertView shareInstance]createAlertView:title Message:@"" CancelTxt:@"确认" OtherTxt:@"再想想" Tag:1001 Delegate:self];
     if ([room.countLabel.text intValue]>=1) {
         self.killIndex = [room.countLabel.text intValue] - 1;
     }else{
@@ -309,16 +309,6 @@
         //处理本机逻辑
         [self victoryWithType:[victory integerValue]];
     }
-}
-
-- (void)createAlertView:(NSString*)title CancelTxt:(NSString*)cancelTxt OtherTxt:(NSString*)otherTxt Tag:(NSInteger)tag{
-    if (self.alert) {
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-    }
-    self.alert = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt, nil];
-    self.alert.delegate = self;
-    [self.alert setTag:tag];
-    [self.alert show];
 }
 
 @end

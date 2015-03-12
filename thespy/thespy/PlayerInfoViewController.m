@@ -8,6 +8,7 @@
 
 #import "PlayerInfoViewController.h"
 #import "UIWindow+YzdHUD.h"
+#import "SPYAlertView.h"
 
 @interface PlayerInfoViewController ()
 
@@ -17,6 +18,13 @@
     PlayerHeader *header;
 }
 @synthesize mainPlayer;
+
+- (void)viewDidAppear:(BOOL)animated{
+    if (self.infoView&&[self.infoView isHidden]==NO) {
+        [self.infoView setHidden:YES];
+    }
+    [[SPYAlertView shareInstance]dismissAlertView];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -152,11 +160,6 @@
 - (void) closeAppInfo{
     [self.infoView setHidden:YES];
     [self.navigationController setNavigationBarHidden:NO];
-}
-
--(BOOL) respondsToSelector:(SEL)aSelector {
-    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
-    return [super respondsToSelector:aSelector];
 }
 
 @end

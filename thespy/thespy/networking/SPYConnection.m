@@ -26,29 +26,29 @@
     return self;
 }
 
-- (void) dealloc{
-//    [self closeConnection];
-//    NSLog(@"SPYConnection's dealloc has called....%@", [UIDevice currentDevice].name);
-}
-
 - (void) closeConnection{
-    if (self.input!=nil) {
-        [self.input close];
+    if (self.input) {
         [self.input removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         self.input = nil;
+        self.input.delegate = nil;
+        [self.input close];
     }
-    if (self.output!=nil) {
+    if (self.output) {
         [self.output removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        [self.output close];
         self.output = nil;
+        self.output.delegate = nil;
+        [self.output close];
     }
 }
 
 - (void)cleanUpStream:(NSStream *)stream{
     [stream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [stream close];
-    
     stream = nil;
+}
+
+- (void)dealloc{
+    [self closeConnection];
 }
 
 @end

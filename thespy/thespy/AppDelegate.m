@@ -33,6 +33,7 @@
     
 //    [NSThread sleepForTimeInterval:1];
     
+//    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
 //    NSLog(@"-=-=-=-=-=-=-=-= %@ =-=-=-=-=-=-=-=-", [[UIDevice currentDevice].identifierForVendor UUIDString]);
     
@@ -84,9 +85,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
 
--(BOOL) respondsToSelector:(SEL)aSelector {
-    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
-    return [super respondsToSelector:aSelector];
-}
+//void uncaughtExceptionHandler(NSException *exception) {
+//    NSLog(@"CRASH: %@", exception);
+//    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+//    // Internal error reporting
+//}
 
 @end

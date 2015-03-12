@@ -45,6 +45,7 @@
 		BF77AD441A6F935E008CCFB9 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD431A6F935E008CCFB9 /* GameResult.m */; };
 		BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */; };
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
+		BF84BC6D1AB13F03007F4F35 /* SPYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */; };
 		BFBA0DB51AAEC6070030D9D4 /* CameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */; };
 		BFBA0DB71AAEC61E0030D9D4 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */; };
 		BFBA0DC21AB01A990030D9D4 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DC11AB01A990030D9D4 /* InfoView.m */; };
@@ -133,6 +134,8 @@
 		BF77AD451A6FD00C008CCFB9 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListCell.xib; sourceTree = "<group>"; };
+		BF84BC6B1AB13F03007F4F35 /* SPYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPYAlertView.h; sourceTree = "<group>"; };
+		BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPYAlertView.m; sourceTree = "<group>"; };
 		BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraOverlayView.h; sourceTree = "<group>"; };
 		BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraOverlayView.m; sourceTree = "<group>"; };
 		BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				BF6D25281A7B760C001F698A /* GameRoomHeader.h */,
 				BF6D25291A7B760C001F698A /* GameRoomHeader.m */,
 				BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */,
+				BF84BC6B1AB13F03007F4F35 /* SPYAlertView.h */,
+				BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 			files = (
 				BFD050381A9F12350048355E /* YzdHUDIndicator.m in Sources */,
 				BF3DBC111A76449600A87FD2 /* GameRoomSubview.m in Sources */,
+				BF84BC6D1AB13F03007F4F35 /* SPYAlertView.m in Sources */,
 				BF77ACEE1A6E4725008CCFB9 /* AppDelegate.m in Sources */,
 				BFD050371A9F12350048355E /* YzdHUDImageView.m in Sources */,
 				BF74DEAD1A88A91D00E8744B /* SPYConnection+Delegate.m in Sources */,

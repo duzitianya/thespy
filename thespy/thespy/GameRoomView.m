@@ -11,6 +11,7 @@
 #import "SPYConnection+Delegate.h"
 #import "PlayerBean.h"
 #import "UIWindow+YzdHUD.h"
+#import "SPYAlertView.h"
 
 @implementation GameRoomView
 @synthesize subRoomView;
@@ -25,9 +26,9 @@
         self.isRemoteInit = NO;
     }
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    if (self.alert) {
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-    }
+    [[SPYAlertView shareInstance]dismissAlertView];
+    self.plvc.delegate = nil;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -102,7 +103,6 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     self.connections = [[NSMutableArray alloc]initWithCapacity:5];
-//    self.tempconns = [[NSMutableArray alloc]initWithCapacity:5];
     self.isRemoteInit = NO;
     self.readMap = [[NSMutableDictionary alloc]initWithCapacity:2];
 }
@@ -127,13 +127,7 @@
             return;
         }
         if (self.asServer==NO&&list==nil) {//说明服务器拒接自己连接
-            if (self.alert) {
-                [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-            }
-            self.alert = [[UIAlertView alloc] initWithTitle:@"不能加入正在进行的游戏！" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-            self.alert.delegate = self;
-            [self.alert setTag:101];
-            [self.alert show];
+            [[SPYAlertView shareInstance]createAlertView:@"无法加入" Message:@"您不能加入正在进行的游戏！" CancelTxt:@"知道了" OtherTxt:@"" Tag:101 Delegate:self];
         }
         if (list) {
             for (int i=0; i<[list count]; i++) {
@@ -227,11 +221,7 @@
 }
 
 - (void)closeCurrentGame{
-    if (self.alert) {
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-    }
-    self.alert = [[UIAlertView alloc] initWithTitle:@"您确认要终止游戏吗？" message:@"" delegate:self cancelButtonTitle:@"终止" otherButtonTitles:@"算了", nil];
-    [self.alert show];
+    [[SPYAlertView shareInstance]createAlertView:@"您确认要终止游戏吗？" Message:@"" CancelTxt:@"终止" OtherTxt:@"算了" Tag:0 Delegate:self];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -244,19 +234,19 @@
             [self.navigationController pushViewController:self.plvc animated:NO];
             return;
         }
-        if (self.asServer) {
-            [self closeService];
-        }else{
-            if (tag!=20140620) {
-                //向服务器发送终止游戏数据
-                NSNumber *num = self.mainPlayer.index;
-                if (self.connection) {
-                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
-                    [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
-                    [self.connection closeConnection];
-                }
+        
+        if (tag!=20140620) {
+            //向服务器发送终止游戏数据
+            NSNumber *num = self.mainPlayer.index;
+            if (self.connection) {
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:num];
+                [self.connection writeData:self.connection.output WithData:data OperType:SYPClientLeavePush];
+                [self.connection closeConnection];
             }
+        }else{
+            [self closeService];
         }
+
         [self.view.window showHUDWithText:nil Type:ShowDismiss Enabled:YES];
         if(self.clientAlive){
             [self gameOver];
@@ -277,10 +267,9 @@
     }
     
     [self.connection closeConnection];
-    self.connections = nil;
     [self.service removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    [self.service setDelegate:nil];
     [self.service stop];
+    [self.service setDelegate:nil];
     self.isServerOpen = NO;
     NSLog(@"SPYService is stop...");
 }
@@ -337,17 +326,17 @@
     }
 }
 
-- (void) netServiceDidResolveAddress:(NSNetService *)sender{
-    NSInputStream *     inputs;
-    NSOutputStream *    outputs;
-    
-    NSString *host = [sender hostName];
-    NSInteger port = [sender port];
-    [NSStream getStreamsToHostNamed:host port:port inputStream:&inputs outputStream:&outputs];
-    if (inputs!=nil&&outputs!=nil) {
-        self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
-    }
-}
+//- (void) netServiceDidResolveAddress:(NSNetService *)sender{
+//    NSInputStream *     inputs;
+//    NSOutputStream *    outputs;
+//    
+//    NSString *host = [sender hostName];
+//    NSInteger port = [sender port];
+//    [NSStream getStreamsToHostNamed:host port:port inputStream:&inputs outputStream:&outputs];
+//    if (inputs!=nil&&outputs!=nil) {
+//        self.connection = [[SPYConnection alloc]initWithInput:inputs output:outputs delegate:self];
+//    }
+//}
 
 - (void) netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
             didFindService:(NSNetService *)netService
@@ -405,12 +394,7 @@
                 NSLog(@"##==%d", (int)[aStream streamStatus]);
             }
             if(self.asServer==NO&&self.isRemoteInit){
-                if (self.alert!=nil) {
-                    [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-                }
-                self.alert = [[UIAlertView alloc] initWithTitle:@"网络出现异常" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-                [self.alert show];
-                self.isRemoteInit = NO;
+                [[SPYAlertView shareInstance]createAlertView:@"网络出现异常" Message:@"" CancelTxt:@"知道了" OtherTxt:nil Tag:0 Delegate:self];
             }
             break;
         }
@@ -522,12 +506,7 @@
 }
 
 -(void)serverIsOut{
-    if (self.alert) {
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
-    }
-    self.alert = [[UIAlertView alloc] initWithTitle:@"主机已经退出游戏" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-    [self.alert setTag:20140620];
-    [self.alert show];
+    [[SPYAlertView shareInstance]createAlertView:@"主机已经退出游戏" Message:@"" CancelTxt:@"知道了" OtherTxt:nil Tag:20140620 Delegate:self];
 }
 
 -(void)startGame{
@@ -691,11 +670,11 @@
     }
 }
 
-//#ifdef _FOR_DEBUG_
+#ifdef _FOR_DEBUG_
 -(BOOL) respondsToSelector:(SEL)aSelector {
     printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
     return [super respondsToSelector:aSelector];
 }
-//#endif
+#endif
 
 @end

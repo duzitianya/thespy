@@ -19,6 +19,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)dealloc{
 //    self.allPlayer = nil;
+    self.collectionView.delegate = nil;
     NSLog(@"GameRoomSubview dealloc....");
 }
 
@@ -66,11 +67,6 @@ static NSString * const reuseIdentifier = @"Cell";
     }
 
     return cell;
-}
-
--(BOOL) respondsToSelector:(SEL)aSelector {
-    printf("SELECTOR: %s\n", [NSStringFromSelector(aSelector) UTF8String]);
-    return [super respondsToSelector:aSelector];
 }
 
 

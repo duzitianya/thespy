@@ -42,6 +42,7 @@
         
         self.cameraOverlayView = [[[NSBundle mainBundle]loadNibNamed:@"CameraOverlayView" owner:self options:nil]lastObject];
         self.cameraOverlayView.delegate = self;
+        self.cameraOverlayView.frame = CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT);
         _camera.cameraOverlayView = self.cameraOverlayView;
         
     } else {
@@ -94,11 +95,17 @@
 }
 
 - (void) didBeginEditing:(UITextField *)textField{
-    [self moveViews:-150];
+    CGFloat textBottom = kMAIN_SCREEN_HEIGHT - textField.frame.origin.y + textField.frame.size.height;
+    if (textBottom<=150) {
+        [self moveViews:-150];
+        self.needMove = YES;
+    }
 }
 
 - (void) didEndEditing:(UITextField *)textField{
-    [self moveViews:150];
+    if (self.needMove) {
+        [self moveViews:150];
+    }
 }
 
 - (void) moveViews:(int)offset{

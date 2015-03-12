@@ -25,10 +25,10 @@
 @interface SettingsBoardView : UIView<UINavigationControllerDelegate, UIImagePickerControllerDelegate, SavePhotoDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *camera;
-//@property (nonatomic, strong) SettingsView *settingsview;
 @property (nonatomic, strong) CameraOverlayView *cameraOverlayView;
 
 @property (nonatomic, assign) int offset;
+@property (nonatomic, assign) BOOL needMove;
 
 @property (nonatomic, weak) id<CameraOpenDelegate> delegate;
 

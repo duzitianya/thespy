@@ -28,7 +28,7 @@
     NSString *serverTxt = @"创建游戏";
     CGSize size = [serverTxt sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(width/2, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
     
-    self.server = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width/2, size.height+30)];
+    self.server = [[UIButton alloc] initWithFrame:CGRectMake(1, 0, width/2-2, size.height+30-1)];
     [self.server setTitle:serverTxt forState:UIControlStateNormal];
     UIImage *serverImg = [UIImage imageNamed:@"SpyResource.bundle/server"];
     [self.server setImage:serverImg forState:UIControlStateNormal];
@@ -36,12 +36,9 @@
     [self.server setTag:1];
     self.server.layer.cornerRadius = 4;
     self.server.backgroundColor = [UIColor darkGrayColor];
-    self.server.alpha = 0.6;
-//    self.server.layer.borderWidth = 2;
-    self.server.layer.borderColor = [[UIColor whiteColor]CGColor];
-    [self addSubview:self.server];
+    self.server.alpha = 0.6;    [self addSubview:self.server];
     
-    self.client = [[UIButton alloc] initWithFrame:CGRectMake(width/2+1, 0, width/2, size.height+30)];
+    self.client = [[UIButton alloc] initWithFrame:CGRectMake(width/2+2, 0, width/2-3, size.height+30-1)];
     [self.client setTitle:@"加入游戏" forState:UIControlStateNormal];
     UIImage *clientImg = [UIImage imageNamed:@"SpyResource.bundle/client"];
     [self.client setImage:clientImg forState:UIControlStateNormal];
@@ -50,10 +47,7 @@
     self.client.layer.cornerRadius = 4;
     self.client.backgroundColor = [UIColor grayColor];
     self.client.alpha = 0.6;
-//    self.client.layer.borderWidth = 2;
-    self.client.layer.borderColor = [[UIColor whiteColor]CGColor];
     [self addSubview:self.client];
-
 }
 
 - (void) buttonClick:(id)sender{

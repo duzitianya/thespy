@@ -30,16 +30,28 @@
     
     self.server = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width/2, size.height+30)];
     [self.server setTitle:serverTxt forState:UIControlStateNormal];
+    UIImage *serverImg = [UIImage imageNamed:@"SpyResource.bundle/server"];
+    [self.server setImage:serverImg forState:UIControlStateNormal];
     [self.server addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.server setTag:1];
-    self.server.backgroundColor = [UIColor grayColor];
+    self.server.layer.cornerRadius = 4;
+    self.server.backgroundColor = [UIColor darkGrayColor];
+    self.server.alpha = 0.6;
+//    self.server.layer.borderWidth = 2;
+    self.server.layer.borderColor = [[UIColor whiteColor]CGColor];
     [self addSubview:self.server];
     
     self.client = [[UIButton alloc] initWithFrame:CGRectMake(width/2+1, 0, width/2, size.height+30)];
     [self.client setTitle:@"加入游戏" forState:UIControlStateNormal];
+    UIImage *clientImg = [UIImage imageNamed:@"SpyResource.bundle/client"];
+    [self.client setImage:clientImg forState:UIControlStateNormal];
     [self.client addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.client setTag:2];
-    self.client.backgroundColor = [UIColor darkGrayColor];
+    self.client.layer.cornerRadius = 4;
+    self.client.backgroundColor = [UIColor grayColor];
+    self.client.alpha = 0.6;
+//    self.client.layer.borderWidth = 2;
+    self.client.layer.borderColor = [[UIColor whiteColor]CGColor];
     [self addSubview:self.client];
 
 }
@@ -54,12 +66,12 @@
         NSInteger tag = button.tag;
         if (tag==1) {//点击的创建游戏
             [self.delegate createServer];
-            self.server.backgroundColor = [UIColor grayColor];
-            self.client.backgroundColor = [UIColor darkGrayColor];
+//            self.server.backgroundColor = [UIColor grayColor];
+//            self.client.backgroundColor = [UIColor darkGrayColor];
         }else if(tag==2){
             [self.delegate asClient];
-            self.client.backgroundColor = [UIColor grayColor];
-            self.server.backgroundColor = [UIColor darkGrayColor];
+//            self.client.backgroundColor = [UIColor grayColor];
+//            self.server.backgroundColor = [UIColor darkGrayColor];
         }
     }
 }

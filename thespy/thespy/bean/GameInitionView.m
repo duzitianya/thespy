@@ -16,9 +16,9 @@
 
 - (void)awakeFromNib{
     [_totalSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    self.totalLabel.text = @"10";        self.totalNum = 10;
-    self.citizenLabel.text = @"8";      self.citizenNum = 8;
-    self.spyLabel.text = @"2";          self.spyNum = 2;
+    self.totalLabel.text = @"8";        self.totalNum = 8;
+    self.citizenLabel.text = @"7";      self.citizenNum = 7;
+    self.spyLabel.text = @"1";          self.spyNum = 1;
     self.whiteboardLabel.text = @"0";   self.whiteBoardNum = 0;
     
     NSArray *allsubs = self.subviews;

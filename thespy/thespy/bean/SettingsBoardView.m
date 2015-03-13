@@ -75,7 +75,7 @@
 }
 
 - (void) savePhoto{
-    if (self.cameraOverlayView.nickName==nil||[[self.cameraOverlayView.nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
+    if (self.cameraOverlayView.nicknameField.text==nil || [[self.cameraOverlayView.nicknameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"昵称不能为空！" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
         [alert show];
@@ -84,6 +84,7 @@
     }
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        self.cameraOverlayView.nickName = self.cameraOverlayView.nicknameField.text;
         [_camera takePicture];
     }
 }

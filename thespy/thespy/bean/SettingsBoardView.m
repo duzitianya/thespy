@@ -35,7 +35,7 @@
     
         //计算偏移量
         CGFloat s = (kMAIN_SCREEN_HEIGHT - kMAIN_SCREEN_HEIGHT*scale) / 2;
-        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, s*-1);
+        _camera.cameraViewTransform = CGAffineTransformTranslate(_camera.cameraViewTransform, 0, s*-1+50);
         _camera.showsCameraControls = NO;
         
         //此处设置只能使用相机，禁止使用视频功能
@@ -98,7 +98,7 @@
 
 - (void) didBeginEditing:(UITextField *)textField{
     CGFloat textBottom = kMAIN_SCREEN_HEIGHT - (textField.frame.origin.y + textField.frame.size.height + 95 + 150);
-    if (textBottom<=150) {
+    if (textBottom<=250) {
         [self moveViews:-150];
         self.needMove = YES;
     }

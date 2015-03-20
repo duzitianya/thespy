@@ -8,6 +8,9 @@
 
 #import "CameraOverlayView.h"
 #import "SPYFileUtil.h"
+#import "SPYAlertView.h"
+#import "UIImage+category.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation CameraOverlayView
 
@@ -30,12 +33,21 @@
         _nickName = uname;
     }
     
+    [self viewDidAppear];
+}
+
+- (void)viewDidAppear{
     //如果禁止相机，则显示默认图片
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO||[UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]==NO) {
+    NSString *mediaType = AVMediaTypeVideo;
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
         self.photoView.alpha = 1;
         UIImage *img = [[SPYFileUtil shareInstance]getUserHeader];
+        img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
         UIImageView *imgView = [[UIImageView alloc]initWithImage:img];
         [self.photoView addSubview:imgView];
+        
+//        [[SPYAlertView shareInstance]createAlertView:@"拜托让我可以调用相机吧！" Message:@"" CancelTxt:@"知道了" OtherTxt:nil Tag:0 Delegate:self];
     }
 }
 

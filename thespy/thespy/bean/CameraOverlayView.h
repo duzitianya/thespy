@@ -17,7 +17,7 @@
 - (void) didEndEditing:(UITextField *)textField;
 @end
 
-@interface CameraOverlayView : UIView<UITextFieldDelegate>
+@interface CameraOverlayView : UIView<UITextFieldDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *deviceLable;
 @property (strong, nonatomic) IBOutlet UITextField *nicknameField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;

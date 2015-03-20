@@ -67,11 +67,6 @@
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     
-    [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
-    
-    [self.delegate dismissViewController];
 }
 
 - (void) savePhoto{
@@ -86,6 +81,12 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         self.cameraOverlayView.nickName = self.cameraOverlayView.nicknameField.text;
         [_camera takePicture];
+        
+        [[SPYFileUtil shareInstance] saveUserName:self.cameraOverlayView.nickName];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
+        
+        [self.delegate dismissViewController];
     }
 }
 

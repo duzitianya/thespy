@@ -45,6 +45,7 @@
 		BF77AD471A6FD00C008CCFB9 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF77AD461A6FD00C008CCFB9 /* HistoryListCell.m */; };
 		BF77AD491A6FD02C008CCFB9 /* HistoryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */; };
 		BF84BC6D1AB13F03007F4F35 /* SPYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */; };
+		BF8DAD2E1ABBBF4A008EEBCB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8DAD2D1ABBBF4A008EEBCB /* AVFoundation.framework */; };
 		BFBA0DB51AAEC6070030D9D4 /* CameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */; };
 		BFBA0DB71AAEC61E0030D9D4 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */; };
 		BFBA0DC21AB01A990030D9D4 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0DC11AB01A990030D9D4 /* InfoView.m */; };
@@ -135,6 +136,7 @@
 		BF77AD481A6FD02C008CCFB9 /* HistoryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListCell.xib; sourceTree = "<group>"; };
 		BF84BC6B1AB13F03007F4F35 /* SPYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPYAlertView.h; sourceTree = "<group>"; };
 		BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPYAlertView.m; sourceTree = "<group>"; };
+		BF8DAD2D1ABBBF4A008EEBCB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BFBA0DB31AAEC6070030D9D4 /* CameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraOverlayView.h; sourceTree = "<group>"; };
 		BFBA0DB41AAEC6070030D9D4 /* CameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraOverlayView.m; sourceTree = "<group>"; };
 		BFBA0DB61AAEC61E0030D9D4 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8DAD2E1ABBBF4A008EEBCB /* AVFoundation.framework in Frameworks */,
 				BF201FA41A733F0700A571C8 /* MobileCoreServices.framework in Frameworks */,
 				BF77AD3D1A6F88F6008CCFB9 /* libsqlite3.dylib in Frameworks */,
 			);
@@ -305,6 +308,7 @@
 		BF77AD361A6E54A2008CCFB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF8DAD2D1ABBBF4A008EEBCB /* AVFoundation.framework */,
 				BF201FA31A733F0700A571C8 /* MobileCoreServices.framework */,
 				BF77AD3C1A6F88F6008CCFB9 /* libsqlite3.dylib */,
 				BF77AD341A6E5484008CCFB9 /* CoreBluetooth.framework */,
@@ -553,7 +557,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Quan Zhao (839QBYS72N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Quan Zhao (839QBYS72N)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -572,7 +577,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -594,7 +599,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Quan Zhao (839QBYS72N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Quan Zhao (839QBYS72N)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -607,6 +613,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -618,12 +625,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Quan Zhao (VEB7YKB5MX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Quan Zhao (VEB7YKB5MX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = thespy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bffb7557-61bb-4a09-9ad7-9c4b71c91e75";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -634,12 +642,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Quan Zhao (VEB7YKB5MX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Quan Zhao (VEB7YKB5MX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = thespy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bffb7557-61bb-4a09-9ad7-9c4b71c91e75";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

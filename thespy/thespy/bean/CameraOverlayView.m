@@ -10,6 +10,7 @@
 #import "SPYFileUtil.h"
 #import "SPYAlertView.h"
 #import "UIImage+category.h"
+#import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
 @implementation CameraOverlayView
@@ -33,7 +34,33 @@
         _nickName = uname;
     }
     
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:self.declareTextView.text];
+    NSRange contentRange = {0,[content length]};
+    [content addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:contentRange];
+    self.declareTextView.attributedText = content;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPrivacyPolicyView)];
+    tap.numberOfTouchesRequired = 1;//双击
+    tap.numberOfTapsRequired = 1;//一个手指点击
+    tap.delegate = self;
+    [self.declareTextView addGestureRecognizer:tap];
+    
+    self.ppv = [[[NSBundle mainBundle]loadNibNamed:@"PrivacyPolicyView" owner:self options:nil]lastObject];
+    [self.ppv setHidden:YES];
+    self.ppv.frame = CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT);
+    [self addSubview:self.ppv];
+    
+    //如果是初始化设置，则不显示取消按钮
+    SPYFileUtil *util = [SPYFileUtil shareInstance];
+    if ([util isUserDataExist]==NO) {
+        [self.cancelButton setHidden:YES];
+    }
+    
     [self viewDidAppear];
+}
+
+- (void)showPrivacyPolicyView{
+    [self.ppv setHidden:NO];
 }
 
 - (void)viewDidAppear{
@@ -62,6 +89,17 @@
 - (IBAction)cancelInput:(UITextField *)sender {
     if ([sender isKindOfClass:[UITextField class]]) {
         [sender resignFirstResponder];
+    }
+}
+
+- (IBAction)changeSwitchState:(UISwitch *)sender {
+    if(sender.on==NO){
+        [self.cancelButton setHidden:YES];
+    }else{
+        SPYFileUtil *util = [SPYFileUtil shareInstance];
+        if ([util isUserDataExist]==YES) {
+            [self.cancelButton setHidden:NO];
+        }
     }
 }
 

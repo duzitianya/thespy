@@ -67,12 +67,20 @@
     img = [img thumbnailWithImageWithoutScale:img size:CGSizeMake(150, 150)];
     [[SPYFileUtil shareInstance] saveUserHeader:img];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadHeaderData" object:nil];
 }
 
 - (void) savePhoto{
     if (self.cameraOverlayView.nicknameField.text==nil || [[self.cameraOverlayView.nicknameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]length]==0) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"昵称不能为空！" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return ;
+    }
+
+    if(self.cameraOverlayView.declareSwitch.on==NO){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请同意隐私声明内容" message:@"" delegate:self cancelButtonTitle:@"好吧" otherButtonTitles:nil, nil];
         [alert show];
         
         return ;

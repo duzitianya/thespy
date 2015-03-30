@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PrivacyPolicyView.h"
 
 @protocol SavePhotoDelegate <NSObject>
 
@@ -17,11 +18,15 @@
 - (void) didEndEditing:(UITextField *)textField;
 @end
 
-@interface CameraOverlayView : UIView<UITextFieldDelegate, UIAlertViewDelegate>
+@interface CameraOverlayView : UIView<UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *deviceLable;
 @property (strong, nonatomic) IBOutlet UITextField *nicknameField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UIView *photoView;
+@property (strong, nonatomic) IBOutlet UISwitch *declareSwitch;
+@property (strong, nonatomic) IBOutlet UITextView *declareTextView;
+@property (strong, nonatomic) PrivacyPolicyView *ppv;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 
 @property (strong, nonatomic) id<SavePhotoDelegate> delegate;
 
@@ -30,5 +35,6 @@
 - (IBAction)cancel:(UIButton *)sender;
 - (IBAction)confirm:(UIButton *)sender;
 - (IBAction)cancelInput:(UITextField *)sender;
+- (IBAction)changeSwitchState:(UISwitch *)sender;
 
 @end

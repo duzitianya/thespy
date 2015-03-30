@@ -56,6 +56,8 @@
 		BFD050371A9F12350048355E /* YzdHUDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050301A9F12350048355E /* YzdHUDImageView.m */; };
 		BFD050381A9F12350048355E /* YzdHUDIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050321A9F12350048355E /* YzdHUDIndicator.m */; };
 		BFD050391A9F12350048355E /* YzdHUDLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD050341A9F12350048355E /* YzdHUDLabel.m */; };
+		BFFEDA9E1AC91186008F26AC /* PrivacyPolicyView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFEDA9D1AC91186008F26AC /* PrivacyPolicyView.m */; };
+		BFFEDAA01AC9119E008F26AC /* PrivacyPolicyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFEDA9F1AC9119E008F26AC /* PrivacyPolicyView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,9 @@
 		BFD050321A9F12350048355E /* YzdHUDIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDIndicator.m; sourceTree = "<group>"; };
 		BFD050331A9F12350048355E /* YzdHUDLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YzdHUDLabel.h; sourceTree = "<group>"; };
 		BFD050341A9F12350048355E /* YzdHUDLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YzdHUDLabel.m; sourceTree = "<group>"; };
+		BFFEDA9C1AC91186008F26AC /* PrivacyPolicyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyPolicyView.h; sourceTree = "<group>"; };
+		BFFEDA9D1AC91186008F26AC /* PrivacyPolicyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyPolicyView.m; sourceTree = "<group>"; };
+		BFFEDA9F1AC9119E008F26AC /* PrivacyPolicyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivacyPolicyView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +306,9 @@
 				BF6D252B1A7B7649001F698A /* GameRoomHeader.xib */,
 				BF84BC6B1AB13F03007F4F35 /* SPYAlertView.h */,
 				BF84BC6C1AB13F03007F4F35 /* SPYAlertView.m */,
+				BFFEDA9C1AC91186008F26AC /* PrivacyPolicyView.h */,
+				BFFEDA9D1AC91186008F26AC /* PrivacyPolicyView.m */,
+				BFFEDA9F1AC9119E008F26AC /* PrivacyPolicyView.xib */,
 			);
 			path = bean;
 			sourceTree = "<group>";
@@ -448,6 +456,7 @@
 				BF6D252C1A7B7649001F698A /* GameRoomHeader.xib in Resources */,
 				BF3DBC081A76351700A87FD2 /* GameRoomCell.xib in Resources */,
 				BFBA0DC41AB01AB60030D9D4 /* InfoView.xib in Resources */,
+				BFFEDAA01AC9119E008F26AC /* PrivacyPolicyView.xib in Resources */,
 				BF77AD311A6E47FF008CCFB9 /* PlayerHeader.xib in Resources */,
 				BF201F9F1A71F10900A571C8 /* SpyResource.bundle in Resources */,
 				BF3D54B91A8CA4C200B4B202 /* GamePlayingViewController.xib in Resources */,
@@ -491,6 +500,7 @@
 				BFD050361A9F12350048355E /* YzdHUDBackgroundView.m in Sources */,
 				BF77AD411A6F8A5D008CCFB9 /* GameDB.m in Sources */,
 				BFD050391A9F12350048355E /* YzdHUDLabel.m in Sources */,
+				BFFEDA9E1AC91186008F26AC /* PrivacyPolicyView.m in Sources */,
 				BF77AD2E1A6E47FF008CCFB9 /* PlayerBean.m in Sources */,
 				BF341FD41A78C28A00E5C0FC /* UIImage+category.m in Sources */,
 				BF77AD331A6E47FF008CCFB9 /* ServerListViewController.m in Sources */,

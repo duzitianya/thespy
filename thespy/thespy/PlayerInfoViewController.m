@@ -80,7 +80,7 @@
     NSString *name = [util getUserName];
     UIImage *headerData = [util getUserHeader];
     NSString *uuid = [[UIDevice currentDevice].identifierForVendor UUIDString];
-    self.mainPlayer = [PlayerBean initWithData:headerData Name:name DeviceName:[UIDevice currentDevice].name BeanID:uuid];
+    self.mainPlayer = [PlayerBean initWithData:headerData Name:name BeanID:uuid];
     self.mainPlayer.status = BLE_ONLINE;
     
     [header initWithPlayerBean:self.mainPlayer Delegate:self];

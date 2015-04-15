@@ -56,10 +56,10 @@
     NSString *dataDirectory = [NSHomeDirectory() stringByAppendingString:APP_PLAYER_DATA_HOME];
     NSData *fileData = [[NSFileManager defaultManager] contentsAtPath:dataDirectory];
     NSString *content = [[NSString alloc]initWithData:fileData encoding:NSUTF8StringEncoding];
-    if (content) {
+    if (content&&[content length]>0) {
         return content;
     }
-    return @"";
+    return [UIDevice currentDevice].name;
 }
 
 - (NSArray*) getWords{

@@ -19,7 +19,7 @@
     if (name) {
         self.playerName.text = name;
     }else{
-        name = player.deviceName;
+//        name = player.deviceName;
         if (name) {
             self.playerName.text = name;
         }

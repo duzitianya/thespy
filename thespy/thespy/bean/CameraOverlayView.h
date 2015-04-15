@@ -19,7 +19,7 @@
 @end
 
 @interface CameraOverlayView : UIView<UITextFieldDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
-@property (strong, nonatomic) IBOutlet UILabel *deviceLable;
+//@property (strong, nonatomic) IBOutlet UILabel *deviceLable;
 @property (strong, nonatomic) IBOutlet UITextField *nicknameField;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet UIView *photoView;

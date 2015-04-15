@@ -16,8 +16,8 @@
 @implementation CameraOverlayView
 
 - (void) awakeFromNib{
-    NSString *deviceName = [UIDevice currentDevice].name;
-    _deviceLable.text = deviceName;
+//    NSString *deviceName = [UIDevice currentDevice].name;
+//    _deviceLable.text = deviceName;
     
     _confirmButton.layer.borderWidth = 1;
     _confirmButton.layer.cornerRadius = 3;

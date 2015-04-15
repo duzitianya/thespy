@@ -87,7 +87,7 @@
     NSString *role = [PlayerBean getRoleStringByPlayerRole:self.bean.role];
     //日期格式化
     NSDate *date = [NSDate date];
-    NSString *gameResultID = [NSString stringWithFormat:@"%@.%f", self.bean.deviceName, [date timeIntervalSince1970]];
+    NSString *gameResultID = [NSString stringWithFormat:@"%@.%f", self.bean.name, [date timeIntervalSince1970]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *str = [dateFormatter stringFromDate:date];

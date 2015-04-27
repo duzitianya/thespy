@@ -59,7 +59,7 @@
     if (content&&[content length]>0) {
         return content;
     }
-    return [UIDevice currentDevice].name;
+    return @"我的昵称";
 }
 
 - (NSArray*) getWords{

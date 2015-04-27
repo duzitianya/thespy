@@ -64,12 +64,12 @@
     //如果尚未初始化，则进行初始化
     SPYFileUtil *util = [SPYFileUtil shareInstance];
     if ([util isUserDataExist]==NO) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==YES) {
+//        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==YES) {
             //弹出初始化视图
             SettingsBoardView *sv = [[SettingsBoardView alloc]initWithFrame:CGRectMake(0, 0, kMAIN_SCREEN_WIDTH, kMAIN_SCREEN_HEIGHT)];
             [sv setupWithDelegate:self];
             [self presentViewController:sv.camera];
-        }
+//        }
     }
     
     UIImage *buttonImg = [UIImage imageNamed:@"SpyResource.bundle/info"];

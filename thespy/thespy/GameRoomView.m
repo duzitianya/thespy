@@ -200,8 +200,9 @@
     self.asServer = asServer;
     if (self.asServer) {
         if (!self.isServerOpen) {
-            NSString *deviceName = [UIDevice currentDevice].name;
-            self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@ 的游戏",deviceName]];
+//            NSString *deviceName = [UIDevice currentDevice].name;
+            NSString *name = self.mainPlayer.name;
+            self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@ 的游戏",name]];
             self.service.includesPeerToPeer = NO;
             [self.service setDelegate:self];
             [self.service scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -283,29 +284,24 @@
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream{
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         SPYConnection *connection = [[SPYConnection alloc] initWithInput:inputStream output:outputStream delegate:self];
-//        [self.connections addObject:connection];
         NSLog(@"Accept connections--->%d, %d", (int)[inputStream hasBytesAvailable], (int)[outputStream hasSpaceAvailable]);
-//        if ([self.tempconns count]<=1) {
-//            [self.tempconns addObject:connection];
-//        }
-//        [self.tempconns addObject:connection];
         if (self.tempconn==nil) {
             self.tempconn = connection;
         }
     }];
 }
 
-- (void) publishServer{
+/*- (void) publishServer{
     NSString *userName = [[SPYFileUtil shareInstance]getUserName];
     if (userName||[userName length]==0) {
         userName = [UIDevice currentDevice].name;
     }
-    self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",userName]];
+    self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_thespy._tcp." name:[NSString stringWithFormat:@"%@-->创建的游戏",@"abc"]];
     self.service.includesPeerToPeer = NO;
     [self.service setDelegate:self];
     [self.service scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.service publishWithOptions:NSNetServiceListenForConnections];
-}
+}*/
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict{
     self.isServerOpen = NO;
